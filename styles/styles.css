@@ -21,7 +21,16 @@ nav{
 .nav-cuenta{
     width: 100%;
     display: flex;
-        justify-content: right;
+    justify-content: right;
+}
+
+.nav-cuenta img {
+    width: 35px;
+    height: 35px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 0.3em;
+    border-radius: 6px;
 }
 
 #cuenta{

@@ -49,9 +49,17 @@
             <?php
                 if (!isset($_SESSION["cuenta_usuario"])){
                     echo "<a href='php/cuenta.php' id='cuenta'>Anónimo</a>"; 
+                    echo '<img src="resources/avatar.png" alt="">';
                 }
                 else{
                     echo "<a href='php/cuenta.php' id='cuenta'>" . $_SESSION["cuenta_usuario"] . "</a>"; 
+                    $avatar = "resources/avatars/" . $_SESSION["cuenta_id"] . ".png";
+                    if (file_exists($avatar)){
+                        echo "<img src='$avatar?v=" . filemtime($avatar) . "alt=''>";
+                    }
+                    else{
+                        echo "<img src='resources/avatar.png' alt=''>";
+                    }
                 }
             ?>
         </div>

@@ -56,6 +56,7 @@
         </ul>
         <div class="nav-cuenta">
             <a href="php/cuenta.php" id="cuenta">Anónimo</a>
+            <img src='resources/avatar.png' alt=''>
         </div>
     </nav>
     <div class="contenido-menu">
