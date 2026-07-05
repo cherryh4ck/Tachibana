@@ -1859,6 +1859,10 @@ header h1{
     color: rgb(211, 199, 199);
 }
 
+.perfil-banner-parte1-modificado-input input[type=password]{
+    width: 220px;
+}
+
 #perfil-banner-parte1-modificado-input-caracteres{
     color: rgb(98, 100, 98) !important;
     font-size: 14px !important;
