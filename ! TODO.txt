@@ -43,4 +43,3 @@ base de datos:
 diseño:
 - hacer todo responsive
 - futura optimizacion: procesar comentarios del lado backend
-- futura optimizacion: optimizar la ventana modal (capaz con un require ya esté, aparte lo hace mas fácil de modificar)
