@@ -188,7 +188,7 @@
                         if ($tag_fetch){
                             $tag_nombre = $tag_fetch["nombre"];
                             $tag_usos = $tag_fetch["usos"];
-                             echo "<span id='input-tag2'>$tag_nombre<b>$tag_usos</b></span>";
+                             echo "<a href='index.php?tags=" . urlencode($tag_nombre) . "'><span id='input-tag2'>$tag_nombre<b>$tag_usos</b></span></a>";
                         }
                     }
                 }

@@ -20,6 +20,9 @@
                 $orden = "DESC";
             }
 
+            $condiciones = [];
+            $parametros = [];
+
             if (isset($_GET["categoria"]) && !($_GET["categoria"] == "all")){
                 $categoria = $_GET["categoria"];
                 $sql = $conn->prepare("SELECT * from categorias WHERE nombre = ?");
@@ -31,34 +34,45 @@
                 else{
                     $id_categoria = 1;
                 }
-
-                if (isset($_GET["q"]) && !(empty($_GET["q"]))){
-                    $query = "%" . $_GET["q"] . "%";
-                    $sql = $conn->prepare("SELECT * from posts WHERE id_categoria = ? AND lower(titulo) LIKE ? ORDER BY id $orden");
-                    $sql->execute([$id_categoria, $query]);
-                    $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
-                }
-                else{
-                    $sql = $conn->prepare("SELECT * from posts WHERE id_categoria = ? ORDER BY id $orden");
-                    $sql->execute([$id_categoria]);
-                    $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
-                }
+                $condiciones[] = "id_categoria = ?";
+                $parametros[] = $id_categoria;
             }
             else{
                 $categoria = "all";
-
-                if (isset($_GET["q"]) && !(empty($_GET["q"]))){
-                    $query = "%" . $_GET["q"] . "%";
-                    $sql = $conn->prepare("SELECT * from posts WHERE lower(titulo) LIKE ? ORDER BY id $orden");
-                    $sql->execute([$query]);
-                    $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
-                }
-                else{
-                    $sql = $conn->prepare("SELECT * from posts ORDER BY id $orden");
-                    $sql->execute();
-                    $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
-                }
             }
+
+            if (isset($_GET["q"]) && !(empty($_GET["q"]))){
+                $query = "%" . $_GET["q"] . "%";
+                $condiciones[] = "lower(titulo) LIKE ?";
+                $parametros[] = $query;
+            }
+
+            if (isset($_GET["tags"]) && !(empty($_GET["tags"]))){
+                $tags_buscados = array_filter(array_map("trim", explode(",", strtolower($_GET["tags"]))));
+                $tags_buscados = array_values(array_unique($tags_buscados));
+            }
+            else{
+                $tags_buscados = [];
+            }
+
+            if (count($tags_buscados) > 0){
+                $placeholders = implode(",", array_fill(0, count($tags_buscados), "?"));
+                $condiciones[] = "id IN (SELECT id_post FROM posts_tags INNER JOIN tags ON posts_tags.id_tag = tags.id WHERE tags.nombre IN ($placeholders) GROUP BY id_post HAVING COUNT(DISTINCT tags.nombre) = ?)";
+                $parametros = array_merge($parametros, $tags_buscados);
+                $parametros[] = count($tags_buscados);
+            }
+
+            if (count($condiciones) > 0){
+                $where = "WHERE " . implode(" AND ", $condiciones);
+            }
+            else{
+                $where = "";
+            }
+
+            $sql = $conn->prepare("SELECT * from posts $where ORDER BY id $orden");
+            $sql->execute($parametros);
+            $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
+
             $sql = $conn->prepare("SELECT * FROM tags ORDER BY usos DESC LIMIT 5");
             $sql->execute();
             $fetch_tags = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -77,6 +91,7 @@
     <title>Inicio</title>
     <script src="js/index/selectores.js" defer></script>
     <script src="js/index/query.js" defer></script>
+    <script src="js/index/tags.js" defer></script>
 
     <script src="js/subir_modal.js" defer></script>
 
@@ -121,15 +136,29 @@
                 <form action="index.php" method="GET" id="formulario-busqueda">
                     <input type="hidden" name="categoria" value="<?php echo $categoria; ?>">
                     <input type="hidden" name="orden" value="<?php echo $orden; ?>">
+                    <input type="hidden" name="tags" value="<?php echo htmlspecialchars(implode(",", $tags_buscados)); ?>" id="tags-valor-busqueda">
                     <input type="text" name="q" placeholder="Buscar..." id="input-busqueda" <?php if (isset($_GET["q"]) && !(empty($_GET["q"]))){ echo "value='" . htmlspecialchars($_GET["q"]) . "'";} ?>>
                 </form>
+                <input type="text" placeholder="Filtrar por tag..." id="input-tag-busqueda">
+                <?php
+                    if (count($tags_buscados) > 0){
+                        echo "<h4>Tags seleccionados</h4>";
+                        echo "<div class='galeria-tags-populares'>";
+                        foreach ($tags_buscados as $tag_seleccionado){
+                            echo "<span id='input-tag' class='tag-seleccionado' data-tag='" . htmlspecialchars($tag_seleccionado) . "'>" . htmlspecialchars($tag_seleccionado);
+                            echo "<input type='button' id='remover-tag' class='tag-seleccionado-remover' value='x'>";
+                            echo "</span>";
+                        }
+                        echo "</div>";
+                    }
+                ?>
                 <?php
                     if ($fetch_tags){
                         echo "<h4>Tags populares</h4>";
                         echo "<div class='galeria-tags-populares'>";
                         if ($fetch_tags){
                             foreach ($fetch_tags as $tag){
-                                echo "<span id='input-tag'>" . $tag["nombre"] . "<b>" . $tag["usos"] . "</b></span>";
+                                echo "<span id='input-tag' class='tag-popular' data-tag='" . htmlspecialchars($tag["nombre"]) . "'>" . $tag["nombre"] . "<b>" . $tag["usos"] . "</b></span>";
                             }
                         }
                         else{

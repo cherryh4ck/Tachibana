@@ -2,8 +2,20 @@ const selector_categorias = document.getElementById("categoria-input-index");
 const selector_orden = document.getElementById("categoria-input-categoria");
 const tag_categoria = document.getElementById("input-tag-rojo-index")
 const input_busqueda = document.getElementById("input-busqueda");
+const tags_valor_busqueda_selector = document.getElementById("tags-valor-busqueda");
 
 let categoria = "any";
+
+function construirUrl(categoria, orden){
+    let url = "?categoria=" + categoria + "&orden=" + orden;
+    if (input_busqueda.value.length > 0){
+        url += "&q=" + input_busqueda.value;
+    }
+    if (tags_valor_busqueda_selector.value.length > 0){
+        url += "&tags=" + tags_valor_busqueda_selector.value;
+    }
+    return url;
+}
 
 selector_categorias.addEventListener("change", function() {
     const opcionSeleccionada = this.options[this.selectedIndex];
@@ -11,19 +23,9 @@ selector_categorias.addEventListener("change", function() {
 
     categoria = valorSeleccionado;
     tag_categoria.textContent = "/" + valorSeleccionado + "/"; 
-    if (input_busqueda.value.length > 0){
-        window.location.replace("?categoria=" + categoria + "&orden=" + selector_orden.value.toUpperCase() + "&q=" + input_busqueda.value);
-    }
-    else{
-        window.location.replace("?categoria=" + categoria + "&orden=" + selector_orden.value.toUpperCase());
-    }
+    window.location.replace(construirUrl(categoria, selector_orden.value.toUpperCase()));
 });
 
 selector_orden.addEventListener("change", function() {
-    if (input_busqueda.value.length > 0){
-        window.location.replace("?categoria=" + selector_categorias.value + "&orden=" + selector_orden.value.toUpperCase() + "&q=" + input_busqueda.value);
-    }
-    else{
-        window.location.replace("?categoria=" + selector_categorias.value + "&orden=" + selector_orden.value.toUpperCase());
-    }
+    window.location.replace(construirUrl(selector_categorias.value, selector_orden.value.toUpperCase()));
 });
