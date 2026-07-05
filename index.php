@@ -162,10 +162,10 @@
                 if (!$fetch_posts){
                     echo "<div class='galeria-imagenes-sin-posts'>";
                     if (isset($_GET["q"]) && !(empty($_GET["q"]))){
-                        echo "<p id='sin-resultados-post'>No se han encontrado resultados con el término '<b>" . $_GET["q"] . "</b>'</p>";
+                        echo '<p id="sin-resultados-post">No se han encontrado resultados con el término "<b>' . $_GET["q"] . '</b>".</p>';
                     }
                     else{
-                        echo "<p id='sin-resultados-post'>No se han encontrado resultados</p>";
+                        echo '<p id="sin-resultados-post">No se han encontrado resultados.</p>';
                     }
                 }
                 else{
