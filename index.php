@@ -100,36 +100,7 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body class="galerias">
-    <nav>
-        <p id="nav-logo">Tachibana</p>
-        <ul>
-            <li><a href="index.php">Inicio</a></li>
-            <?php
-                if (isset($_SESSION["cuenta_usuario"])){
-                    echo "<li><a href='#' id='subir-boton-modal'>Publicar</a></li>";
-                }
-            ?>
-            <li><a href="perfiles.php">Usuarios</a></li>
-        </ul>
-        <div class="nav-cuenta">
-            <?php
-                if (!isset($_SESSION["cuenta_usuario"])){
-                    echo "<a href='php/cuenta.php' id='cuenta'>Anónimo</a>"; 
-                    echo '<img src="resources/avatar.png" alt="">';
-                }
-                else{
-                    echo "<a href='php/cuenta.php' id='cuenta'>" . $_SESSION["cuenta_usuario"] . "</a>"; 
-                    $avatar = "resources/avatars/" . $_SESSION["cuenta_id"] . ".png";
-                    if (file_exists($avatar)){
-                        echo "<img src='$avatar?v=" . filemtime($avatar) . "alt=''>";
-                    }
-                    else{
-                        echo "<img src='resources/avatar.png' alt=''>";
-                    }
-                }
-            ?>
-        </div>
-    </nav>
+    <?php include("resources/nav.php"); ?>
     <div class="galeria">
         <div class="galeria-panel">
             <div class="galeria-herramientas">
