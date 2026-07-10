@@ -1,57 +1,24 @@
 <?php
     session_start();
-    
+
     require "php/db/config.php";
     date_default_timezone_set('America/Argentina/Buenos_Aires');
-    $modo = "ver";
-    if (isset($_GET["id"])){
-        if (!is_numeric($_GET["id"])){
-            header("Location: error.php?id=2");
-            exit();
-        }
-    }
-    else{
-        if (isset($_SESSION["cuenta_usuario"])){
-            $_GET["id"] = $_SESSION["cuenta_id"];
-        }
-        else{
-            header("Location: login.php");
-            exit();
-        }
+
+    function e(?string $texto): string {
+        $decodificado = html_entity_decode($texto ?? '', ENT_QUOTES, 'UTF-8');
+        return htmlspecialchars($decodificado, ENT_QUOTES, 'UTF-8');
     }
 
-    if (isset($_GET["editar"])){
-        $modo = "editar";
-    }
-    else if(isset($_GET["seguridad"])){
-        $modo = "seguridad";
+    function avatar_img(string $ruta, string $atributos_extra = ''): string {
+        if (file_exists($ruta)) {
+            $src = e($ruta) . '?v=' . filemtime($ruta);
+        } else {
+            $src = 'resources/avatar.png';
+        }
+        return "<img src='$src' alt='' $atributos_extra>";
     }
 
-    try{
-        $sql = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
-        $sql->execute([$_GET["id"]]);
-        $fetch = $sql->fetch(PDO::FETCH_ASSOC);
-        if ($fetch){
-            $nombre_usuario = $fetch["username"];
-            $nickname = $fetch["nickname"];
-            $descripcion = $fetch["descripcion"];
-            $rol = $fetch["rol"];
-            $fecha_creacion = $fetch["fecha_creacion"];
-            $ultima_actividad = $fetch["ult_act"];
-            $ultima_actividad_activo = $fetch["ult_act_activo"];
-            $avatar = "resources/avatars/" . $_GET["id"] . ".png";
-        }
-        else{
-            header("Location: error.php?id=2");
-            exit();
-        }
-    }
-    catch (PDOException $e){
-        header("Location: error.php?id=2");
-        exit();
-    }
-
-    function calcular_tiempo($fecha) {
+    function calcular_tiempo(string $fecha): string {
         // gracias chatgpt, ni sabía de esto kek
         $ahora = new DateTime();
         $fecha_obj = new DateTime($fecha);
@@ -68,22 +35,79 @@
         } elseif ($diferencia->i > 0) {
             return $diferencia->i . " minuto" . ($diferencia->i > 1 ? "s" : "");
         } else {
-            if ($diferencia->s < 1) {
-                $diferencia->s = 1;
-            }
-            return $diferencia->s . " segundo" . ($diferencia->s > 1 ? "s" : "");
+            $segundos = max(1, $diferencia->s);
+            return $segundos . " segundo" . ($segundos > 1 ? "s" : "");
         }
     }
-?>
 
+    function formatear_descripcion(string $descripcion): string {
+        $descripcion = str_replace(["<br>", "<br />"], "</p><p>", $descripcion);
+        $descripcion = "<p>$descripcion</p>";
+        $descripcion = preg_replace(
+            '/<p>\s*(&gt;|>)(.*)<\/p>/',
+            '<p id="post-comentarios-greentext">&gt;$2</p>',
+            $descripcion
+        );
+        return $descripcion;
+    }
+
+    if (isset($_GET["id"])) {
+        if (!is_numeric($_GET["id"])) {
+            header("Location: error.php?id=2");
+            exit();
+        }
+        $id_perfil = (int) $_GET["id"];
+    } elseif (isset($_SESSION["cuenta_usuario"])) {
+        $id_perfil = (int) $_SESSION["cuenta_id"];
+    } else {
+        header("Location: login.php");
+        exit();
+    }
+
+    $es_el_dueño = isset($_SESSION["cuenta_id"]) && $id_perfil === (int) $_SESSION["cuenta_id"];
+
+    if (isset($_GET["editar"])) {
+        $modo = "editar";
+    } elseif (isset($_GET["seguridad"])) {
+        $modo = "seguridad";
+    } else {
+        $modo = "ver";
+    }
+
+    if ($modo !== "ver" && !$es_el_dueño) {
+        header("Location: index.php");
+        exit();
+    }
+
+    try {
+        $sql = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+        $sql->execute([$id_perfil]);
+        $usuario = $sql->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        header("Location: error.php?id=2");
+        exit();
+    }
+
+    if (!$usuario) {
+        header("Location: error.php?id=2");
+        exit();
+    }
+
+    $nombre_usuario         = $usuario["username"];
+    $nickname               = $usuario["nickname"];
+    $descripcion            = $usuario["descripcion"];
+    $rol                    = $usuario["rol"];
+    $fecha_creacion         = $usuario["fecha_creacion"];
+    $ultima_actividad       = $usuario["ult_act"];
+    $ultima_actividad_activo = $usuario["ult_act_activo"];
+    $avatar                 = "resources/avatars/" . $id_perfil . ".png";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php
-        echo "<title> $nickname - @$nombre_usuario </title>";
-    ?>
+    <title><?= e($nickname) ?> - @<?= e($nombre_usuario) ?></title>
     <script src="js/subir_modal.js" defer></script>
 
     <link rel="stylesheet" href="styles/styles.css">
@@ -94,259 +118,175 @@
         <p id="nav-logo">Tachibana</p>
         <ul>
             <li><a href="index.php?pag=1">Inicio</a></li>
-            <?php
-                if (isset($_SESSION["cuenta_usuario"])){
-                    echo "<li><a href='#' id='subir-boton-modal'>Publicar</a></li>";
-                }
-            ?>
+            <?php if (isset($_SESSION["cuenta_usuario"])): ?>
+                <li><a href="#" id="subir-boton-modal">Publicar</a></li>
+            <?php endif; ?>
             <li><a href="perfiles.php">Usuarios</a></li>
         </ul>
         <div class="nav-cuenta">
-            <?php
-                if (!isset($_SESSION["cuenta_usuario"])){
-                    echo "<a href='php/cuenta.php' id='cuenta'>Anónimo</a>"; 
-                    echo '<img src="resources/avatar.png" alt="">';
-                }
-                else{
-                    echo "<a href='php/cuenta.php' id='cuenta'>" . $_SESSION["cuenta_usuario"] . "</a>"; 
-                    $avatar = "resources/avatars/" . $_SESSION["cuenta_id"] . ".png";
-                    if (file_exists($avatar)){
-                        echo "<img src='$avatar?v=" . filemtime($avatar) . "alt=''>";
-                    }
-                    else{
-                        echo "<img src='resources/avatar.png' alt=''>";
-                    }
-                }
+            <?php if (!isset($_SESSION["cuenta_usuario"])): ?>
+                <a href="php/cuenta.php" id="cuenta">Anónimo</a>
+                <img src="resources/avatar.png" alt="">
+            <?php else:
+                $avatar_propio = "resources/avatars/" . $_SESSION["cuenta_id"] . ".png";
             ?>
+                <a href="php/cuenta.php" id="cuenta"><?= e($_SESSION["cuenta_usuario"]) ?></a>
+                <?= avatar_img($avatar_propio) ?>
+            <?php endif; ?>
         </div>
     </nav>
     <header>
         <div class="perfil-div">
             <div class="perfil-banner">
-                <?php
-                    if ($modo == "ver"){
-                        echo "<div class='perfil-banner-parte1'>";
-                        if (file_exists($avatar)){
-                            echo "<img src='$avatar?v=" . filemtime($avatar) . "alt=''>";
-                        }
-                        else{
-                            echo "<img src='resources/avatar.png' alt=''>";
-                        }
-                        echo "<div class='perfil-info'>";
-                        echo "<div class='perfil-info-nickname-tags'>";
-                        echo "<p><b>$nickname</p></b>";
-                        if ($rol == "admin" || $rol == "mod"){
-                            echo "<span id='input-tag-" . $rol . "'class='comentar-input-tag-op'>" . strtoupper($rol) . "</span>";
-                        }
-                        echo "</div>";
-                        echo "<p id='contenido-perfil-bloque-info-username'>@$nombre_usuario</p>";
-                        echo "<div class='perfil-info-avanzada'>";
+                <?php if ($modo === "ver"): ?>
+                    <div class="perfil-banner-parte1">
+                        <?= avatar_img($avatar) ?>
+                        <div class="perfil-info">
+                            <div class="perfil-info-nickname-tags">
+                                <p><b><?= e($nickname) ?></b></p>
+                                <?php if ($rol === "admin" || $rol === "mod"): ?>
+                                    <span id="input-tag-<?= e($rol) ?>" class="comentar-input-tag-op"><?= strtoupper(e($rol)) ?></span>
+                                <?php endif; ?>
+                            </div>
+                            <p id="contenido-perfil-bloque-info-username">@<?= e($nombre_usuario) ?></p>
+                            <div class="perfil-info-avanzada">
+                                <?php if ($ultima_actividad_activo == 1): ?>
+                                    <p>Se unió hace <?= calcular_tiempo($fecha_creacion) ?> <span id="viñeta">•</span> Última vez hace <?= calcular_tiempo($ultima_actividad) ?></p>
+                                <?php else: ?>
+                                    <p>Se unió hace <?= calcular_tiempo($fecha_creacion) ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php if ($es_el_dueño): ?>
+                        <div class="perfil-banner-parte2">
+                            <button onclick="window.location.href='perfil.php?editar=1'">Editar perfil</button>
+                            <button onclick="window.location.href='perfil.php?seguridad=1'">Administrar seguridad</button>
+                            <button onclick="window.location.href='php/db/logout.php'" id="boton-cerrar-sesion">Cerrar sesión</button>
+                        </div>
+                    <?php endif; ?>
 
-                        $se_unio = "Se unió hace " . calcular_tiempo($fecha_creacion);
-                        $ult_vez = "Última vez hace " . calcular_tiempo($ultima_actividad);
+                <?php elseif ($modo === "editar"): ?>
+                    <div class="perfil-banner-parte1-modificado">
+                        <script src="js/perfil/editar.js" defer></script>
+                        <script src="js/perfil/ult_act.js" defer></script>
+                        <script src="js/perfil/caracteres.js" defer></script>
+                        <form action="php/account/editar.php" method="POST" enctype="multipart/form-data" id="formulario-editar-perfil" onkeydown="if (event.keyCode === 13 && event.target.tagName !== 'TEXTAREA') {return false;}">
+                            <input type="hidden" name="ultima-actividad" id="ultima-actividad-hidden" value="<?= $ultima_actividad_activo == 1 ? '1' : '0' ?>">
 
-                        if ($ultima_actividad_activo == 1){
-                            echo "<p>$se_unio <span id='viñeta'>•</span> $ult_vez</p>";
-                        }
-                        else{
-                            echo "<p>$se_unio</p>";
-                        }
-                        echo "</div>";  
-                        echo "</div>";
-                        echo "</div>";
-                        if (isset($_SESSION["cuenta_id"])){
-                            if ($_GET["id"] == $_SESSION["cuenta_id"]){
-                                echo "<div class='perfil-banner-parte2'>";
-                                echo '<button onclick="window.location.href=\'perfil.php?editar=1\'">Editar perfil</button>';
-                                echo '<button onclick="window.location.href=\'perfil.php?seguridad=1\'">Administrar seguridad</button>';
-                                echo '<button onclick="window.location.href=\'php/db/logout.php\'" id="boton-cerrar-sesion">Cerrar sesión</button>';
-                                echo "</div>";
-                            }
-                        }
-                    }
-                    else{
-                        if (isset($_SESSION["cuenta_id"])){
-                            if ($_GET["id"] == $_SESSION["cuenta_id"]){
-                                
-                            }
-                            else{
-                                header("Location: index.php");
-                            }
-                        }
-                    }
-                ?>
-            </div>
-        </div>
-        <?php
-            if ($modo == "ver"){
-                echo "<div class='perfil-div perfil-div-separacion'>";
-                echo "<div class='perfil-descripcion'>";
-                echo "<p id='perfil-descripcion-texto'>Descripción</p>";
-                if (!empty($descripcion)){
-                    $descripcion = str_replace(["<br>", "<br />"], "</p><p>", $descripcion);
-                    $descripcion = "<p>$descripcion</p>";
-                    $descripcion = preg_replace(
-                        '/<p>\s*(&gt;|>)(.*)<\/p>/',
-                        '<p id="post-comentarios-greentext">&gt;$2</p>',
-                        $descripcion
-                    );
-                    echo $descripcion;
-                }
-                else{
-                    echo "<p>No hay descripción.</p>";
-                }
-                echo "</div>";
-            }
-            else if ($modo == "editar"){
-                echo <<<EOM
-                <div class="perfil-div">
-                <div class="perfil-banner">
-                <div class="perfil-banner-parte1-modificado">
-                <script src="js/perfil/editar.js" defer></script>
-                <script src="js/perfil/ult_act.js" defer></script>
-                <script src="js/perfil/caracteres.js" defer></script>
-                <form action="php/account/editar.php" method="POST" enctype="multipart/form-data" id='formulario-editar-perfil' onkeydown="if (event.keyCode === 13 && event.target.tagName !== 'TEXTAREA') {return false;}">
-                EOM;
-                if ($ultima_actividad_activo == 1){
-                    echo "<input type='hidden' name='ultima-actividad' id='ultima-actividad-hidden' value='1'>";
-                }
-                else{
-                    echo "<input type='hidden' name='ultima-actividad' id='ultima-actividad-hidden' value='0'>";
-                }
-                echo <<<EOM
-                <div class="perfil-banner-parte1-fila">
-                <div class="perfil-banner-parte1-modificado-input">
-                <p>Nickname</p>
-                EOM;
-                echo "<input type='text' name='nickname' id='nickname-input' value='$nickname' placeholder='Nickname...'>";
-                echo <<<EOM
-                </div>
-                <div class="perfil-banner-parte1-modificado-input perfil-banner-parte1-modificado-input-username">
-                <p>Username</p>
-                EOM;
-                echo "<input type='text' value='$nombre_usuario' disabled>";
-                echo <<<EOM
-                </div>
-                </div>
-                <div class="perfil-banner-parte1-modificado-input">
-                <p>Descripción</p>
-                EOM;
-                echo "<textarea name='descripcion' id='descripcion-input' class='descripcion-input-perfil' placeholder='Descripción...' max-length='400'>" . strip_tags($descripcion) . "</textarea>";
-                echo "<p style='display: none;' id='perfil-banner-parte1-modificado-input-caracteres'>ad</p>";
-                echo <<<EOM
-                </div>
-                <div class="perfil-banner-parte1-modificado-input">
-                <p>Avatar</p>
-                <div class="perfil-banner-parte1-modificado-input-avatar">
-                <div class="perfil-banner-parte1-modificado-input-avatar-preview">
-                EOM;
-                if (file_exists($avatar)){
-                    echo "<img src='$avatar?v=" . filemtime($avatar) . "alt='' id='avatar-img'>";
-                    echo "<p>80px</p>";
-                    echo "</div>";
-                    echo "<div class='perfil-banner-parte1-modificado-input-avatar-preview'>";
-                    echo "<img src='$avatar?v=" . filemtime($avatar) . "alt='' id='avatar-img2' class='perfil-banner-parte1-modificado-input-avatar-preview-chiquito'>";
-                    echo "<p>50px</p>";
-                    echo "</div>";
-                }
-                else{
-                    echo "<img src='resources/avatar.png' alt='' id='avatar-img'>";
-                    echo "<p>80px</p>";
-                    echo "</div>";
-                    echo "<div class='perfil-banner-parte1-modificado-input-avatar-preview'>";
-                    echo "<img src='resources/avatar.png' alt='' id='avatar-img2' class='perfil-banner-parte1-modificado-input-avatar-preview-chiquito'>";
-                    echo "<p>50px</p>";
-                    echo "</div>";
-                }
-                echo <<<EOM
-                <input type="file" accept=".png, .jpg, .jpeg" name="avatar" id="avatar-file">
-                </div>
-                </div>
-                <div class="perfil-banner-parte1-modificado-input">
-                    <p>Privacidad</p>
-                </div>
-                <div class="perfil-banner-parte1-checkbox">
-                EOM;
-                if ($ultima_actividad_activo == 1){
-                    echo "<input type='checkbox' id='ultima-actividad-checkbox' checked>";
-                }
-                else{
-                    echo "<input type='checkbox' id='ultima-actividad-checkbox'>";
-                }
-                echo <<<EOM
-                    <label for="anonimo">Mostrar última actividad</label>
-                </div>   
-                <div class="contenido-subir-formulario-error perfil-editar-mensaje">
-                    <!-- div para mostrar errores / avisos mediante js/archivos.js -->
-                    <p style="display: none;" id="mensaje-error"><span>Error al editar el perfil:</span> Test test</p>
-                    <p style="display: none;" id="mensaje-aviso"><span id="mensaje-aviso2">Aviso:</span> El ancho y la altura del avatar no coinciden, por lo que puede verse estirado.</p>
-                </div>
-                <div class="perfil-banner-parte1-modificado-input perfil-banner-parte1-modificado-input-gap">
-                <input type="submit" value="Guardar cambios" id="guardar-cambios" disabled>
-                <input type="button" value="Volver" onclick="window.location.href='perfil.php'">
-                </div>
-                </form>
-                </div>
-                </div>
-                </div>
-                EOM;
-            }
-            else{
-                echo <<<EOM
-                <div class="perfil-div">
-                <div class="perfil-banner">
-                <div class="perfil-banner-parte1-modificado">
-                <script src="js/perfil/seguridad.js" defer></script>
-                <form action="php/account/seguridad.php" method="POST" id='formulario-seguridad-perfil' onkeydown="if (event.keyCode === 13 && event.target.tagName !== 'TEXTAREA') {return false;}">
-                <div class="perfil-banner-parte1-modificado-input">
-                <p>Contraseña actual</p>
-                EOM;
-                echo "<input type='password' name='actual' id='actual-input' placeholder='Contraseña actual...'>";
-                echo <<<EOM
-                </div>
-                <div class="perfil-banner-parte1-modificado-input">
-                <p>Contraseña nueva</p>
-                EOM;
-                echo "<input type='password' name='nueva' id='nueva-input' placeholder='Contraseña nueva...'>";
-                echo <<<EOM
-                </div>
-                <div class="perfil-banner-parte1-modificado-input">
-                <p>Repetir contraseña nueva</p>
-                EOM;
-                echo "<input type='password' name='repetir' id='repetir-input' placeholder='Repetir contraseña nueva...'>";
-                echo <<<EOM
-                </div>
-                <div class="contenido-subir-formulario-error perfil-editar-mensaje">
-                        <p style="display: none;" id="mensaje-error"><span>Error al cambiar la contraseña:</span> Test test</p>
-                        <p style="display: none;" id="mensaje-aviso"><span id="mensaje-aviso2">Aviso:</span> La contraseña se cambió correctamente.</p>
-                </div>
-                EOM;
-                if (isset($_GET["error"])){
+                            <div class="perfil-banner-parte1-fila">
+                                <div class="perfil-banner-parte1-modificado-input">
+                                    <p>Nickname</p>
+                                    <input type="text" name="nickname" id="nickname-input" value="<?= e($nickname) ?>" placeholder="Nickname...">
+                                </div>
+                                <div class="perfil-banner-parte1-modificado-input perfil-banner-parte1-modificado-input-username">
+                                    <p>Username</p>
+                                    <input type="text" value="<?= e($nombre_usuario) ?>" disabled>
+                                </div>
+                            </div>
+
+                            <div class="perfil-banner-parte1-modificado-input">
+                                <p>Descripción</p>
+                                <textarea name="descripcion" id="descripcion-input" class="descripcion-input-perfil" placeholder="Descripción..." maxlength="400"><?= strip_tags($descripcion) ?></textarea>
+                                <p style="display: none;" id="perfil-banner-parte1-modificado-input-caracteres">ad</p>
+                            </div>
+
+                            <div class="perfil-banner-parte1-modificado-input">
+                                <p>Avatar</p>
+                                <div class="perfil-banner-parte1-modificado-input-avatar">
+                                    <div class="perfil-banner-parte1-modificado-input-avatar-preview">
+                                        <?= avatar_img($avatar, "id='avatar-img'") ?>
+                                        <p>80px</p>
+                                    </div>
+                                    <div class="perfil-banner-parte1-modificado-input-avatar-preview">
+                                        <?= avatar_img($avatar, "id='avatar-img2' class='perfil-banner-parte1-modificado-input-avatar-preview-chiquito'") ?>
+                                        <p>50px</p>
+                                    </div>
+                                    <input type="file" accept=".png, .jpg, .jpeg" name="avatar" id="avatar-file">
+                                </div>
+                            </div>
+
+                            <div class="perfil-banner-parte1-modificado-input">
+                                <p>Privacidad</p>
+                            </div>
+                            <div class="perfil-banner-parte1-checkbox">
+                                <input type="checkbox" id="ultima-actividad-checkbox" <?= $ultima_actividad_activo == 1 ? 'checked' : '' ?>>
+                                <label for="anonimo">Mostrar última actividad</label>
+                            </div>
+
+                            <div class="contenido-subir-formulario-error perfil-editar-mensaje">
+                                <!-- div para mostrar errores / avisos mediante js/archivos.js -->
+                                <p style="display: none;" id="mensaje-error"><span>Error al editar el perfil:</span> Test test</p>
+                                <p style="display: none;" id="mensaje-aviso"><span id="mensaje-aviso2">Aviso:</span> El ancho y la altura del avatar no coinciden, por lo que puede verse estirado.</p>
+                            </div>
+
+                            <div class="perfil-banner-parte1-modificado-input perfil-banner-parte1-modificado-input-gap">
+                                <input type="submit" value="Guardar cambios" id="guardar-cambios" disabled>
+                                <input type="button" value="Volver" onclick="window.location.href='perfil.php'">
+                            </div>
+                        </form>
+                    </div>
+
+                <?php else: /* modo === "seguridad" */
                     $errores_seguridad = [
                         1 => "Los campos están vacíos",
                         2 => "Las contraseñas nuevas no coinciden",
                         3 => "La contraseña nueva debe tener entre 6 y 72 caracteres",
                         4 => "La contraseña actual es incorrecta",
                     ];
-                    if (isset($errores_seguridad[$_GET["error"]])){
-                        echo "<script>window.addEventListener('DOMContentLoaded', () => { mostrarErrorSeguridad('" . $errores_seguridad[$_GET["error"]] . "'); });</script>";
-                    }
-                }
-                if (isset($_GET["ok"])){
-                    echo "<script>window.addEventListener('DOMContentLoaded', () => { mostrarAvisoSeguridad(); });</script>";
-                }
-                echo <<<EOM
-                <div class="perfil-banner-parte1-modificado-input perfil-banner-parte1-modificado-input-gap">
-                <input type="submit" value="Cambiar contraseña" id="guardar-cambios-seguridad">
-                <input type="button" value="Volver" onclick="window.location.href='perfil.php'">
+                ?>
+                    <div class="perfil-banner-parte1-modificado">
+                        <script src="js/perfil/seguridad.js" defer></script>
+                        <form action="php/account/seguridad.php" method="POST" id="formulario-seguridad-perfil" onkeydown="if (event.keyCode === 13 && event.target.tagName !== 'TEXTAREA') {return false;}">
+                            <div class="perfil-banner-parte1-modificado-input">
+                                <p>Contraseña actual</p>
+                                <input type="password" name="actual" id="actual-input" placeholder="Contraseña actual...">
+                            </div>
+                            <div class="perfil-banner-parte1-modificado-input">
+                                <p>Contraseña nueva</p>
+                                <input type="password" name="nueva" id="nueva-input" placeholder="Contraseña nueva...">
+                            </div>
+                            <div class="perfil-banner-parte1-modificado-input">
+                                <p>Repetir contraseña nueva</p>
+                                <input type="password" name="repetir" id="repetir-input" placeholder="Repetir contraseña nueva...">
+                            </div>
+
+                            <div class="contenido-subir-formulario-error perfil-editar-mensaje">
+                                <p style="display: none;" id="mensaje-error"><span>Error al cambiar la contraseña:</span> Test test</p>
+                                <p style="display: none;" id="mensaje-aviso"><span id="mensaje-aviso2">Aviso:</span> La contraseña se cambió correctamente.</p>
+                            </div>
+
+                            <?php if (isset($_GET["error"]) && isset($errores_seguridad[$_GET["error"]])): ?>
+                                <script>window.addEventListener('DOMContentLoaded', () => { mostrarErrorSeguridad('<?= e($errores_seguridad[$_GET["error"]]) ?>'); });</script>
+                            <?php endif; ?>
+                            <?php if (isset($_GET["ok"])): ?>
+                                <script>window.addEventListener('DOMContentLoaded', () => { mostrarAvisoSeguridad(); });</script>
+                            <?php endif; ?>
+
+                            <div class="perfil-banner-parte1-modificado-input perfil-banner-parte1-modificado-input-gap">
+                                <input type="submit" value="Cambiar contraseña" id="guardar-cambios-seguridad">
+                                <input type="button" value="Volver" onclick="window.location.href='perfil.php'">
+                            </div>
+                        </form>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <?php if ($modo === "ver"): ?>
+            <div class="perfil-div perfil-div-separacion">
+                <div class="perfil-descripcion">
+                    <p id="perfil-descripcion-texto">Descripción</p>
+                    <?php if (!empty($descripcion)): ?>
+                        <?php // No se re-escapa: editar.php ya guarda la descripción segura
+                              // (htmlspecialchars + nl2br), lista para mostrarse tal cual. ?>
+                        <?= formatear_descripcion($descripcion) ?>
+                    <?php else: ?>
+                        <p>No hay descripción.</p>
+                    <?php endif; ?>
                 </div>
-                </form>
-                </div>
-                </div>
-                </div>
-                EOM;
-            }
-        ?>
+            </div>
+        <?php endif; ?>
 
         <?php include("resources/dialog-upload.php"); ?>
     </header>
