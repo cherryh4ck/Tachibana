@@ -62,17 +62,7 @@
     <script src="js/login/sanidad.js" defer></script>
 </head>
 <body>
-    <nav>
-        <p id="nav-logo">Tachibana</p>
-        <ul>
-            <li><a href="index.php?pag=1">Inicio</a></li>
-            <li><a href="perfiles.php">Usuarios</a></li>
-        </ul>
-        <div class="nav-cuenta">
-            <a href="php/cuenta.php" id="cuenta">Anónimo</a>
-            <img src='resources/avatar.png' alt=''>
-        </div>
-    </nav>
+    <?php include("resources/nav.php"); ?>
     <div class="contenido-menu">
         <form action="login.php" method="post" id="formulario-login">
             <p id="texto-centrado">Iniciar sesión</p>

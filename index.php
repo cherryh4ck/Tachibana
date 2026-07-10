@@ -4,6 +4,7 @@
     // Arreglar lo de que si el ID 1 no existe, colapsa todo el sistema xd
     session_start();
     require "php/db/config.php";
+    require "resources/parse_functions.php";
 
     if ($conn_test == 1){
         try{

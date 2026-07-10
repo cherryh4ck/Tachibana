@@ -48,17 +48,7 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
-    <nav>
-        <p id="nav-logo">Tachibana</p>
-        <ul>
-            <li><a href="index.php?pag=1">Inicio</a></li>
-            <li><a href="perfiles.php">Usuarios</a></li>
-        </ul>
-        <div class="nav-cuenta">
-            <a href="php/cuenta.php" id="cuenta">Anónimo</a>
-            <img src='resources/avatar.png' alt=''>
-        </div>
-    </nav>
+    <?php include("resources/nav.php"); ?>
     <div class="contenido-menu">
         <form action="register.php" method="post" id="formulario">
             <p id="texto-centrado">Registrarse</p>

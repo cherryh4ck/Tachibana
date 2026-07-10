@@ -1,22 +1,7 @@
 <?php
-    session_start();
-
     require "php/db/config.php";
+    require "resources/parse_functions.php";
     date_default_timezone_set('America/Argentina/Buenos_Aires');
-
-    function e(?string $texto): string {
-        $decodificado = html_entity_decode($texto ?? '', ENT_QUOTES, 'UTF-8');
-        return htmlspecialchars($decodificado, ENT_QUOTES, 'UTF-8');
-    }
-
-    function avatar_img(string $ruta, string $atributos_extra = ''): string {
-        if (file_exists($ruta)) {
-            $src = e($ruta) . '?v=' . filemtime($ruta);
-        } else {
-            $src = 'resources/avatar.png';
-        }
-        return "<img src='$src' alt='' $atributos_extra>";
-    }
 
     function calcular_tiempo(string $fecha): string {
         // gracias chatgpt, ni sabía de esto kek
@@ -114,27 +99,7 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
-    <nav>
-        <p id="nav-logo">Tachibana</p>
-        <ul>
-            <li><a href="index.php?pag=1">Inicio</a></li>
-            <?php if (isset($_SESSION["cuenta_usuario"])): ?>
-                <li><a href="#" id="subir-boton-modal">Publicar</a></li>
-            <?php endif; ?>
-            <li><a href="perfiles.php">Usuarios</a></li>
-        </ul>
-        <div class="nav-cuenta">
-            <?php if (!isset($_SESSION["cuenta_usuario"])): ?>
-                <a href="php/cuenta.php" id="cuenta">Anónimo</a>
-                <img src="resources/avatar.png" alt="">
-            <?php else:
-                $avatar_propio = "resources/avatars/" . $_SESSION["cuenta_id"] . ".png";
-            ?>
-                <a href="php/cuenta.php" id="cuenta"><?= e($_SESSION["cuenta_usuario"]) ?></a>
-                <?= avatar_img($avatar_propio) ?>
-            <?php endif; ?>
-        </div>
-    </nav>
+    <?php include("resources/nav.php"); ?>
     <header>
         <div class="perfil-div">
             <div class="perfil-banner">

@@ -1,5 +1,6 @@
 <?php
     require "php/db/config.php";
+    require "resources/parse_functions.php";
     if ($mantenimiento == 0 && $conn_test == 1){
         session_start();
     }
@@ -33,33 +34,7 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
-    <nav>
-        <p id="nav-logo">Tachibana</p>
-        <ul>
-            <li><a href="index.php?pag=1">Inicio</a></li>
-            <li><a href="perfiles.php">Usuarios</a></li>
-        </ul>
-        <div class="nav-cuenta">
-            <?php
-                if ($mantenimiento == 0){
-                    if (!isset($_SESSION["cuenta_usuario"])){
-                        echo "<a href='php/cuenta.php' id='cuenta'>Anónimo</a>"; 
-                        echo "<img src='resources/avatar.png' alt=''>";
-                    }
-                    else{
-                        echo "<a href='php/cuenta.php' id='cuenta'>" . $_SESSION["cuenta_usuario"] . "</a>"; 
-                        $avatar = "resources/avatars/" . $_SESSION["cuenta_id"] . ".png";
-                        if (file_exists($avatar)){
-                            echo "<img src='$avatar?v=" . filemtime($avatar) . "alt=''>";
-                        }
-                        else{
-                            echo "<img src='resources/avatar.png' alt=''>";
-                        }
-                    }
-                }
-            ?>
-        </div>
-    </nav>
+    <?php include("resources/nav.php"); ?>
     <header>
         <h1>Ups, hubo un problema...</h1>
         <?php

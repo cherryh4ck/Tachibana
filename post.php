@@ -1,6 +1,7 @@
 <?php
     session_start();
     require "php/db/config.php";
+    require "resources/parse_functions.php";
 
     // para el formateo de fecha
     $año_actual = (int)date("Y");
@@ -134,36 +135,7 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
-    <nav>
-        <p id="nav-logo">Tachibana</p>
-        <ul>
-            <li><a href="index.php">Inicio</a></li>
-            <?php
-                if (isset($_SESSION["cuenta_usuario"])){
-                    echo "<li><a href='#' id='subir-boton-modal'>Publicar</a></li>";
-                }
-            ?>
-            <li><a href="perfiles.php">Usuarios</a></li>
-        </ul>
-        <div class="nav-cuenta">
-            <?php
-                if (!isset($_SESSION["cuenta_usuario"])){
-                    echo "<a href='php/cuenta.php' id='cuenta'>Anónimo</a>"; 
-                    echo '<img src="resources/avatar.png" alt="">';
-                }
-                else{
-                    echo "<a href='php/cuenta.php' id='cuenta'>" . $_SESSION["cuenta_usuario"] . "</a>"; 
-                    $avatar = "resources/avatars/" . $_SESSION["cuenta_id"] . ".png";
-                    if (file_exists($avatar)){
-                        echo "<img src='$avatar?v=" . filemtime($avatar) . "alt=''>";
-                    }
-                    else{
-                        echo "<img src='resources/avatar.png' alt=''>";
-                    }
-                }
-            ?>
-        </div>
-    </nav>
+    <?php include("resources/nav.php"); ?>
     <header>
         <!-- datos enviados por php -->
         <span style="display: none;" id="es_anonimo"><?=$post_anonimo?></span>
