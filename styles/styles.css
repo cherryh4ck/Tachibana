@@ -19,34 +19,70 @@ nav{
 }
 
 .nav-cuenta{
-    width: 100%;
     display: flex;
-    justify-content: right;
-}
-
-.nav-cuenta img {
-    width: 35px;
-    height: 35px;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 0.3em;
-    border-radius: 6px;
-}
-
-#cuenta{
+    align-items: center;
+    margin-left: auto;
+    margin-right: 0.6em;
     position: relative;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 0.65em;
-    transition: all 200ms;
-    font-size: 20px;
-    color: rgb(211, 199, 199);
-    text-decoration: none;
+    z-index: 2;
 }
-
-#cuenta:hover{
-    color: rgb(150, 148, 148);
+ 
+.nav-cuenta-link{
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    padding: 0.35em 0.6em;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 200ms, box-shadow 200ms;
+}
+ 
+.nav-cuenta-link:hover{
+    background-color: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 16px rgba(211, 199, 199, 0.3);
     cursor: pointer;
+}
+ 
+.nav-cuenta-link:hover .nav-username{
+    color: rgb(150, 148, 148);
+}
+ 
+.nav-status-cuenta{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25em;
+    line-height: 1;
+}
+ 
+.nav-username{
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(211, 199, 199);
+    transition: color 200ms;
+}
+ 
+.nav-rol,
+#input-tag-admin.nav-rol,
+#input-tag-mod.nav-rol,
+#input-tag-user.nav-rol{
+    margin: 0;
+    height: auto;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+}
+ 
+.nav-avatar{
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    box-shadow: 2px 3px 6px rgba(17, 17, 17, 0.6);
+    transition: box-shadow 200ms;
+}
+ 
+.nav-cuenta-link:hover .nav-avatar{
+    box-shadow: 0 0 10px rgba(211, 199, 199, 0.5);
 }
 
 nav ul{
@@ -1049,7 +1085,7 @@ header h1{
     user-select: none;
 }
 
-#input-tag, #input-tag2, #input-tag-rojo, #input-tag-op, #input-tag-admin, #input-tag-mod{
+#input-tag, #input-tag2, #input-tag-rojo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user{
     background-color: rgb(49, 168, 79);
     border-radius: 8px;
     height: 25px;
@@ -1092,6 +1128,15 @@ header h1{
 
 #input-tag-mod{
     background-color: rgb(219, 64, 116);
+    height: 18px;
+    margin-left: 0.5em;
+    font-size: 12px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#input-tag-user{
+    background-color: rgb(207, 76, 196);
     height: 18px;
     margin-left: 0.5em;
     font-size: 12px;
