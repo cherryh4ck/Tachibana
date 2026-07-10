@@ -227,7 +227,7 @@
                         </form>
                     </div>
 
-                <?php else: /* modo === "seguridad" */
+                <?php else:
                     $errores_seguridad = [
                         1 => "Los campos están vacíos",
                         2 => "Las contraseñas nuevas no coinciden",
@@ -278,14 +278,25 @@
                 <div class="perfil-descripcion">
                     <p id="perfil-descripcion-texto">Descripción</p>
                     <?php if (!empty($descripcion)): ?>
-                        <?php // No se re-escapa: editar.php ya guarda la descripción segura
-                              // (htmlspecialchars + nl2br), lista para mostrarse tal cual. ?>
                         <?= formatear_descripcion($descripcion) ?>
                     <?php else: ?>
                         <p>No hay descripción.</p>
                     <?php endif; ?>
                 </div>
             </div>
+
+            <?php if ($_SESSION['cuenta_rol'] === 'admin' || $_SESSION['cuenta_rol'] === 'mod'): ?>
+                <div class="perfil-div perfil-div-separacion">
+                    <div class="perfil-descripcion">
+                        <p id="perfil-descripcion-texto">Acciones administrativas (<?php echo $_SESSION['cuenta_rol']; ?>)</p>
+                        <div class="perfil-descripcion-acciones">
+                            <button onclick="window.location.href='perfil.php?editar=1'">Bloquear usuario</button>
+                            <button onclick="window.location.href='perfil.php?editar=1'">Eliminar usuario</button>
+                            <button onclick="window.location.href='php/db/logout.php'" id="boton-cerrar-sesion">Modificar datos</button>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
 
         <?php include("resources/dialog-upload.php"); ?>

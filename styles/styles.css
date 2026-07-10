@@ -1793,7 +1793,7 @@ header h1{
     gap: 0.5em;
 }
 
-.perfil-banner-parte2 button{
+.perfil-banner-parte2 button, .perfil-descripcion-acciones button{
     display: block;
     width: auto;
     height: 40px;
@@ -1809,13 +1809,20 @@ header h1{
     margin-left: auto;
 }
 
-.perfil-banner-parte2 button:hover{
+.perfil-banner-parte2 button:hover, .perfil-descripcion-acciones button:hover{
     background-color: rgb(27, 26, 26);
     color: rgb(255, 255, 255);
     box-shadow: 5px 1px 30px rgb(54, 53, 53);
     cursor: pointer;
     opacity: .6;
     transform: scale(1.05);
+}
+
+.perfil-descripcion-acciones {
+    display: flex;
+    gap: 0.5em;
+    margin: 0;
+    margin-top: 1em;
 }
 
 .perfil-banner-parte1-fila{
