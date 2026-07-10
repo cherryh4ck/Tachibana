@@ -1,10 +1,11 @@
 /// LISTA DE TODO GENERAL ///
 
 Conceptos generales:
-- añadir funciones para los administradores
+- añadir funciones para los administradores (faltan algunos apartados)
 - añadir más parametros al config.ini
 - trabajar en un motd (?)
 - id personalizada de usuario (?)
+- menor manejo de errores (que siga trabajando por ID, pero mejor guardarlo en la sesión xD)
 
 index.php:
 - terminar funcionamiento (en progreso)
