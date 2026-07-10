@@ -1,6 +1,7 @@
 <?php
     session_start();
     require "php/db/config.php";
+    require "resources/parse_functions.php";
 
     if (isset($_GET["q"])){
         if ((strlen($_GET["q"]) > 2) && !(empty($_GET["q"]))){
