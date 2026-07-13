@@ -501,7 +501,8 @@ header h1{
     align-items: flex-start;
     padding: 1em;
     gap: 0.5em;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     background-color: #191b1b;
     border: 2px solid #282b2b;
     border-radius: 8px;
@@ -778,6 +779,33 @@ header h1{
 .post-comentarios-comentar-botones-checkbox label, .perfil-banner-parte1-checkbox label{
     margin-left: 0.3em;
     color: rgb(211, 199, 199);
+}
+
+@media (max-width: 1100px){
+    .post-contenido{
+        width: 75%;
+    }
+}
+
+@media (max-width: 800px){
+    .contenido-post img{
+        max-width: 100%;
+    }
+    .post-contenido{
+        width: 92%;
+    }
+}
+
+@media (max-width: 500px){
+    #post-titulo{
+        font-size: 22px;
+    }
+    .post-contenido-tags{
+        margin-left: 0;
+    }
+    .post-comentarios-comentar-botones{
+        flex-wrap: wrap;
+    }
 }
 
 /* Subir.php // Subir contenido */
@@ -1209,8 +1237,63 @@ header h1{
     margin-top: 1em;
 }
 
+.error-header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 350px - 2em);
+    padding: 2em 1em;
+}
+
+.error-card{
+    background-color: rgb(24, 23, 23);
+    border-radius: 12px;
+    padding: 3em 2.5em;
+    max-width: 480px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 5px 1px 40px rgba(0, 0, 0, 0.3);
+}
+
+.error-icono{
+    font-size: 48px;
+    color: rgb(219, 64, 64);
+    margin-bottom: 0.2em;
+}
+
+.error-card h1{
+    font-size: 22px;
+    margin-bottom: 0.6em;
+}
+
+#error{
+    margin-top: 0;
+    font-size: 15px;
+    color: rgb(211, 199, 199);
+}
+
 #disculpas{
-    margin-top: 1em;
+    margin-top: 0.6em;
+    font-size: 13px;
+    color: rgb(150, 148, 148);
+}
+
+.error-volver{
+    display: inline-block;
+    margin-top: 1.5em;
+    padding: 0.6em 1.6em;
+    border-radius: 8px;
+    background-color: rgb(141, 192, 129);
+    color: rgb(20, 20, 19);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 200ms;
+}
+
+.error-volver:hover{
+    background-color: rgb(158, 206, 147);
+    box-shadow: 5px 1px 40px rgba(141, 192, 129, 0.3);
 }
 
 /* Página principal // index.php */
@@ -1244,35 +1327,78 @@ header h1{
     width: 100%;
     max-width: 340px;
     min-width: 300px;
-    min-height: 400px;
+    padding-bottom: 0.5em;
 }
 
 .galeria-herramientas h2{
     text-align: center;
-    padding: 0.3em;
+    padding: 0.8em 0.3em 0.5em 0.3em;
 }
 
-.galeria-herramientas h4{
-    margin-left: 0.5em;
-    margin-top: 1.2em;
+.galeria-campo{
+    padding: 0.9em 1em;
+    border-top: 1px solid rgb(38, 37, 37);
 }
 
-.galeria-herramientas input{
+.galeria-campo h4{
+    margin: 0 0 0.6em 0;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgb(150, 148, 148);
+}
+
+.galeria-campo-hint{
+    color: rgb(136, 131, 131);
+    font-size: 12px;
+    margin-top: 0.8em;
+    margin-bottom: 0.4em;
+}
+
+.galeria-campo-form{
+    display: flex;
+    gap: 0.5em;
+}
+
+.galeria-campo-form input[type=text]{
+    flex: 1 1 auto;
+    width: auto;
+}
+
+#boton-busqueda{
+    width: auto;
+    height: 40px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    padding: 0 1.2em;
+    border-radius: 8px;
+    border: none;
+    background-color: rgb(141, 192, 129);
+    color: rgb(20, 20, 19);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+#boton-busqueda:hover{
+    background-color: rgb(158, 206, 147);
+    box-shadow: 5px 1px 40px rgba(141, 192, 129, 0.25);
+}
+
+.galeria-herramientas input[type=text]{
     display: block;
     box-sizing: border-box;
-    width: 90%;
+    width: 100%;
     height: 40px;
-    margin-top: 0.25em;
+    margin: 0;
     border-radius: 8px;
     background-color: #191b1b;
     border: 2px solid #282b2b;
-    color: white;
+    color: rgb(211, 199, 199);
     padding: 0.5em;
     transition: all 200ms;
     font-size: 16px;
-    margin-left: auto;
-    margin-right: auto;
-    color: rgb(211, 199, 199);
 }
 
 .galeria-herramientas input[type=text]:hover{
@@ -1288,17 +1414,13 @@ header h1{
 }
 
 .galeria-tags-populares{
-    margin-top: 0.5em;
-    margin-left: 0.5em;
+    margin-top: 0.3em;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5em;
 }
 
 .galeria-categoria-seleccionada{
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5em;
@@ -1468,19 +1590,30 @@ header h1{
         width: 100%;
         min-width: 0;
         height: auto;
+        display: flex;
+        justify-content: center;
+        padding: 1em;
     }
     .galeria-herramientas{
-        max-width: none;
+        max-width: 480px;
     }
     .galeria-panel2{
         flex: 1 1 auto;
         height: auto;
+        padding: 0 1em;
     }
 }
 
 @media (max-width: 480px){
     .galeria-imagenes{
         grid-template-columns: minmax(0, 1fr);
+    }
+    .galeria-campo-form{
+        flex-direction: column;
+    }
+    #boton-busqueda{
+        width: 100%;
+        height: 38px;
     }
 }
 
@@ -1705,6 +1838,44 @@ header h1{
     color: rgb(98, 100, 98);
     font-size: 14px;
     margin-bottom: 0.30em;
+}
+
+#contenido-perfil-bloque-info-alta{
+    color: rgb(136, 131, 131);
+    font-size: 12px;
+    margin-bottom: 0.4em;
+}
+
+#contenido-perfil-bloque-info-sin-descripcion{
+    color: rgb(136, 131, 131);
+    font-style: italic;
+}
+
+@media (max-width: 1100px){
+    .contenido-perfiles{
+        width: 60%;
+    }
+    .contenido-perfiles-usuarios{
+        width: 80%;
+    }
+    .contenido-perfiles-usuarios-lista{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px){
+    .contenido-perfiles{
+        width: 90%;
+    }
+    .contenido-perfiles-usuarios{
+        width: 92%;
+    }
+    .contenido-perfiles-usuarios-lista{
+        grid-template-columns: 1fr;
+    }
+    .contenido-perfil-bloque{
+        min-width: 0;
+    }
 }
 
 /* Perfil */
