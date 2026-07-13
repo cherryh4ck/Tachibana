@@ -39,7 +39,6 @@ nav{
  
 .nav-cuenta-link:hover{
     background-color: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 0 16px rgba(211, 199, 199, 0.3);
     cursor: pointer;
 }
  
