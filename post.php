@@ -101,14 +101,6 @@
         header("Location: error.php?id=2");
         exit();
     }
-
-    //todo:
-    // hacer funcionar el botón de adjuntar imagen
-    // añadir info de la imagen al adjuntar imagen
-    // añadir id a los comentarios
-    // añadir soporte para las imagenes en los comentarios
-    // añadir categoria
-    // arreglar el alineado del titulo kek
 ?>
 
 <!DOCTYPE html>
