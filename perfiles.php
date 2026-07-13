@@ -45,34 +45,35 @@
     <div class="contenido-perfiles-usuarios">
         <?php
             if (isset($fetch)){
-                echo "<p>Usuarios</p>";
                 if (count($fetch) == 0){
+                    echo "<p>Usuarios</p>";
                     echo "<p id='no-se-ha-encontrado'>No se han encontrado usuarios.</p>";
                 }
                 else{
+                    $cantidad = count($fetch);
+                    echo "<p>" . $cantidad . " usuario" . ($cantidad != 1 ? "s" : "") . " encontrado" . ($cantidad != 1 ? "s" : "") . "</p>";
                     echo "<div class='contenido-perfiles-usuarios-lista'>";
                     foreach ($fetch as $usuario){
                         $avatar = "resources/avatars/" . $usuario["id"] . ".png";
                         echo "<div class='contenido-perfil-bloque' onclick=\"location.href='perfil.php?id=" . $usuario["id"] . "'\">";
-                        if (file_exists($avatar)){
-                            echo "<img src='$avatar?v=" . filemtime($avatar) . "alt=''>";
-                        }
-                        else{
-                            echo "<img src='resources/avatar.png' alt=''>";
-                        }
+                        echo avatar_img($avatar);
                         echo "<div class='contenido-perfil-bloque-info'>";
                         echo "<div class='perfil-info-nickname-tags'>";
-                        echo "<p><b>" . $usuario["nickname"] . "</b></p>";
+                        echo "<p><b>" . e($usuario["nickname"]) . "</b></p>";
                         if ($usuario["rol"] == "admin"){
                             echo "<span id='input-tag-admin' class='comentar-input-tag-op'>ADMIN</span>";
                         }
+                        else if ($usuario["rol"] == "mod"){
+                            echo "<span id='input-tag-mod' class='comentar-input-tag-op'>MOD</span>";
+                        }
                         echo "</div>";
-                        echo "<p id='contenido-perfil-bloque-info-username'>@" . htmlspecialchars($usuario["username"]) . "</p>";
+                        echo "<p id='contenido-perfil-bloque-info-username'>@" . e($usuario["username"]) . "</p>";
+                        echo "<p id='contenido-perfil-bloque-info-alta'>Se unió hace " . calcular_tiempo($usuario["fecha_creacion"]) . "</p>";
                         if (!empty($usuario["descripcion"])){
                             echo "<p>" . strip_tags($usuario["descripcion"]) . "</p>";
                         }
                         else{
-                            echo "<p>No hay descripción.</p>";
+                            echo "<p id='contenido-perfil-bloque-info-sin-descripcion'>No hay descripción.</p>";
                         }
                         echo "</div></div>";
                     }
