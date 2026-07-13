@@ -35,16 +35,20 @@
 </head>
 <body>
     <?php include("resources/nav.php"); ?>
-    <header>
-        <h1>Ups, hubo un problema...</h1>
-        <?php
-            if ($mantenimiento == 1) {
-                echo "<p id='error'>" . $errores[10] . "</p>";
-            } else {
-                echo "<p id='error'>" . $errores[$_GET["id"] - 1] . "</p>";
-            }
-        ?>
-        <p id="disculpas"><b>Pedimos disculpas.</b></p>
+    <header class="error-header">
+        <div class="error-card">
+            <p class="error-icono">&#9888;</p>
+            <h1>Ups, hubo un problema...</h1>
+            <?php
+                if ($mantenimiento == 1) {
+                    echo "<p id='error'>" . $errores[9] . "</p>";
+                } else {
+                    echo "<p id='error'>" . $errores[$_GET["id"] - 1] . "</p>";
+                }
+            ?>
+            <p id="disculpas"><b>Pedimos disculpas.</b></p>
+            <a href="index.php?pag=1" class="error-volver">Volver al inicio</a>
+        </div>
     </header>
 </body>
 </html>
