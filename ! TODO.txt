@@ -5,12 +5,12 @@ Conceptos generales:
 - añadir más parametros al config.ini
 - trabajar en un motd (?)
 - id personalizada de usuario (?)
-- menor manejo de errores (que siga trabajando por ID, pero mejor guardarlo en la sesión xD)
+- mejor manejo de errores (que siga trabajando por ID, pero mejor guardarlo en la sesión xD)
 
 index.php:
 - terminar funcionamiento (en progreso)
 - añadir sistema de búsqueda (casi terminado)
-- añadir un sistema de tags seleccionados (en progreso)
+- aclarar ciertos errores (por ej, min chars en la búsqueda por texto)
 - trabajar en el concepto de scroll "infinito" (osea, que no exista un sistema de páginas, si no que se carguen posts a medida que el usuario scrollea)
 
 perfil.php:
@@ -18,7 +18,6 @@ perfil.php:
 
 perfiles.php:
 - añadir más chequeos de sanidad
-- reworkear el diseño (está horrendo)
 
 register.php:
 - prevenir usuarios con caracteres ilegales
