@@ -159,7 +159,7 @@
                 echo "</div>";
                 echo "<div class='post-autor'>";
                 if ((file_exists($avatar)) && !($post_anonimo == 1)){
-                    echo "<img src='$avatar?v=" . filemtime($avatar) . "alt='' id='post-autor-avatar'>";
+                    echo "<img src='$avatar?v=" . filemtime($avatar) . "' alt='' id='post-autor-avatar'>";
                 }
                 else{
                     echo "<img src='resources/avatar.png' alt='' id='post-autor-avatar'>";
@@ -245,7 +245,7 @@
                                 echo "<div class='post-comentarios-comentario-avatar-div'>";
                                 if (file_exists($avatar)){
                                     if ($comentario_autor_id != 0){
-                                        echo "<a href='perfil.php?id=$comentario_autor_id'><img src='$avatar?v=" . filemtime($avatar) . "alt='' id='post-comentarios-comentario-avatar'></a>";
+                                        echo "<a href='perfil.php?id=$comentario_autor_id'><img src='$avatar?v=" . filemtime($avatar) . "' alt='' id='post-comentarios-comentario-avatar'></a>";
                                     }
                                     else{
                                         echo "<img src='$avatar' alt='' id='post-comentarios-comentario-avatar'>";
@@ -371,7 +371,7 @@
                     if (isset($_SESSION["cuenta_id"])){
                         $avatar = "resources/avatars/" . $_SESSION["cuenta_id"] . ".png";
                         if (file_exists($avatar)){
-                            echo "<img src='$avatar?v=" . filemtime($avatar) . "alt='' id='post-comentarios-comentario-avatar' class='comentar-avatar'>";
+                            echo "<img src='$avatar?v=" . filemtime($avatar) . "' alt='' id='post-comentarios-comentario-avatar' class='comentar-avatar'>";
                         }
                         else{
                             echo "<img src='resources/avatar.png' alt='' id='post-comentarios-comentario-avatar' class='comentar-avatar'>";
