@@ -105,64 +105,75 @@
         <div class="galeria-panel">
             <div class="galeria-herramientas">
                 <h2>Búsqueda</h2>
-                <form action="index.php" method="GET" id="formulario-busqueda">
-                    <input type="hidden" name="categoria" value="<?php echo $categoria; ?>">
-                    <input type="hidden" name="orden" value="<?php echo $orden; ?>">
-                    <input type="hidden" name="tags" value="<?php echo htmlspecialchars(implode(",", $tags_buscados)); ?>" id="tags-valor-busqueda">
-                    <input type="text" name="q" placeholder="Buscar..." id="input-busqueda" <?php if (isset($_GET["q"]) && !(empty($_GET["q"]))){ echo "value='" . htmlspecialchars($_GET["q"]) . "'";} ?>>
-                </form>
-                <input type="text" placeholder="Filtrar por tag..." id="input-tag-busqueda">
-                <?php
-                    if (count($tags_buscados) > 0){
-                        echo "<h4>Tags seleccionados</h4>";
-                        echo "<div class='galeria-tags-populares'>";
-                        foreach ($tags_buscados as $tag_seleccionado){
-                            echo "<span id='input-tag' class='tag-seleccionado' data-tag='" . htmlspecialchars($tag_seleccionado) . "'>" . htmlspecialchars($tag_seleccionado);
-                            echo "<input type='button' id='remover-tag' class='tag-seleccionado-remover' value='x'>";
-                            echo "</span>";
-                        }
-                        echo "</div>";
-                    }
-                ?>
-                <?php
-                    if ($fetch_tags){
-                        echo "<h4>Tags populares</h4>";
-                        echo "<div class='galeria-tags-populares'>";
-                        if ($fetch_tags){
-                            foreach ($fetch_tags as $tag){
-                                echo "<span id='input-tag' class='tag-popular' data-tag='" . htmlspecialchars($tag["nombre"]) . "'>" . $tag["nombre"] . "<b>" . $tag["usos"] . "</b></span>";
-                            }
-                        }
-                        else{
-                            echo "<p id='sin-resultados'>No hay resultados</p>";
-                        }
-                        echo "</div>";
-                    }
-                ?>
-                <h4>Categoría seleccionada</h4>
-                <div class="galeria-categoria-seleccionada">
-                    <select name="categoria" id="categoria-input-index" size="1">
-                                <option value="all" <?php if ($categoria == "all"){ echo "selected";} ?>>Todos los posts</option>
-                                <option value="any" <?php if ($categoria == "any"){ echo "selected";} ?>>General - /any/</option>
-                                <option value="anime" <?php if ($categoria == "anime"){ echo "selected";} ?>>Anime - /anime/</option>
-                                <option value="manga" <?php if ($categoria == "manga"){ echo "selected";} ?>>Manga - /manga/</option>
-                                <option value="games" <?php if ($categoria == "games"){ echo "selected";} ?>>Videojuegos - /games/</option>
-                                <option value="pol" <?php if ($categoria == "pol"){ echo "selected";} ?>>Política - /pol/</option>
-                                <option value="tech" <?php if ($categoria == "tech"){ echo "selected";} ?>>Tecnología - /tech/</option>
-                                <option value="music" <?php if ($categoria == "music"){ echo "selected";} ?>>Música - /music/</option>
-                                <option value="movie" <?php if ($categoria == "movie"){ echo "selected";} ?>>Películas - /movie/</option>
-                                <option value="coding" <?php if ($categoria == "coding"){ echo "selected";} ?>>Programación - /coding/</option>
-                    </select>
+                <div class="galeria-campo">
+                    <h4>Título</h4>
+                    <form action="index.php" method="GET" id="formulario-busqueda" class="galeria-campo-form">
+                        <input type="hidden" name="categoria" value="<?php echo $categoria; ?>">
+                        <input type="hidden" name="orden" value="<?php echo $orden; ?>">
+                        <input type="hidden" name="tags" value="<?php echo htmlspecialchars(implode(",", $tags_buscados)); ?>" id="tags-valor-busqueda">
+                        <input type="text" name="q" placeholder="Buscar por título..." id="input-busqueda" <?php if (isset($_GET["q"]) && !(empty($_GET["q"]))){ echo "value='" . htmlspecialchars($_GET["q"]) . "'";} ?>>
+                        <input type="submit" value="Buscar" id="boton-busqueda">
+                    </form>
+                </div>
+                <div class="galeria-campo">
+                    <h4>Tags</h4>
+                    <input type="text" placeholder="Escribí un tag y tocá Enter..." id="input-tag-busqueda">
                     <?php
-                        echo "<span id='input-tag-rojo-index'>/$categoria/</span>";
+                        if (count($tags_buscados) > 0){
+                            echo "<p class='galeria-campo-hint'>Tags seleccionados</p>";
+                            echo "<div class='galeria-tags-populares'>";
+                            foreach ($tags_buscados as $tag_seleccionado){
+                                echo "<span id='input-tag' class='tag-seleccionado' data-tag='" . htmlspecialchars($tag_seleccionado) . "'>" . htmlspecialchars($tag_seleccionado);
+                                echo "<input type='button' id='remover-tag' class='tag-seleccionado-remover' value='x'>";
+                                echo "</span>";
+                            }
+                            echo "</div>";
+                        }
+                    ?>
+                    <?php
+                        if ($fetch_tags){
+                            echo "<p class='galeria-campo-hint'>Tags populares</p>";
+                            echo "<div class='galeria-tags-populares'>";
+                            if ($fetch_tags){
+                                foreach ($fetch_tags as $tag){
+                                    echo "<span id='input-tag' class='tag-popular' data-tag='" . htmlspecialchars($tag["nombre"]) . "'>" . $tag["nombre"] . "<b>" . $tag["usos"] . "</b></span>";
+                                }
+                            }
+                            else{
+                                echo "<p id='sin-resultados'>No hay resultados</p>";
+                            }
+                            echo "</div>";
+                        }
                     ?>
                 </div>
-                <h4>Ordenar por</h4>
-                <div class="galeria-categoria-seleccionada">
-                    <select name="ordenar" id="categoria-input-categoria" size="1">
-                            <option value="desc" <?php if ($orden == "DESC") { echo "selected";} ?>>Más reciente</option>
-                            <option value="asc" <?php if ($orden == "ASC") { echo "selected";} ?>>Más antiguo</option>
-                    </select>
+                <div class="galeria-campo">
+                    <h4>Categoría</h4>
+                    <div class="galeria-categoria-seleccionada">
+                        <select name="categoria" id="categoria-input-index" size="1">
+                                    <option value="all" <?php if ($categoria == "all"){ echo "selected";} ?>>Todos los posts</option>
+                                    <option value="any" <?php if ($categoria == "any"){ echo "selected";} ?>>General - /any/</option>
+                                    <option value="anime" <?php if ($categoria == "anime"){ echo "selected";} ?>>Anime - /anime/</option>
+                                    <option value="manga" <?php if ($categoria == "manga"){ echo "selected";} ?>>Manga - /manga/</option>
+                                    <option value="games" <?php if ($categoria == "games"){ echo "selected";} ?>>Videojuegos - /games/</option>
+                                    <option value="pol" <?php if ($categoria == "pol"){ echo "selected";} ?>>Política - /pol/</option>
+                                    <option value="tech" <?php if ($categoria == "tech"){ echo "selected";} ?>>Tecnología - /tech/</option>
+                                    <option value="music" <?php if ($categoria == "music"){ echo "selected";} ?>>Música - /music/</option>
+                                    <option value="movie" <?php if ($categoria == "movie"){ echo "selected";} ?>>Películas - /movie/</option>
+                                    <option value="coding" <?php if ($categoria == "coding"){ echo "selected";} ?>>Programación - /coding/</option>
+                        </select>
+                        <?php
+                            echo "<span id='input-tag-rojo-index'>/$categoria/</span>";
+                        ?>
+                    </div>
+                </div>
+                <div class="galeria-campo">
+                    <h4>Ordenar por</h4>
+                    <div class="galeria-categoria-seleccionada">
+                        <select name="ordenar" id="categoria-input-categoria" size="1">
+                                <option value="desc" <?php if ($orden == "DESC") { echo "selected";} ?>>Más reciente</option>
+                                <option value="asc" <?php if ($orden == "ASC") { echo "selected";} ?>>Más antiguo</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
