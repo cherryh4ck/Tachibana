@@ -1,4 +1,5 @@
 <?php
+    // faltó chequear si la petición es post y existe el dir XD
     $host = $_POST["host"] ?? "";
     $puerto = $_POST["puerto"] ?? "";
     $usuario = $_POST["usuario"] ?? "";
