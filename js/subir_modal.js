@@ -1,5 +1,6 @@
 const ventana_subir = document.getElementsByClassName("contenido-subir")[0];
 const ventana_boton = document.getElementById("subir-boton-modal");
+const posible_setup = document.getElementById("dialog-setup");
 
 ventana_boton.addEventListener("click", function(e) {
     e.preventDefault();
@@ -16,7 +17,7 @@ ventana_subir.addEventListener("click", (event) => {
         event.clientY >= dialogRect.top &&
         event.clientY <= dialogRect.bottom;
 
-    if (!clickInside) {
+    if (!clickInside && posible_setup === null) {
         ventana_subir.close();
         ventana_subir.style.display = "none";
     }

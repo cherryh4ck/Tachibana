@@ -831,6 +831,16 @@ header h1{
     background: rgba(26, 25, 25, 0.8);
 }
 
+.contenido-setup{
+    min-height: 0;
+}
+
+.contenido-setup-titulo{
+    color: rgb(141, 192, 129);
+    text-align: center;
+    margin-bottom: 0.8em;
+}
+
 .contenido-subir-preview{
     display: flex;
     height: 100%;
@@ -906,7 +916,7 @@ header h1{
 }
 /* fin de input file */
 
-.contenido-subir-formulario form input[type=text]{
+.contenido-subir-formulario form input[type=text], .contenido-subir-formulario form input[type=password]{
     display: block;
     box-sizing: border-box;
     width: 100%;
@@ -922,12 +932,12 @@ header h1{
     color: rgb(211, 199, 199);
 }
 
-.contenido-subir-formulario form input[type=text]:hover{
+.contenido-subir-formulario form input[type=text]:hover, .contenido-subir-formulario form input[type=password]:hover{
     background-color: rgb(37, 35, 35);
     box-shadow: 5px 1px 40px rgb(36, 35, 35);
 }
 
-.contenido-subir-formulario form input[type=text]:focus{
+.contenido-subir-formulario form input[type=text]:focus, .contenido-subir-formulario form input[type=password]:focus{
     outline: none;
     border: 2px solid #464949;
     box-shadow: 5px 1px 40px rgb(56, 55, 55);

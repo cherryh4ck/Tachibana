@@ -6,7 +6,14 @@
     require "php/db/config.php";
     require "resources/parse_functions.php";
 
-    if ($conn_test == 1){
+    $instalado = is_dir("galeria");
+
+    if ($instalado && $conn_test == 0){
+        header("Location: error.php?id=8");
+        exit();
+    }
+
+    if ($instalado){
         try{
             if (isset($_GET["orden"])){
                 $_GET["orden"] = strtoupper($_GET["orden"]);
@@ -101,6 +108,7 @@
 </head>
 <body class="galerias">
     <?php include("resources/nav.php"); ?>
+    <?php if ($instalado): ?>
     <div class="galeria">
         <div class="galeria-panel">
             <div class="galeria-herramientas">
@@ -237,5 +245,8 @@
 
         <?php include("resources/dialog-upload.php"); ?>
     </div>
+    <?php else: ?>
+    <?php include("resources/dialog-setup.php"); ?>
+    <?php endif; ?>
 </body>
 </html>
