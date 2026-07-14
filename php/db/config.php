@@ -1,23 +1,23 @@
 <?php
-    $configuracion_ini = parse_ini_file(__DIR__ . "\config.ini", true);
+    $configuracion = require __DIR__ . "/config-data.php";
 
     // configuracion
-    $settings_id = $configuracion_ini["general"]["settings_id"];
-    $motd_activado = $configuracion_ini["general"]["motd_activado"];
+    $settings_id = $configuracion["general"]["settings_id"];
+    $motd_activado = $configuracion["general"]["motd_activado"];
 
     // posts
-    $chequeo_estricto_imagen = $configuracion_ini["posts"]["chequeo_estricto_imagen"];
+    $chequeo_estricto_imagen = $configuracion["posts"]["chequeo_estricto_imagen"];
 
     // bd
-    $host = $configuracion_ini["network"]["host"];
-    $puerto = $configuracion_ini["network"]["puerto"];
-    $user = $configuracion_ini["network"]["username"];
-    $pass = $configuracion_ini["network"]["password"];
-    $db = $configuracion_ini["network"]["database"];
+    $host = $configuracion["network"]["host"];
+    $puerto = $configuracion["network"]["puerto"];
+    $user = $configuracion["network"]["username"];
+    $pass = $configuracion["network"]["password"];
+    $db = $configuracion["network"]["database"];
 
     // seguridad
-    $mantenimiento = $configuracion_ini["seguridad"]["mantenimiento"];
-    $debug = $configuracion_ini["seguridad"]["debug"];
+    $mantenimiento = $configuracion["seguridad"]["mantenimiento"];
+    $debug = $configuracion["seguridad"]["debug"];
 
     if ($debug == 0){
         error_reporting(E_ERROR | E_PARSE);
