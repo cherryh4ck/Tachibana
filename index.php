@@ -9,7 +9,7 @@
     $instalado = is_dir("galeria");
 
     if ($instalado && $conn_test == 0){
-        header("Location: error.php?id=8");
+        header("Location: error.php?id=9");
         exit();
     }
 

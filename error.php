@@ -15,7 +15,7 @@
         "No se ha encontrado la cuenta solicitada.", 
         "La imagen debe tener una resolución mínima de 300x300 píxeles.", // sin usar
         "El tamaño de la imagen debe ser menor a 5.2 MBs.", // sin usar
-        "No se puede acceder al servidor porque está caído.<br>Intenta nuevamente en un rato.",
+        "El servidor se encuentra temporalmente caído.<br>Intenta nuevamente en un rato.",
         "No se puede acceder al servidor porque está en mantenimiento.<br>En breve, la página mostrará cuando se acaba el mantenimiento.",
     ];
     if ((!isset($_GET["id"])) || (!is_numeric($_GET["id"])) || ($_GET["id"] < 1) || ($_GET["id"] > count($errores)) && (!$mantenimiento)) {
