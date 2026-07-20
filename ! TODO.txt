@@ -7,12 +7,14 @@ Conceptos generales:
 - id personalizada de usuario (?)
 - mejor manejo de errores (que siga trabajando por ID, pero mejor guardarlo en la sesión o como cookie xD)
 - chequeo de extensión GD
+- poder fijar un post
 
 index.php:
 - terminar funcionamiento (en progreso)
 - añadir sistema de búsqueda (casi terminado)
 - aclarar ciertos errores (por ej, min chars en la búsqueda por texto)
 - trabajar en el concepto de scroll "infinito" (osea, que no exista un sistema de páginas, si no que se carguen posts a medida que el usuario scrollea)
+- sticky posts (general o por categoría)
 
 perfil.php:
 - terminar apartado de seguridad
