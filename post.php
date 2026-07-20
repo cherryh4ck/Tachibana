@@ -147,7 +147,12 @@
             <?php
                 echo "</h1>";
                 echo "<div class='post-contenido-tags'>";
-                echo "<span id='input-tag-rojo'>$post_categoria</span>";
+                if ($post_sticky == 1){
+                    echo "<span id='input-tag-amarillo'>Sticky</span>";
+                }
+                else{
+                    echo "<span id='input-tag-rojo'>$post_categoria</span>";
+                }
                 if ($tags_fetch) {
                     foreach ($tags_fetch as $tag){
                         $tag_id = $tag["id_tag"];
