@@ -39,6 +39,7 @@
             $post_id_autor = $fetch["id_autor"];
             $post_anonimo = $fetch["anonimo"];
             $post_fecha_creacion = $fetch["fecha_creacion"];
+            $post_sticky = $fetch["sticky"];
             
             // conseguir datos de la categoria
             $sql = $conn->prepare("SELECT * FROM categorias WHERE id = ?;");
@@ -140,7 +141,11 @@
                 echo "<img src='galeria/fullsize/" . $id . "." . $ext ."'>";
                 echo "<div class='post-contenido'>";
                 echo "<div class='post-contenido-titulo'>";
-                echo "<h1 id='post-titulo'>$post_titulo</h1>";
+                echo "<h1 id='post-titulo'>$post_titulo";
+            ?>
+                <span id='post-titulo-fijado' title='Post fijado' <?php if ($post_sticky == 0) { echo "style='display: none;'"; } ?>><svg viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg></span>
+            <?php
+                echo "</h1>";
                 echo "<div class='post-contenido-tags'>";
                 echo "<span id='input-tag-rojo'>$post_categoria</span>";
                 if ($tags_fetch) {
@@ -186,6 +191,24 @@
                 );
                 echo $post_descripcion;
                 echo "</div></div>";
+                
+                if (isset($_SESSION["cuenta_rol"]) && ($_SESSION["cuenta_rol"] === "admin" || $_SESSION["cuenta_rol"] === "mod")){
+                    echo "<script src='js/admin/modify-post.js' defer></script>";
+                    echo "<div class='post-admin-panel'>";
+                    echo "<div class='post-admin-panel-info'>";
+                    echo "<span id='input-tag-" . $_SESSION["cuenta_rol"] . "' class='comentar-input-tag-op'>" . strtoupper($_SESSION["cuenta_rol"]) . "</span>";
+                    echo "<p>Panel de moderación</p>";
+                    echo "</div>";
+                    echo "<div class='post-admin-panel-acciones'>";
+                    if ($_SESSION["cuenta_rol"] === "admin"){
+                        echo "<button id='post-admin-fijar' data-id='$id'>Fijar post</button>";
+                    }
+                    echo "<button id='post-admin-banear' data-id='$id'>Banear post</button>";
+                    echo "<button id='post-admin-eliminar' data-id='$id' class='post-admin-peligro'>Eliminar post</button>";
+                    echo "<button id='post-admin-bloquear-comentarios' data-id='$id'>Bloquear comentarios</button>";
+                    echo "</div>";
+                    echo "</div>";
+                }
             ?>
             <?php
                 if ($post_comentarios > 0){

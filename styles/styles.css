@@ -374,14 +374,87 @@ header h1{
     gap: 0.5em;
 }
 
+.post-admin-panel{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.7em;
+    background-color: #191b1b;
+    border: 2px solid #282b2b;
+    border-left: 3px solid rgb(219, 64, 64);
+    border-radius: 8px;
+    padding: 0.6em 1em;
+    margin: 0.6em 0.3em 0.3em 0.3em;
+}
+ 
+.post-admin-panel-info{
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+}
+ 
+.post-admin-panel-info p{
+    color: rgb(150, 148, 148);
+    font-size: 14px;
+}
+ 
+.post-admin-panel-acciones{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+ 
+.post-admin-panel-acciones button{
+    display: block;
+    height: 36px;
+    padding: 0 1em;
+    background-color: rgb(20, 20, 19);
+    color: rgb(211, 199, 199);
+    border: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 200ms;
+    cursor: pointer;
+}
+ 
+.post-admin-panel-acciones button:hover{
+    background-color: rgb(27, 26, 26);
+    color: rgb(255, 255, 255);
+    box-shadow: 5px 1px 30px rgb(54, 53, 53);
+    opacity: .6;
+    transform: scale(1.05);
+}
+ 
+.post-admin-panel-acciones button.post-admin-peligro:hover{
+    background-color: rgb(46, 20, 20);
+    color: rgb(255, 154, 154);
+    box-shadow: 5px 1px 30px rgba(219, 64, 64, 0.35);
+}
+ 
+@media (max-width: 500px){
+    .post-admin-panel{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
 #post-titulo{
     display: flex;
+    align-items: center;
+    gap: 0.35em;
     width: 100%;
     margin-top: 0.5em;
     margin-bottom: 0.2em;
     margin-left: 0.1em;
     text-shadow: 3px 4px 4px rgba(17, 17, 17, 0.7);
     font-weight: bold;
+}
+ 
+#post-titulo-fijado{
+    display: flex;
+    flex-shrink: 0;
+    color: rgb(219, 147, 64);
 }
 
 .post-autor{
