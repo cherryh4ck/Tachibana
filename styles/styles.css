@@ -1195,7 +1195,7 @@ header h1{
     user-select: none;
 }
 
-#input-tag, #input-tag2, #input-tag-rojo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user{
+#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user{
     background-color: rgb(49, 168, 79);
     border-radius: 8px;
     height: 25px;
@@ -1256,6 +1256,11 @@ header h1{
 
 #input-tag-rojo{
     background-color: rgb(219, 64, 64);
+    padding: 0 15px;
+}
+
+#input-tag-amarillo{
+    background-color: rgb(219, 170, 64);
     padding: 0 15px;
 }
 
@@ -1642,6 +1647,9 @@ header h1{
     position: absolute;
     bottom: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
     width: 100%;
     max-width: 400px;
     background-color: rgba(41, 40, 40, 0.233);

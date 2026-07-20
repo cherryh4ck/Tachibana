@@ -77,7 +77,7 @@
                 $where = "";
             }
 
-            $sql = $conn->prepare("SELECT * from posts $where ORDER BY id $orden");
+            $sql = $conn->prepare("SELECT * from posts $where ORDER BY sticky DESC, id $orden");
             $sql->execute($parametros);
             $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -225,10 +225,19 @@
                             }
                             echo "<div class='contenido-bloque'>";
                             echo "<div class='contenido-bloque-categoria'>";
-                            echo "<span id='input-tag-rojo'>/$post_categoria/</span>";
+                            if ($post["sticky"] == 0){
+                                echo "<span id='input-tag-rojo'>/$post_categoria/</span>";
+                            }
+                            else{
+                                echo "<span id='input-tag-amarillo'>Sticky</span>";
+                            }
                             echo "</div>";
                             echo "<a href='post.php?id=" . $post["id"] . "'><img src='galeria/" . $post["id"] . ".jpg' alt=''></a>";
-                            echo "<p>$post_titulo</p>";
+                            echo "<p>";
+                            if ($post["sticky"] == 1){
+                                echo "<span id='post-titulo-fijado' title='Post fijado'><svg viewBox='0 0 24 24' width='16' height='16' fill='currentColor'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg></span>";
+                            }
+                            echo "$post_titulo</p>";
                             echo "</div>";
                         }
                         /*else if ($id <= $end_id){
