@@ -1,4 +1,6 @@
 <?php
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
+
     function e(?string $texto): string {
         $decodificado = html_entity_decode($texto ?? '', ENT_QUOTES, 'UTF-8');
         return htmlspecialchars($decodificado, ENT_QUOTES, 'UTF-8');

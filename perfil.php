@@ -1,7 +1,6 @@
 <?php
     require "php/db/config.php";
     require "resources/parse_functions.php";
-    date_default_timezone_set('America/Argentina/Buenos_Aires');
     
     function formatear_descripcion(string $descripcion): string {
         $descripcion = str_replace(["<br>", "<br />"], "</p><p>", $descripcion);
