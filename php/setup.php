@@ -15,6 +15,15 @@
         unset($_COOKIE["ult_act"]);
         setcookie("auth", "", 1, "/");
         setcookie("ult_act", "", 1, "/"); 
+        
+        if (!extension_loaded("gd")) {
+            header("Content-Type: application/json");
+            echo json_encode([
+                "ok" => false,
+                "mensaje" => "Falta la extensión GD en PHP."
+            ]);
+            exit();
+        }
 
         require __DIR__ . "/../resources/update-config.php";
         actualizar_config([
