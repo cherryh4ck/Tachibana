@@ -7,7 +7,6 @@ Conceptos generales:
 - id personalizada de usuario (?)
 - mejor manejo de errores (que siga trabajando por ID, pero mejor guardarlo en la sesión o como cookie xD)
 - chequeo de extensión GD
-- poder fijar un post
 
 index.php:
 - terminar funcionamiento (en progreso)
