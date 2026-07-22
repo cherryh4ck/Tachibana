@@ -10,10 +10,7 @@ Conceptos generales:
 
 index.php:
 - terminar funcionamiento (en progreso)
-- añadir sistema de búsqueda (casi terminado)
 - aclarar ciertos errores (por ej, min chars en la búsqueda por texto)
-- trabajar en el concepto de scroll "infinito" (osea, que no exista un sistema de páginas, si no que se carguen posts a medida que el usuario scrollea)
-- sticky posts (general o por categoría)
 
 perfil.php:
 - terminar apartado de seguridad
