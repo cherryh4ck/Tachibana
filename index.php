@@ -15,69 +15,14 @@
 
     if ($instalado){
         try{
-            if (isset($_GET["orden"])){
-                $_GET["orden"] = strtoupper($_GET["orden"]);
-                if ($_GET["orden"] == "ASC"){
-                    $orden = "ASC";
-                }
-                else{
-                    $orden = "DESC";
-                }
-            }
-            else{
-                $orden = "DESC";
-            }
+            $filtro = construir_filtro_posts($conn);
+            $categoria = $filtro["categoria"];
+            $orden = $filtro["orden"];
+            $tags_buscados = $filtro["tags_buscados"];
+            $where = $filtro["where"];
+            $parametros = $filtro["parametros"];
 
-            $condiciones = [];
-            $parametros = [];
-
-            if (isset($_GET["categoria"]) && !($_GET["categoria"] == "all")){
-                $categoria = $_GET["categoria"];
-                $sql = $conn->prepare("SELECT * from categorias WHERE nombre = ?");
-                $sql->execute([$categoria]);
-                $fetch_categoria = $sql->fetch(PDO::FETCH_ASSOC);
-                if ($fetch_categoria){
-                    $id_categoria = $fetch_categoria["id"];
-                }
-                else{
-                    $id_categoria = 1;
-                }
-                $condiciones[] = "id_categoria = ?";
-                $parametros[] = $id_categoria;
-            }
-            else{
-                $categoria = "all";
-            }
-
-            if (isset($_GET["q"]) && !(empty($_GET["q"]))){
-                $query = "%" . $_GET["q"] . "%";
-                $condiciones[] = "lower(titulo) LIKE ?";
-                $parametros[] = $query;
-            }
-
-            if (isset($_GET["tags"]) && !(empty($_GET["tags"]))){
-                $tags_buscados = array_filter(array_map("trim", explode(",", strtolower($_GET["tags"]))));
-                $tags_buscados = array_values(array_unique($tags_buscados));
-            }
-            else{
-                $tags_buscados = [];
-            }
-
-            if (count($tags_buscados) > 0){
-                $placeholders = implode(",", array_fill(0, count($tags_buscados), "?"));
-                $condiciones[] = "id IN (SELECT id_post FROM posts_tags INNER JOIN tags ON posts_tags.id_tag = tags.id WHERE tags.nombre IN ($placeholders) GROUP BY id_post HAVING COUNT(DISTINCT tags.nombre) = ?)";
-                $parametros = array_merge($parametros, $tags_buscados);
-                $parametros[] = count($tags_buscados);
-            }
-
-            if (count($condiciones) > 0){
-                $where = "WHERE " . implode(" AND ", $condiciones);
-            }
-            else{
-                $where = "";
-            }
-
-            $sql = $conn->prepare("SELECT * from posts $where ORDER BY sticky DESC, id $orden");
+            $sql = $conn->prepare("SELECT * from posts $where ORDER BY sticky DESC, id $orden LIMIT " . POSTS_POR_PAGINA . " OFFSET 0");
             $sql->execute($parametros);
             $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -100,6 +45,7 @@
     <script src="js/index/selectores.js" defer></script>
     <script src="js/index/query.js" defer></script>
     <script src="js/index/tags.js" defer></script>
+    <script src="js/index/scroll.js" defer></script>
 
     <script src="js/subir_modal.js" defer></script>
 
@@ -199,53 +145,13 @@
                 else{
                     echo "<div class='galeria-imagenes'>";
                     foreach ($fetch_posts as $post){
-                        if (file_exists("galeria/" . $post["id"] . ".jpg")){
-                            try {
-                                $sql = $conn->prepare("SELECT * FROM posts WHERE id = ?");
-                                $sql->execute([$post["id"]]);
-                                $fetch = $sql->fetch(PDO::FETCH_ASSOC);
-                                if ($fetch){
-                                    $post_id_categoria = $fetch["id_categoria"];
-                                    $post_titulo = $fetch["titulo"];
-
-                                    $sql = $conn->prepare("SELECT * FROM categorias WHERE id = ?");
-                                    $sql->execute([$post_id_categoria]);
-                                    $fetch = $sql->fetch(PDO::FETCH_ASSOC);
-                                    if ($fetch){
-                                        $post_categoria = $fetch["nombre"];
-                                    }
-                                }
-                            }
-                            catch (PDOException $e){
-                                echo "<div class='contenido-bloque contenido-bloque-phantom'>";
-                                echo "<a href='error.php?id=4'><img src='resources/notfound.jpg' alt=''></a>";
-                                echo "<p>(Eliminado)</p>";
-                                echo "</div>";
-                                // ?????? que es esto
-                            }
-                            echo "<div class='contenido-bloque'>";
-                            echo "<div class='contenido-bloque-categoria'>";
-                            if ($post["sticky"] == 0){
-                                echo "<span id='input-tag-rojo'>/$post_categoria/</span>";
-                            }
-                            else{
-                                echo "<span id='input-tag-amarillo'>Sticky</span>";
-                            }
-                            echo "</div>";
-                            echo "<a href='post.php?id=" . $post["id"] . "'><img src='galeria/" . $post["id"] . ".jpg' alt=''></a>";
-                            echo "<p>";
-                            if ($post["sticky"] == 1){
-                                echo "<span id='post-titulo-fijado' title='Post fijado'><svg viewBox='0 0 24 24' width='16' height='16' fill='currentColor'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg></span>";
-                            }
-                            echo "$post_titulo</p>";
-                            echo "</div>";
-                        }
-                        /*else if ($id <= $end_id){
-                            echo "<div class='contenido-bloque contenido-bloque-phantom'>";
-                            echo "<a href='error.php?id=4'><img src='resources/notfound.jpg' alt=''></a>";
-                            echo "<p>Post #" . $id . " (Eliminado)</p>";
-                            echo "</div>";
-                        }*/
+                        echo renderizar_post_card($post, $conn);
+                    }
+                    echo "</div>";
+                    if (count($fetch_posts) == POSTS_POR_PAGINA){
+                        echo "<div id='galeria-cargar-mas' data-offset='" . POSTS_POR_PAGINA . "'>";
+                        echo "<span class='galeria-cargar-mas-spinner'></span>";
+                        echo "</div>";
                     }
                 }
             ?>

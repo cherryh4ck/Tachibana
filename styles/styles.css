@@ -1582,6 +1582,34 @@ header h1{
     height: 100%;
 }
 
+#galeria-cargar-mas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    margin-top: 1.5em;
+}
+ 
+.galeria-cargar-mas-spinner{
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 3px solid rgb(56, 55, 55);
+    border-top-color: rgb(141, 192, 129);
+    opacity: 0;
+    animation: girar 700ms linear infinite;
+    transition: opacity 200ms;
+}
+ 
+#galeria-cargar-mas.galeria-cargar-mas-activo .galeria-cargar-mas-spinner{
+    opacity: 1;
+}
+ 
+@keyframes girar{
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
+}
+
 .galeria-imagenes-sin-posts{
     margin: 0;
     margin-left: 0em;
@@ -1615,7 +1643,8 @@ header h1{
     display: block;
     width: 100%;
     max-width: 400px;
-    max-height: 300px;
+    height: 300px;
+    overflow: hidden;
     border-radius: 10px;
     transition: all 200ms;
 }
@@ -1634,6 +1663,7 @@ header h1{
 .contenido-bloque img{
     width: 100%;
     height: 100%;
+    object-fit: cover;
     border-radius: 10px;
 }
 
