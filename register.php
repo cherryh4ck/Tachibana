@@ -17,11 +17,7 @@
 
         if ((strlen($user) > 3) && (strlen($user) < 20)){
             $password = password_hash($password, PASSWORD_BCRYPT);
-
             try{
-                $conn = new PDO("mysql:host=$host:$puerto;dbname=$db", $user, $pass);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                 $sql = $conn->prepare("INSERT INTO usuarios(username, password, nickname) VALUES (?, ?, ?);");
                 $sql->execute([$username, $password, $username]);
                 header("Location: login.php?reg=1");
