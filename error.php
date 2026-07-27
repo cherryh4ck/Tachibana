@@ -18,9 +18,12 @@
         "El servidor se encuentra temporalmente caído.<br>Intenta nuevamente en un rato.",
         "No se puede acceder al servidor porque está en mantenimiento.<br>En breve, la página mostrará cuando se acaba el mantenimiento.",
     ];
-    if ((!isset($_GET["id"])) || (!is_numeric($_GET["id"])) || ($_GET["id"] < 1) || ($_GET["id"] > count($errores)) && (!$mantenimiento)) {
-        header("Location: index.php?pag=1");
+    if ((!isset($_SESSION["error"])) && (!$mantenimiento)) {
+        header("Location: index.php");
+        exit();
     }
+
+    unset($_SESSION["error"]);
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +46,7 @@
                 if ($mantenimiento == 1) {
                     echo "<p id='error'>" . $errores[9] . "</p>";
                 } else {
-                    echo "<p id='error'>" . $errores[$_GET["id"] - 1] . "</p>";
+                    echo "<p id='error'>" . $errores[$_SESSION["error"] - 1] . "</p>";
                 }
             ?>
             <p id="disculpas"><b>Pedimos disculpas.</b></p>

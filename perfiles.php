@@ -15,7 +15,8 @@
                 $fetch = $sql->fetchAll(PDO::FETCH_ASSOC);
             }
             catch(PDOException $e){
-                header("Location: error.php?id=9");
+                $_SESSION["error"] = 9;
+                header("Location: error.php");
                 exit();
             }
         }

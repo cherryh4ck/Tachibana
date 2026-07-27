@@ -13,7 +13,8 @@
                 $ext = "gif";
             }
             else{
-                header("Location: error.php?id=2");
+                $_SESSION["error"] = 2;
+                header("Location: error.php");
                 exit();
             }
         }
@@ -22,7 +23,8 @@
         }
     }
     else{
-        header("Location: error.php?id=2");
+        $_SESSION["error"] = 2;
+        header("Location: error.php");
         exit();
     }
     try {
@@ -49,7 +51,8 @@
                 $post_categoria = "/" . $fetch["nombre"] . "/";
             }
             else{
-                header("Location: error.php?id=2");
+                $_SESSION["error"] = 2;
+                header("Location: error.php");
                 exit();
             }
 
@@ -89,17 +92,20 @@
                 }
             }
             else{
-                header("Location: error.php?id=2");
+                $_SESSION["error"] = 2;
+                header("Location: error.php");
                 exit();
             }
         }
         else{
-            header("Location: error.php?id=2");
+            $_SESSION["error"] = 2;
+            header("Location: error.php");
             exit();
         }
     }
     catch (PDOException $e){
-        header("Location: error.php?id=2");
+        $_SESSION["error"] = 2;
+        header("Location: error.php");
         exit();
     }
 ?>

@@ -15,7 +15,8 @@
 
     if (isset($_GET["id"])) {
         if (!is_numeric($_GET["id"])) {
-            header("Location: error.php?id=2");
+            $_SESSION["error"] = 2;
+            header("Location: error.php");
             exit();
         }
         $id_perfil = (int) $_GET["id"];
@@ -46,12 +47,14 @@
         $sql->execute([$id_perfil]);
         $usuario = $sql->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
-        header("Location: error.php?id=2");
+        $_SESSION["error"] = 2;
+        header("Location: error.php");
         exit();
     }
 
     if (!$usuario) {
-        header("Location: error.php?id=2");
+        $_SESSION["error"] = 2;
+        header("Location: error.php");
         exit();
     }
 

@@ -34,6 +34,7 @@
                     $_SESSION["cuenta_id"] = $fetch["id"];
                     $_SESSION["cuenta_usuario"] = $fetch["username"];
                     $_SESSION["cuenta_rol"] = $fetch["rol"];
+                    $_SESSION["error"] = 0;
                     header("Location: index.php");
                 }
                 else{
