@@ -4,18 +4,18 @@
     session_start();
     if (isset($_SESSION["cuenta_usuario"])){
         header("Location: index.php");
+        exit();
     }
 
     if ($_SERVER["REQUEST_METHOD"] === "POST"){
         $username = trim(strip_tags($_POST["user"]));
-        $username = str_replace(" ", "", $username);
         $password = $_POST["password"];
 
         if (empty($username) || empty($password)){
             exit();
         }
 
-        if (preg_match('/^[a-zA-Z0-9_]{3,16}$/', $username)){
+        if (preg_match('/^(?!.*_{2,})[a-zA-Z0-9_]{3,16}$/', $username)){
             $password = password_hash($password, PASSWORD_BCRYPT);
             try{
                 $sql = $conn->prepare("INSERT INTO usuarios(username, password, nickname) VALUES (?, ?, ?);");
@@ -28,7 +28,7 @@
             }
         }
         else{
-            $mensaje = "<span>Error:</span> El usuario es muy corto o muy largo";
+            $mensaje = "<span>Error:</span> El usuario es muy corto, muy largo o contiene caracteres inválidos";
         }
     }
 ?>
