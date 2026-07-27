@@ -15,7 +15,7 @@
             exit();
         }
 
-        if ((strlen($username) > 3) && (strlen($username) < 20)){
+        if (preg_match('/^[a-zA-Z0-9_]{3,16}$/', $username)){
             $password = password_hash($password, PASSWORD_BCRYPT);
             try{
                 $sql = $conn->prepare("INSERT INTO usuarios(username, password, nickname) VALUES (?, ?, ?);");
