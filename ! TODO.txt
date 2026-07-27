@@ -5,7 +5,6 @@ Conceptos generales:
 - añadir más parametros al config.ini
 - trabajar en un motd (?)
 - id personalizada de usuario (?)
-- mejor manejo de errores (que siga trabajando por ID, pero mejor guardarlo en la sesión o como cookie xD)
 
 index.php:
 - terminar funcionamiento (en progreso)
