@@ -11,11 +11,11 @@
         $username = str_replace(" ", "", $username);
         $password = $_POST["password"];
 
-        if (empty($user) || empty($password)){
+        if (empty($username) || empty($password)){
             exit();
         }
 
-        if ((strlen($user) > 3) && (strlen($user) < 20)){
+        if ((strlen($username) > 3) && (strlen($username) < 20)){
             $password = password_hash($password, PASSWORD_BCRYPT);
             try{
                 $sql = $conn->prepare("INSERT INTO usuarios(username, password, nickname) VALUES (?, ?, ?);");
