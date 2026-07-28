@@ -4,6 +4,8 @@ const contraseña = document.getElementById("contraseña");
 const repetirContraseña = document.getElementById("repetirContraseña");
 const divMensaje = document.getElementById("register-mensaje");
 
+const regex = /^(?!.*_{2,})[a-zA-Z0-9_]{3,16}$/;
+
 const mensaje = document.createElement("p");
 mensaje.id = "formulario-mensaje";
 mensaje.innerHTML = "<span>Error:</span> El usuario ya existe.";
@@ -18,25 +20,25 @@ formulario.addEventListener("submit", function(event) {
 
     if (contraseña.value !== repetirContraseña.value){
         event.preventDefault();
-        mensaje.innerHTML = "<span>Error:</span> Las contraseñas no coinciden";
+        mensaje.innerHTML = "<span>Error:</span> Las contraseñas no coinciden.";
         error = true;
     }
     else{
-        if (contraseña.value == usernameF.value){
+        if (contraseña.value == username.value){
             event.preventDefault();
-            mensaje.innerHTML = "<span>Error:</span> La contraseña no puede ser igual al usuario";
+            mensaje.innerHTML = "<span>Error:</span> La contraseña no puede ser igual al usuario.";
             error = true;
         }
         else{
-            if ((username.value.length < 4) || (username.value.length > 19)){
+            if (!regex.test(username.value)){
                 event.preventDefault();
-                mensaje.innerHTML = "<span>Error:</span> El usuario es muy corto o es muy largo";
+                mensaje.innerHTML = "<span>Error:</span> El usuario es muy corto, muy largo o contiene caracteres inválidos.";
                 error = true;
             }
             else{
                 if (contraseña.value.length < 6){
                     event.preventDefault();
-                    mensaje.innerHTML = "<span>Error:</span> La contraseña debe tener al menos 6 caracteres";
+                    mensaje.innerHTML = "<span>Error:</span> La contraseña debe tener al menos 6 caracteres.";
                     error = true;
                 }
                 else{
