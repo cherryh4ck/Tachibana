@@ -16,9 +16,6 @@ perfil.php:
 perfiles.php:
 - añadir más chequeos de sanidad
 
-register.php:
-- prevenir usuarios con caracteres ilegales
-
 post.php:
 - pasar la carga a php/post/comentar.php
 - hover con soporte de imagenes??
