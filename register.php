@@ -45,21 +45,32 @@
 </head>
 <body>
     <?php include("resources/nav.php"); ?>
-    <div class="contenido-menu">
-        <form action="register.php" method="post" id="formulario">
-            <p id="texto-centrado">Registrarse</p>
-            <input type="text" name="user" id="usernameF" placeholder="Nombre de usuario" required>
-            <input type="password" name="password" placeholder="Contraseña" id="contraseña" required>
-            <input type="password" name="verifyPassword" placeholder="Repetir contraseña" id="repetirContraseña" required>
-            <div id="register-mensaje">
-                <?php
-                    if (isset($mensaje)){
-                        echo "<p id='formulario-mensaje'>$mensaje</p>";
-                    }
-                ?>
-            </div>
-            <input type="submit" value="Registrarse">
-        </form>
+    <div class="auth-contenedor">
+        <div class="contenido-menu">
+            <h1 id="texto-centrado">Registrarse</h1>
+            <form action="register.php" method="post" id="formulario">
+                <div class="auth-campo">
+                    <p>Usuario</p>
+                    <input type="text" name="user" id="usernameF" placeholder="Nombre de usuario" required>
+                </div>
+                <div class="auth-campo">
+                    <p>Contraseña</p>
+                    <input type="password" name="password" placeholder="Contraseña" id="contraseña" required>
+                </div>
+                <div class="auth-campo">
+                    <p>Repetir contraseña</p>
+                    <input type="password" name="verifyPassword" placeholder="Repetir contraseña" id="repetirContraseña" required>
+                </div>
+                <div id="register-mensaje">
+                    <?php
+                        if (isset($mensaje)){
+                            echo "<p id='formulario-mensaje'>$mensaje</p>";
+                        }
+                    ?>
+                </div>
+                <input type="submit" value="Registrarse">
+            </form>
+        </div>
         <p id="registrate">¿Tenés cuenta? Iniciá sesión <a href="login.php">acá</a></p>
     </div>
 </body>

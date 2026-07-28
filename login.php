@@ -64,19 +64,27 @@
 </head>
 <body>
     <?php include("resources/nav.php"); ?>
-    <div class="contenido-menu">
-        <form action="login.php" method="post" id="formulario-login">
-            <p id="texto-centrado">Iniciar sesión</p>
-            <input type="text" name="user" placeholder="Nombre de usuario" id="user-input" required>
-            <input type="password" name="password" placeholder="Contraseña" id="password-input" required>
-            <?php
-                if (isset($mensaje)){
-                    echo "<p id='formulario-mensaje2'>$mensaje</p>";
-                }
-                echo "<p id='formulario-mensaje' style='display: none;'></p>";
-            ?>
-            <input type="submit" value="Iniciar sesión">
-        </form>
+    <div class="auth-contenedor">
+        <div class="contenido-menu">
+            <h1 id="texto-centrado">Iniciar sesión</h1>
+            <form action="login.php" method="post" id="formulario-login">
+                <div class="auth-campo">
+                    <p>Usuario</p>
+                    <input type="text" name="user" placeholder="Nombre de usuario" id="user-input" required>
+                </div>
+                <div class="auth-campo">
+                    <p>Contraseña</p>
+                    <input type="password" name="password" placeholder="Contraseña" id="password-input" required>
+                </div>
+                <?php
+                    if (isset($mensaje)){
+                        echo "<p id='formulario-mensaje2'>$mensaje</p>";
+                    }
+                    echo "<p id='formulario-mensaje' style='display: none;'></p>";
+                ?>
+                <input type="submit" value="Iniciar sesión">
+            </form>
+        </div>
         <p id="registrate">¿No tenés cuenta? Registrate <a href="register.php">acá</a></p>
     </div>
 </body>

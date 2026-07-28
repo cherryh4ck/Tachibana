@@ -1741,53 +1741,78 @@ header h1{
 /* register y login */
 /* //////////////// */
 
+.auth-contenedor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+ 
 .contenido-menu{
-    display: block;  
-    min-width: 200px;
-    max-width: 300px;
-    min-height: 250px;
-    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 420px;
+    padding: 2em 2.2em;
     background-color: rgb(24, 23, 23);
-    margin-left: auto;
-    margin-right: auto;
     margin-top: 2em;
     border-radius: 8px;
+    border: 2px solid #444747;
+    box-shadow: 5px 1px 40px rgb(56, 55, 55);
+    transition: all 200ms;
 }
-
-.contenido-menu p{
+ 
+.contenido-menu form{
+    width: 100%;
+}
+ 
+#texto-centrado{
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    font-weight: normal;
+    color: rgb(141, 192, 129);
+    margin-bottom: 0.8em;
+}
+ 
+.auth-campo{
+    margin-top: 1em;
+}
+ 
+.auth-campo p{
     color: rgb(211, 199, 199);
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 18px;
 }
-
+ 
 .contenido-menu input[type=text], .contenido-menu input[type=password]{
     display: block;
     box-sizing: border-box;
     width: 100%;
-    height: 40px;
-    margin-top: 1.5em;
-    margin-bottom: 1.5em;
+    height: 35px;
+    margin-top: 0.25em;
     border-radius: 8px;
     background-color: #191b1b;
     border: 2px solid #282b2b;
-    color: white;
-    padding: 1em;
+    color: rgb(211, 199, 199);
+    padding: 0.5em;
     transition: all 200ms;
     font-size: 16px;
-    color: rgb(211, 199, 199);
 }
-
+ 
 .contenido-menu input[type=text]:hover, .contenido-menu input[type=password]:hover{
     background-color: rgb(37, 35, 35);
     box-shadow: 5px 1px 40px rgb(36, 35, 35);
 }
-
+ 
 .contenido-menu input[type=text]:focus, .contenido-menu input[type=password]:focus{
     outline: none;
     border: 2px solid #464949;
     box-shadow: 5px 1px 40px rgb(56, 55, 55);
     color: rgb(228, 221, 221);
 }
-
+ 
 .contenido-menu input[type=submit]{
     display: block;
     width: 150px;
@@ -1800,9 +1825,9 @@ header h1{
     border-radius: 8px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1em;
+    margin-top: 1.5em;
 }
-
+ 
 .contenido-menu input[type=submit]:hover{
     background-color: rgb(27, 26, 26);
     color: rgb(255, 255, 255);
@@ -1811,35 +1836,38 @@ header h1{
     opacity: .6;
     transform: scale(1.05);
 }
-
-#texto-centrado{
-    text-align: center;
-}
-
+ 
 #registrate{
     font-size: 16px;
     text-align: center;
+    margin-top: 1.3em;
+    color: rgb(211, 199, 199);
 }
-
+ 
 #registrate a{
     color: rgb(49, 168, 79);
     text-decoration: none;
     transition: all 200ms;
 }
-
+ 
 #registrate a:hover{
     color: rgb(34, 119, 56);
     cursor: pointer;
 }
-
+ 
 #formulario-mensaje, #formulario-mensaje2{
+    width: 100%;
     margin-top: 1em;
-    margin-bottom: 1em;
-    font-size: 17px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    color: rgb(211, 199, 199);
+    font-size: 18px;
 }
-
+ 
 #formulario-mensaje span, #formulario-mensaje2 span{
     color: rgb(219, 64, 64);
+    font-size: 18px;
 }
 
 /* perfiles */
