@@ -2,6 +2,7 @@
     require "php/db/config.php";
     if (isset($_SESSION["cuenta_usuario"])){
         header("Location: index.php");
+        exit();
     }
 
     if (isset($_GET["reg"])){
@@ -12,7 +13,7 @@
         $username = trim($_POST["user"]);
         $password = $_POST["password"];
 
-        if (empty($user) || empty($password)){
+        if (empty($username) || empty($password)){
             $mensaje = "<span>Error:</span> Los campos están vacios.";
         }
         else{
@@ -36,6 +37,7 @@
                     $_SESSION["cuenta_rol"] = $fetch["rol"];
                     $_SESSION["error"] = 0;
                     header("Location: index.php");
+                    exit();
                 }
                 else{
                     $mensaje = "<span>Error:</span> Usuario o contraseña incorrecta";
