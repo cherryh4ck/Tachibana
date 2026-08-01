@@ -42,6 +42,8 @@
             $post_anonimo = $fetch["anonimo"];
             $post_fecha_creacion = $fetch["fecha_creacion"];
             $post_sticky = $fetch["sticky"];
+            $baneado = $fetch["baneado"];
+            $baneado_motivo = $fetch["baneado_motivo"];
             
             // conseguir datos de la categoria
             $sql = $conn->prepare("SELECT * FROM categorias WHERE id = ?;");
@@ -144,7 +146,9 @@
 
         <div class="contenido-post">
             <?php
-                echo "<img src='galeria/fullsize/" . $id . "." . $ext ."'>";
+                if ($baneado == 0) {
+                    echo "<img src='galeria/fullsize/" . $id . "." . $ext ."'>";
+                }
                 echo "<div class='post-contenido'>";
                 echo "<div class='post-contenido-titulo'>";
                 echo "<h1 id='post-titulo'>$post_titulo";
@@ -193,13 +197,18 @@
                 echo "</div></div>";
                 echo "<h2 id='post-titulo-descripcion'>Descripción</h2>";
                 echo "<div class='post-descripcion'>";
-                $post_descripcion = str_replace(["<br>", "<br />"], "</p><p>", $post_descripcion);
-                $post_descripcion = "<p>$post_descripcion</p>";
-                $post_descripcion = preg_replace(
-                    '/<p>\s*(&gt;|>)(.*)<\/p>/',
-                    '<p id="post-comentarios-greentext">&gt;$2</p>',
-                    $post_descripcion
-                );
+                if ($baneado == 0) {
+                    $post_descripcion = str_replace(["<br>", "<br />"], "</p><p>", $post_descripcion);
+                    $post_descripcion = "<p>$post_descripcion</p>";
+                    $post_descripcion = preg_replace(
+                        '/<p>\s*(&gt;|>)(.*)<\/p>/',
+                        '<p id="post-comentarios-greentext">&gt;$2</p>',
+                        $post_descripcion
+                    );
+                }
+                else {
+                    $post_descripcion = "<p>Este post ha sido baneado por un moderador.<br>Motivo: $baneado_motivo</p>";
+                }
                 echo $post_descripcion;
                 echo "</div></div>";
                 
@@ -399,6 +408,7 @@
                     }
                 ?>
             </div>
+            <?php if ($baneado == 0): ?>
             <h2 id="post-comentarios-comentar">Comentar</h2>
             <div class="post-comentarios-comentar">
                 <div class="post-comentarios-comentar-seccion-avatar">
@@ -444,6 +454,7 @@
                     ?>
                 </form>
             </div>
+            <?php endif; ?>
             </div>
         </div>
 
