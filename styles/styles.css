@@ -953,6 +953,11 @@ header h1{
     display: block;
 }
 
+.contenido-subir-formulario p{
+    color: rgb(211, 199, 199);
+    font-size: 18px;
+}
+
 /* input file */
 .subir-archivo{
     transition: all 200ms;

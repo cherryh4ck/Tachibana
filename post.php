@@ -204,7 +204,7 @@
                 echo "</div></div>";
                 
                 if (isset($_SESSION["cuenta_rol"]) && ($_SESSION["cuenta_rol"] === "admin" || $_SESSION["cuenta_rol"] === "mod")){
-                    echo "<script src='js/admin/modify-post.js' defer></script>";
+                    require "resources/dialog-mod-ban.php";
                     echo "<div class='post-admin-panel'>";
                     echo "<div class='post-admin-panel-info'>";
                     echo "<span id='input-tag-" . $_SESSION["cuenta_rol"] . "' class='comentar-input-tag-op'>" . strtoupper($_SESSION["cuenta_rol"]) . "</span>";
@@ -219,6 +219,7 @@
                     echo "<button id='post-admin-bloquear-comentarios' data-id='$id'>Bloquear comentarios</button>";
                     echo "</div>";
                     echo "</div>";
+                    echo "<script src='js/post/modal_ban.js' defer></script>";
                 }
             ?>
             <?php
