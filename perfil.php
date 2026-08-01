@@ -230,7 +230,7 @@
                 </div>
             </div>
 
-            <?php if ($_SESSION['cuenta_rol'] === 'admin' || $_SESSION['cuenta_rol'] === 'mod'): ?>
+            <?php if (($_SESSION['cuenta_rol'] === 'admin' || $_SESSION['cuenta_rol'] === 'mod') && !$es_el_dueño): ?>
                 <div class="perfil-div perfil-div-separacion">
                     <div class="perfil-descripcion">
                         <p id="perfil-descripcion-texto">Acciones administrativas (<?php echo $_SESSION['cuenta_rol']; ?>)</p>
