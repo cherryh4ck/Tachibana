@@ -36,7 +36,14 @@
                 if ($fetch){
                     $post_autor_id = $fetch["id_autor"];
                     $post_anonimo = $fetch["anonimo"];
+                    $baneado = $fetch["baneado"];
                     $original_poster = 0;
+
+                    if ($baneado == 1){
+                        header("Location: ../../post.php?id=$comentario_id");
+                        exit();
+                    }
+
                     if ($post_autor_id == $_SESSION["cuenta_id"]){
                         if ((($comentario_anonimo == 0) && ($post_anonimo == 0)) || (($comentario_anonimo == 1) && ($post_anonimo == 1))){
                             $original_poster = 1;
