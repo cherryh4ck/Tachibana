@@ -1,4 +1,4 @@
-const ventana_subir = document.getElementsByClassName("contenido-subir")[0];
+const ventana_subir = document.getElementById("dialog-subir");
 const ventana_boton = document.getElementById("subir-boton-modal");
 const posible_setup = document.getElementById("dialog-setup");
 

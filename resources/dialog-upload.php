@@ -1,4 +1,4 @@
-<dialog style="display: none;" class="contenido-subir">
+<dialog style="display: none;" class="contenido-subir" id="dialog-subir">
     <script src="js/archivos.js" type="module" defer></script>
     <script src="js/tags.js" type="module" defer></script>
     <img src="" alt="" id="image-preview" style="display: none;">
