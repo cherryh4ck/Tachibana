@@ -11,7 +11,7 @@
             <div class="contenido-subir-formulario-fila1">
                 <div class="contenido-subir-formulario-fila1-input-allspace">
                     <p>Motivo del baneo</p>
-                    <input type="text" name="motivo" id="setup-motivo" placeholder="...">
+                    <input type="text" name="motivo" id="ban-motivo" placeholder="...">
                 </div>
             </div>
             <div class="contenido-subir-formulario-error">
