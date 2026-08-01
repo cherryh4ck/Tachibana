@@ -3,7 +3,8 @@
         <h2 class="contenido-setup-titulo">Banear post</h2>
         <script src="js/admin/modify-post.js" defer></script>
         <form action="php/setup.php" method="POST" id="formulario-setup">
-            <input type="hidden" name="postID" value="<?php echo $id; ?>">
+            <input type="hidden" name="post_id" value="<?php echo $id; ?>">
+            <input type="hidden" name="accion" value="ban">
             <p>Banear un post hará que este siga siendo visible, sin embargo los datos del post serán ocultados.</p>
             <br>
             <p>El motivo se mostrará en la descripción.</p>
