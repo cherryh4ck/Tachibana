@@ -94,11 +94,6 @@
     }
 
     function renderizar_post_card(array $post, PDO $conn): string {
-        $ruta_imagen = __DIR__ . "/../galeria/" . $post["id"] . ".jpg";
-        if (!file_exists($ruta_imagen)){
-            return "";
-        }
-
         $post_titulo = "";
         $post_categoria = "";
 
@@ -107,6 +102,13 @@
             $sql->execute([$post["id"]]);
             $fetch = $sql->fetch(PDO::FETCH_ASSOC);
             if ($fetch){
+                if ($post["baneado"] == 0){
+                    $ruta_imagen = __DIR__ . "/../galeria/" . $post["id"] . ".jpg";
+                    if (!file_exists($ruta_imagen)){
+                        return "";
+                    }
+                }
+
                 $post_titulo = $fetch["titulo"];
 
                 $sql = $conn->prepare("SELECT * FROM categorias WHERE id = ?");

@@ -8,19 +8,6 @@
 
     if (isset($_GET["id"]) && is_numeric($_GET["id"])){
         $id = $_GET["id"];
-        if (!file_exists("galeria/fullsize/" . $id . ".jpg")){
-            if (file_exists("galeria/fullsize/" . $id . ".gif")){
-                $ext = "gif";
-            }
-            else{
-                $_SESSION["error"] = 2;
-                header("Location: error.php");
-                exit();
-            }
-        }
-        else{
-            $ext = "jpg";
-        }
     }
     else{
         $_SESSION["error"] = 2;
@@ -44,6 +31,22 @@
             $post_sticky = $fetch["sticky"];
             $baneado = $fetch["baneado"];
             $baneado_motivo = $fetch["baneado_motivo"];
+
+            if ($baneado == 0){
+                if (!file_exists("galeria/fullsize/" . $id . ".jpg")){
+                    if (file_exists("galeria/fullsize/" . $id . ".gif")){
+                        $ext = "gif";
+                    }
+                    else{
+                        $_SESSION["error"] = 2;
+                        header("Location: error.php");
+                        exit();
+                    }
+                }
+                else{
+                    $ext = "jpg";
+                }
+            }
             
             // conseguir datos de la categoria
             $sql = $conn->prepare("SELECT * FROM categorias WHERE id = ?;");
