@@ -1147,7 +1147,7 @@ header h1{
     color: rgb(81, 76, 76);
 }
 
-.contenido-subir-formulario-error{
+.contenido-subir-formulario-error, .contenido-subir-formulario-aviso-setup{
     display: block;
     width: 100%;
     margin-top: 1em;
@@ -1156,7 +1156,7 @@ header h1{
     white-space: normal;
 }
 
-.contenido-subir-formulario-error p{
+.contenido-subir-formulario-error p, .contenido-subir-formulario-aviso-setup p{
     color: rgb(211, 199, 199);
     font-size: 18px;
 }

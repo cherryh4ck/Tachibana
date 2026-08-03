@@ -33,6 +33,9 @@
                 <input type="checkbox" name="cuenta_obligatoria" id="setup-cuenta-obligatoria" checked>
                 <label for="setup-cuenta-obligatoria">Requerir cuenta para poder postear</label>
             </div>
+            <div class="contenido-subir-formulario-aviso-setup">
+                <p style="display: flex;" id="mensaje-imagick">- Imagick instalado (<b><span id="mensaje-imagick-status">...</span></b>)</p>
+            </div>
             <div class="contenido-subir-formulario-error">
                 <p style="display: none;" id="mensaje-error"><span>Error al instalar:</span> Test test</p>
             </div>
