@@ -85,9 +85,6 @@
             }
 
             try{
-                $conn = new PDO("mysql:host=$host:$puerto;dbname=$db", $user, $pass);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                 $sql = $conn->prepare("INSERT INTO posts(id_autor, id_categoria, titulo, descripcion, anonimo) VALUES (?, ?, ?, ?, ?);");
                 $sql->execute([$post_autor_id, $post_categoria, $post_titulo, $post_descripcion, $post_anonimo]);
 
