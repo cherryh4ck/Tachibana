@@ -24,7 +24,7 @@
     $post_titulo = htmlspecialchars($_POST["titulo"]);
     $post_categoria = $_POST["categoria"];
     $post_descripcion = nl2br(htmlspecialchars($_POST["descripcion"]));
-    $post_autor_id = $_SESSION["cuenta_id"];
+    $post_autor_id = $_SESSION["cuenta_id"] ?? null;
     $post_anonimo = $_POST["anonimo"];
     if ($post_anonimo == "on"){
         $post_anonimo = 1;
@@ -58,8 +58,8 @@
         exit();
     }
 
-    $dir = "../galeria/";
-    $fullsize = "../galeria/fullsize/";
+    $dir = realpath(__DIR__ . "/../galeria") . DIRECTORY_SEPARATOR;
+    $fullsize = realpath(__DIR__ . "/../galeria/fullsize") . DIRECTORY_SEPARATOR;
 
     $tamaño = filesize($archivo["tmp_name"]);
     $imagesize = getimagesize($archivo["tmp_name"]);
@@ -118,13 +118,6 @@
         $sql->execute([$post_autor_id, $post_categoria, $post_titulo, $post_descripcion, $post_anonimo]);
 
         $last_insert = $conn->lastInsertId();
-        $renombrado = strval($last_insert) . ".jpg";
-        if ($extension_real == "gif"){
-            $fullRenombrado = strval($last_insert) . ".gif";
-        }
-        else{
-            $fullRenombrado = $renombrado;
-        }
 
         if (!(empty($post_tags))){
             $tags = explode(",", $post_tags);
@@ -161,36 +154,85 @@
         exit();
     }
 
+    if ($extension_real == "gif"){
+        $fullRenombrado = strval($last_insert) . ".gif";
+    }
+    else{
+        $fullRenombrado = strval($last_insert) . ".jpg";
+    }
+
     $miniatura_w = 400;
     $miniatura_h = 300;
 
-    $width = imagesx($imagen);
-    $height = imagesy($imagen);
+    $usar_imagick_gif = ($extension_real == "gif" && extension_loaded("imagick"));
 
-    $aspecto_original = $width / $height;
-    $aspecto_miniatura = $miniatura_w / $miniatura_h;
+    if ($usar_imagick_gif){
+        $renombrado = strval($last_insert) . ".gif";
 
-    if ( $aspecto_original >= $aspecto_miniatura )
-    {
-        $nueva_height = $miniatura_h;
-        $nueva_width = $width / ($height / $miniatura_h);
+        $gif = new Imagick($archivo["tmp_name"]);
+        $gif = $gif->coalesceImages();
+
+        foreach ($gif as $frame){
+            $ancho_frame = $frame->getImageWidth();
+            $alto_frame = $frame->getImageHeight();
+
+            $aspecto_frame = $ancho_frame / $alto_frame;
+            $aspecto_miniatura = $miniatura_w / $miniatura_h;
+
+            if ($aspecto_frame >= $aspecto_miniatura){
+                $nueva_height = $miniatura_h;
+                $nueva_width = $ancho_frame / ($alto_frame / $miniatura_h);
+            }
+            else{
+                $nueva_width = $miniatura_w;
+                $nueva_height = $alto_frame / ($ancho_frame / $miniatura_w);
+            }
+
+            $frame->resizeImage((int) $nueva_width, (int) $nueva_height, Imagick::FILTER_LANCZOS, 1);
+            $frame->cropImage(
+                $miniatura_w,
+                $miniatura_h,
+                (int) (($nueva_width - $miniatura_w) / 2),
+                (int) (($nueva_height - $miniatura_h) / 2)
+            );
+            $frame->setImagePage($miniatura_w, $miniatura_h, 0, 0);
+        }
+
+        $gif = $gif->deconstructImages();
+        $gif->writeImages($dir . $renombrado, true);
     }
-    else
-    {
-        $nueva_width = $miniatura_w;
-        $nueva_height = $height / ($width / $miniatura_w);
+    else{
+        $renombrado = strval($last_insert) . ".jpg";
+
+        $width = imagesx($imagen);
+        $height = imagesy($imagen);
+
+        $aspecto_original = $width / $height;
+        $aspecto_miniatura = $miniatura_w / $miniatura_h;
+
+        if ( $aspecto_original >= $aspecto_miniatura )
+        {
+            $nueva_height = $miniatura_h;
+            $nueva_width = $width / ($height / $miniatura_h);
+        }
+        else
+        {
+            $nueva_width = $miniatura_w;
+            $nueva_height = $height / ($width / $miniatura_w);
+        }
+
+        $miniatura = imagecreatetruecolor( $miniatura_w, $miniatura_h );
+
+        imagecopyresampled($miniatura,
+                        $imagen,
+                        0 - ($nueva_width - $miniatura_w) / 2, 
+                        0 - ($nueva_height - $miniatura_h) / 2, 
+                        0, 0,
+                        $nueva_width, $nueva_height,
+                        $width, $height);
+        imagejpeg($miniatura, $dir . $renombrado , 80);
     }
 
-    $miniatura = imagecreatetruecolor( $miniatura_w, $miniatura_h );
-
-    imagecopyresampled($miniatura,
-                    $imagen,
-                    0 - ($nueva_width - $miniatura_w) / 2, 
-                    0 - ($nueva_height - $miniatura_h) / 2, 
-                    0, 0,
-                    $nueva_width, $nueva_height,
-                    $width, $height);
-    imagejpeg($miniatura, $dir . $renombrado , 80);
     if ($extension_real == "gif"){
         rename($archivo["tmp_name"], $fullsize . $fullRenombrado);
     }

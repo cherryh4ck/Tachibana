@@ -103,8 +103,14 @@
             $fetch = $sql->fetch(PDO::FETCH_ASSOC);
             if ($fetch){
                 if ($post["baneado"] == 0){
-                    $ruta_imagen = __DIR__ . "/../galeria/" . $post["id"] . ".jpg";
-                    if (!file_exists($ruta_imagen)){
+                    $ruta_base = __DIR__ . "/../galeria/" . $post["id"];
+                    if (file_exists($ruta_base . ".gif")){
+                        $extension_miniatura = "gif";
+                    }
+                    else if (file_exists($ruta_base . ".jpg")){
+                        $extension_miniatura = "jpg";
+                    }
+                    else{
                         return "";
                     }
                 }
@@ -140,7 +146,7 @@
             $html .= "<a href='post.php?id=" . $post["id"] . "'><img src='resources/notfound.jpg' alt=''></a>";
         }
         else{
-            $html .= "<a href='post.php?id=" . $post["id"] . "'><img src='galeria/" . $post["id"] . ".jpg' alt=''></a>";
+            $html .= "<a href='post.php?id=" . $post["id"] . "'><img src='galeria/" . $post["id"] . "." . $extension_miniatura . "' alt=''></a>";
         }
         $html .= "<p>";
         if ($post["sticky"] == 1){
