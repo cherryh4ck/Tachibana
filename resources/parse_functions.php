@@ -134,7 +134,12 @@
             $html .= "<span id='input-tag-amarillo'>Sticky</span>";
         }
         $html .= "</div>";
-        $html .= "<a href='post.php?id=" . $post["id"] . "'><img src='galeria/" . $post["id"] . ".jpg' alt=''></a>";
+        if ($post["baneado"] == 1){
+            $html .= "<a href='post.php?id=" . $post["id"] . "'><img src='resources/notfound.jpg' alt=''></a>";
+        }
+        else{
+            $html .= "<a href='post.php?id=" . $post["id"] . "'><img src='galeria/" . $post["id"] . ".jpg' alt=''></a>";
+        }
         $html .= "<p>";
         if ($post["sticky"] == 1){
             $html .= "<span id='post-titulo-fijado' title='Post fijado'><svg viewBox='0 0 24 24' width='16' height='16' fill='currentColor'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg></span>";
