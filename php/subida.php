@@ -2,7 +2,6 @@
     // TODO TOTAL:
     // - más chequeos de sanidad (tamaño mínimo, máxima resolución, sesión etc etc etc)
     // - organizar el código, parece un desastre xd
-    // - reworkear un poco todo para que trabaje más con base de datos y no depender de archivos xddd
     // - terminar tags
     require "db/config.php";
     error_reporting(E_ERROR | E_PARSE);
@@ -33,12 +32,16 @@
     $renombrado = "";
     $archivos = scandir("../galeria/");
     
-    // Por si existe el test.txt o no
-    if (file_exists("../galeria/Test.txt")){
-        $total_archivos = count($archivos) - 3;
+    try {   
+        $sql = $conn->prepare("SELECT MAX(id) as max FROM posts");
+        $sql->execute();
+
+        $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+        $total_archivos = $fetch["max"] + 1;
     }
-    else{
-        $total_archivos = count($archivos) - 2;
+    catch (PDOException $e){
+        header("Location: ../error.php?id=9");
+        exit();
     }
 
     $info = pathinfo($archivo["name"]);
