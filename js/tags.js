@@ -19,7 +19,7 @@ const formulario = document.getElementById("formulario-subir");
 function introducirTag(tag){
     tag = tag.trim()
     tag_permitido = true;
-    if ((tag.length <= 20) && (tags_introducidos < 4) && (tag != "") && (/\S/.test(tag) && (tag != null) && (tag.length >= 4) && (!tags.includes(tag)))){
+    if ((tag.length <= 20) && (tags_introducidos < 4) && (tag != "") && (/\S/.test(tag) && (tag != null) && (tag.length >= 2) && (!tags.includes(tag)))){
         for (let i = 0; i < tag.length; i++) {
             if (caracteres_permitidos.includes(tag[i]) == false) {
                 tag_permitido = false;
@@ -83,8 +83,8 @@ function introducirTag(tag){
         else if (tags_introducidos >= 4){
             mensaje_error.innerHTML = "<span>Error al añadir tag: </span> El máximo de tags es de 4";
         }
-        else if (tag.length < 4){
-            mensaje_error.innerHTML = "<span>Error al añadir tag: </span> El tag debe tener al menos 4 caracteres";
+        else if (tag.length < 2){
+            mensaje_error.innerHTML = "<span>Error al añadir tag: </span> El tag debe tener al menos 2 caracteres";
         }
         else{
             mensaje_error.innerHTML = "<span>Error al añadir tag: </span> El tag no puede estar vacío";
