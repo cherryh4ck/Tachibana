@@ -47,6 +47,7 @@
     <script src="js/index/query.js" defer></script>
     <script src="js/index/tags.js" defer></script>
     <script src="js/index/scroll.js" defer></script>
+    <script src="js/index/stats.js" defer></script>
 
     <script src="js/subir_modal.js" defer></script>
 
@@ -131,6 +132,7 @@
                     </div>
                 </div>
             </div>
+            <div class="galeria-stats" id="galeria-stats"></div>
         </div>
         <div class="galeria-panel2">
             <?php

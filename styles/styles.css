@@ -1569,6 +1569,19 @@ header h1{
     font-size: 20px;
 }
 
+.galeria-stats{
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 340px;
+    min-width: 300px;
+    margin-top: 0.8em;
+    padding: 0 0.5em;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: rgb(112, 108, 108);
+}
+
 .galeria-panel2{
     display: block;
     height: 100%;
