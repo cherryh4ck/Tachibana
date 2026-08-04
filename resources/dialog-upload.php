@@ -1,6 +1,7 @@
 <dialog style="display: none;" class="contenido-subir" id="dialog-subir">
     <script src="js/archivos.js" type="module" defer></script>
     <script src="js/tags.js" type="module" defer></script>
+    <script src="js/upload-post.js" type="module" defer></script>
     <img src="" alt="" id="image-preview" style="display: none;">
     <div class="contenido-subir-formulario">
         <form action="php/subida.php" method="POST" enctype="multipart/form-data" id="formulario-subir" onkeydown="if (event.keyCode === 13 && event.target.tagName !== 'TEXTAREA') {return false;}">

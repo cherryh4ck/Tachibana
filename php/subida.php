@@ -1,20 +1,30 @@
 <?php
+    header("Content-Type: application/json");
     if ($_SERVER["REQUEST_METHOD"] != "POST"){
-        header("Location: ../index.php");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Método de solicitud incorrecto."
+        ]);
         exit();
     }
 
     require "db/config.php";
 
     if ($conn_test == 0){
-        header("Location: ../error.php?id=9");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Sin conexión a la base de datos."
+        ]);
         exit();
     }
 
     $cuenta_obligatoria = $configuracion["general"]["cuenta_obligatoria"];
 
     if ($cuenta_obligatoria == 1 && !isset($_SESSION["cuenta_id"])){
-        header("Location: ../login.php");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Sin autorización."
+        ]);
         exit();
     }
 
@@ -36,12 +46,18 @@
     $archivo = $_FILES["archivo"] ?? null;
 
     if (!isset($archivo) || $archivo["error"] != UPLOAD_ERR_OK || !is_uploaded_file($archivo["tmp_name"])){ // chequear si de entrada tenemos un archivo válido
-        header("Location: ../index.php");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Archivo inválido."
+        ]);
         exit();
     }
 
     if (!is_numeric($post_categoria)){
-        header("Location: ../error.php?id=7");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Categoría inválida."
+        ]);
         exit();
     }
 
@@ -49,12 +65,18 @@
         $sql = $conn->prepare("SELECT id FROM categorias WHERE id = ?");
         $sql->execute([$post_categoria]);
         if (!$sql->fetch(PDO::FETCH_ASSOC)){
-            header("Location: ../error.php?id=7");
+            echo json_encode([
+                "ok" => false,
+                "mensaje" => "Categoría no encontrada."
+            ]);
             exit();
         }
     }
     catch (PDOException $e){
-        header("Location: ../error.php?id=9");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Error al hacer la query en la base de datos."
+        ]);
         exit();
     }
 
@@ -65,7 +87,10 @@
     $imagesize = getimagesize($archivo["tmp_name"]);
 
     if (!$imagesize){
-        header("Location: ../error.php?id=3");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Tipo de imagen no válido."
+        ]);
         exit();
     }
 
@@ -107,7 +132,10 @@
     }
 
     if (!$imagen){
-        header("Location: ../error.php?id=3");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Error al procesar la imagen."
+        ]);
         exit();
     }
 
@@ -150,7 +178,10 @@
     }
     catch (PDOException $e){
         $conn->rollBack();
-        header("Location: ../error.php?id=9");
+        echo json_encode([
+            "ok" => false,
+            "mensaje" => "Error al insertar en la base de datos."
+        ]);
         exit();
     }
 
@@ -240,6 +271,10 @@
         imagejpeg($imagen, $fullsize . $fullRenombrado);
     }
 
-    header("Location: ../post.php?id=" . strval($last_insert));
+    echo json_encode([
+        "ok" => true,
+        "mensaje" => "OK.",
+        "id" => $last_insert
+    ]);
     exit();
 ?>
