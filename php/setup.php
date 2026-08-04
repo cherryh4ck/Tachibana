@@ -1,5 +1,7 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST" && !is_dir(__DIR__ . "/../galeria")) {
+        header("Content-Type: application/json");
+
         $host = $_POST["host"] ?? "";
         $puerto = $_POST["puerto"] ?? "";
         $usuario = $_POST["usuario"] ?? "";
@@ -17,7 +19,6 @@
         setcookie("ult_act", "", 1, "/"); 
         
         if (!extension_loaded("gd")) {
-            header("Content-Type: application/json");
             echo json_encode([
                 "ok" => false,
                 "mensaje" => "Falta la extensión GD en PHP."
@@ -54,7 +55,6 @@
                 mkdir(__DIR__ . "/../" . $carpeta);
             }
 
-            header("Content-Type: application/json");
             echo json_encode([
                 "ok" => true,
                 "mensaje" => "Instalado"
@@ -62,14 +62,12 @@
         }
         catch(PDOException $e){
             if ($paso == "conexion") {
-                header("Content-Type: application/json");
                 echo json_encode([
                     "ok" => false,
                     "mensaje" => "No se pudo conectar a la base de datos."
                 ]);
             }
             else{
-                header("Content-Type: application/json");
                 echo json_encode([
                     "ok" => false,
                     "mensaje" => "$e"
