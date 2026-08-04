@@ -21,9 +21,11 @@ sticky_boton.addEventListener("click", function(e){
             console.log(data);
             if (data.value == 1){
                 post_titulo_fijado.style.display = "inline";
+                sticky_boton.textContent = "Desfijar post";
             }
             else{
                 post_titulo_fijado.style.display = "none";
+                sticky_boton.textContent = "Fijar post";
             }
         }
         else {

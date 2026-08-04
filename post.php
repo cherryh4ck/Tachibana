@@ -217,7 +217,12 @@
                     echo "</div>";
                     echo "<div class='post-admin-panel-acciones'>";
                     if ($_SESSION["cuenta_rol"] === "admin"){
-                        echo "<button id='post-admin-fijar' data-id='$id'>Fijar post</button>";
+                        if ($post_sticky == 0){
+                            echo "<button id='post-admin-fijar' data-id='$id'>Fijar post</button>";
+                        }
+                        else{
+                            echo "<button id='post-admin-fijar' data-id='$id'>Desfijar post</button>";
+                        }
                     }
                     echo "<button id='post-admin-banear' data-id='$id'>Banear post</button>";
                     echo "<button id='post-admin-eliminar' data-id='$id' class='post-admin-peligro'>Eliminar post</button>";
