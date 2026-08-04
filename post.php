@@ -120,14 +120,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php
-        if ($post_anonimo == 0){
-            echo "<title>$post_autor_nickname - $post_titulo</title>";
-        }
-        else{
-            echo "<title>Anónimo - $post_titulo</title>";
-        }
-    ?>
+    <title><?= e($post_titulo) ?> - Tachibana</title>
     <script src="js/post/comentar.js" defer></script>
     <script src="js/post/anonimo.js" defer></script>
     <script src="js/post/adjuntar_imagen.js" defer></script>
