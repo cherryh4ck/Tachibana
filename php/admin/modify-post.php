@@ -4,7 +4,7 @@
         try {
             $accion = $_POST["accion"];
             $post_id = $_POST["post_id"];
-            
+
             if ($accion == "sticky") {
                 $sql = $conn->prepare("UPDATE posts SET sticky = (@new := CASE WHEN sticky = 1 THEN 0 ELSE 1 END) WHERE id = ?");
                 $sql->execute([$post_id]);
@@ -24,6 +24,9 @@
                 $motivo = $_POST["motivo"];
                 $sql = $conn->prepare("UPDATE posts SET baneado = 1, baneado_motivo = ? WHERE id = ?");
                 $sql->execute([$motivo, $post_id]);
+
+                $sql = $conn->prepare("UPDATE posts SET sticky = 0 WHERE id = ?");
+                $sql->execute([$post_id]);
 
                 http_response_code(200);
                 header("Content-Type: application/json");
