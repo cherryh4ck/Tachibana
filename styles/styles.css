@@ -416,6 +416,12 @@ header h1{
     transition: all 200ms;
     cursor: pointer;
 }
+
+.post-admin-panel-acciones button:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
  
 .post-admin-panel-acciones button:hover{
     background-color: rgb(27, 26, 26);
