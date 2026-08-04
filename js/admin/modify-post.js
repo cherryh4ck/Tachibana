@@ -1,4 +1,5 @@
 const sticky_boton = document.getElementById("post-admin-fijar");
+const banear_form = document.getElementById("formulario-ban");
 const banear_boton = document.getElementById("setup-enviar");
 const post_titulo_fijado = document.getElementById("post-titulo-fijado");
 const postId = sticky_boton.dataset.id;
@@ -38,10 +39,11 @@ sticky_boton.addEventListener("click", function(e){
     });
 });
 
-banear_boton.addEventListener("click", function(e){
+banear_form.addEventListener("submit", function(e){
     e.preventDefault();
     accion = "ban";
     var motivo = document.getElementById("ban-motivo").value;
+    var eliminar_recursos = document.getElementById("subir-eliminar-recursos").checked;
 
     if (motivo === "") {
         motivo = "Sin especificar.";
@@ -52,7 +54,7 @@ banear_boton.addEventListener("click", function(e){
     fetch("php/admin/modify-post.php", {
         method: "POST",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ accion: accion, motivo: motivo, post_id: postId })
+        body: new URLSearchParams({ accion: accion, motivo: motivo, eliminar_recursos: eliminar_recursos, post_id: postId })
     })
     .then(response => response.json())
     .then(data => {

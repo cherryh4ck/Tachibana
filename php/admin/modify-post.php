@@ -22,18 +22,37 @@
             }
             else if ($accion == "ban") {
                 $motivo = $_POST["motivo"];
+                $eliminar_recursos = $_POST["eliminar_recursos"] ?? "false";
                 $sql = $conn->prepare("UPDATE posts SET baneado = 1, baneado_motivo = ? WHERE id = ?");
                 $sql->execute([$motivo, $post_id]);
 
                 $sql = $conn->prepare("UPDATE posts SET sticky = 0 WHERE id = ?");
                 $sql->execute([$post_id]);
 
+                if ($eliminar_recursos === "true") {
+                    if (file_exists(__DIR__ . "/../../galeria/$post_id.jpg")) {
+                        unlink(__DIR__ . "/../../galeria/$post_id.jpg");
+                        unlink(__DIR__ . "/../../galeria/fullsize/$post_id.jpg");
+                    }
+                    else{
+                        if (extension_loaded("imagick")){
+                            unlink(__DIR__ . "/../../galeria/$post_id.gif");
+                            unlink(__DIR__ . "/../../galeria/fullsize/$post_id.gif");
+                        }
+                        else{
+                            unlink(__DIR__ . "/../../galeria/$post_id.jpg");
+                            unlink(__DIR__ . "/../../galeria/fullsize/$post_id.gif");
+                        }
+                    }
+                }
+
                 http_response_code(200);
                 header("Content-Type: application/json");
                 echo json_encode([
                     "authorized" => true,
                     "ok" => true,
-                    "mensaje" => "Post $post_id baneado con motivo: $motivo."
+                    "mensaje" => "Post $post_id baneado con motivo: $motivo.",
+                    "eliminar_recursos" => $eliminar_recursos
                 ]);
             }
             else {
