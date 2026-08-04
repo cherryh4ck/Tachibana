@@ -159,17 +159,15 @@
                 else{
                     echo "<span id='input-tag-rojo'>$post_categoria</span>";
                 }
+
+                $sql = $conn->prepare("SELECT tags.nombre, tags.usos FROM posts_tags INNER JOIN tags ON tags.id = posts_tags.id_tag WHERE posts_tags.id_post = ? ORDER BY tags.nombre ASC");
+                $sql->execute([$id]);
+                $tags_fetch = $sql->fetchAll(PDO::FETCH_ASSOC);
                 if ($tags_fetch) {
                     foreach ($tags_fetch as $tag){
-                        $tag_id = $tag["id_tag"];
-                        $sql = $conn->prepare("SELECT * FROM tags WHERE id = ?");
-                        $sql->execute([$tag_id]);
-                        $tag_fetch = $sql->fetch(PDO::FETCH_ASSOC);
-                        if ($tag_fetch){
-                            $tag_nombre = $tag_fetch["nombre"];
-                            $tag_usos = $tag_fetch["usos"];
-                             echo "<a href='index.php?tags=" . urlencode($tag_nombre) . "'><span id='input-tag2'>$tag_nombre<b>$tag_usos</b></span></a>";
-                        }
+                        $tag_nombre = $tag["nombre"];
+                        $tag_usos = $tag["usos"];
+                        echo "<a href='index.php?tags=" . urlencode($tag_nombre) . "'><span id='input-tag2'>$tag_nombre<b>$tag_usos</b></span></a>";
                     }
                 }
                 echo "</div>";
