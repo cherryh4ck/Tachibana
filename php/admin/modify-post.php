@@ -4,9 +4,7 @@
         try {
             $accion = $_POST["accion"];
             $post_id = $_POST["post_id"];
-
-            $conn = new PDO("mysql:host=$host:$puerto;dbname=$db", $user, $pass);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
             if ($accion == "sticky") {
                 $sql = $conn->prepare("UPDATE posts SET sticky = (@new := CASE WHEN sticky = 1 THEN 0 ELSE 1 END) WHERE id = ?");
                 $sql->execute([$post_id]);
