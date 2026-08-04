@@ -3,6 +3,10 @@
 Conceptos generales:
 - añadir funciones para los administradores (faltan algunos apartados)
 - añadir más parametros al config.ini
+- suspensiones de cuentas
+- stats mediante api
+- info de tachibana en un admin panel o apartado
+- añadir footer
 - trabajar en un motd (?)
 - id personalizada de usuario (?)
 
