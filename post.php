@@ -147,7 +147,7 @@
                 }
                 echo "<div class='post-contenido'>";
                 echo "<div class='post-contenido-titulo'>";
-                echo "<h1 id='post-titulo'>$post_titulo";
+                echo "<h1 id='post-titulo'><span id='post-titulo-texto'>$post_titulo</span>";
             ?>
                 <span id='post-titulo-fijado' title='Post fijado' <?php if ($post_sticky == 0) { echo "style='display: none;'"; } ?>><svg viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg></span>
             <?php
