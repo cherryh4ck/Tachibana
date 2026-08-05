@@ -152,7 +152,8 @@
         if ($post["sticky"] == 1){
             $html .= "<span id='post-titulo-fijado' title='Post fijado'><svg viewBox='0 0 24 24' width='16' height='16' fill='currentColor'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg></span>";
         }
-        $html .= "$post_titulo</p>";
+        $html .= "<span class='contenido-bloque-titulo-texto'>$post_titulo</span>";
+        $html .= "</p>";
         $html .= "</div>";
 
         return $html;
