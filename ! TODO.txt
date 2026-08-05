@@ -1,28 +1,26 @@
 /// LISTA DE TODO GENERAL ///
 
 Conceptos generales:
-- añadir funciones para los administradores (faltan algunos apartados)
+- añadir funciones para los administradores (faltan algunos apartados) (SI, siguen faltando apartados)
 - añadir más parametros al config.ini
-- suspensiones de cuentas
+- suspensión de cuentas
 - info de tachibana en un admin panel o apartado
 - añadir footer
+- modo anonimato (deshabilita la creación de cuentas y el panel de usuarios / perfiles)
 - trabajar en un motd (?)
 - id personalizada de usuario (?)
 
-index.php:
-- terminar funcionamiento (en progreso)
-- aclarar ciertos errores (por ej, min chars en la búsqueda por texto)
-
 perfil.php:
-- terminar apartado de seguridad
+- terminar apartado de seguridad (uh, no sé que falta)
 
 perfiles.php:
-- añadir más chequeos de sanidad
+- añadir más chequeos de sanidad (estoy confundido)
+- que se muestren los últimos usuarios conectados y yap
 
 post.php:
 - pasar la carga a php/post/comentar.php
-- hover con soporte de imagenes??
-- incluir máximo de caracteres al comentar
+- hover con soporte de imagenes?? (claude je)
+- incluir contador de caracteres al comentar
 
 php/subida.php:
 - añadir chequeos de sanidad (titulo y descripción)
@@ -30,12 +28,6 @@ php/subida.php:
 
 php/post/comentar.php:
 - añadir chequeos de sanidad
-
-setup.php:
-- mejorar el estilo visual
-
-base de datos:
-- optimizar búsqueda de tags (ordenar tags de manera alfabética y usar comas para separar la busqueda)
 
 diseño:
 - hacer todo responsive
