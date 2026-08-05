@@ -447,6 +447,7 @@ header h1{
 #post-titulo{
     display: flex;
     align-items: center;
+    text-align: left;
     gap: 0.35em;
     width: 100%;
     margin-top: 0.5em;
@@ -454,6 +455,12 @@ header h1{
     margin-left: 0.1em;
     text-shadow: 3px 4px 4px rgba(17, 17, 17, 0.7);
     font-weight: bold;
+}
+
+#post-titulo-texto{
+    display: block;
+    min-width: 0;
+    overflow-wrap: break-word;
 }
  
 #post-titulo-fijado{
