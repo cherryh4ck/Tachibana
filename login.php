@@ -37,6 +37,7 @@
                     $_SESSION["cuenta_usuario"] = $fetch["username"];
                     $_SESSION["cuenta_rol"] = $fetch["rol"];
                     $_SESSION["error"] = 0;
+                    unset($_SESSION['last_user']);
                     header("Location: index.php");
                     exit();
                 }
