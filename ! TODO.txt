@@ -5,7 +5,6 @@ Conceptos generales:
 - añadir más parametros al config.ini
 - suspensión de cuentas
 - info de tachibana en un admin panel o apartado
-- añadir footer
 - modo anonimato (deshabilita la creación de cuentas y el panel de usuarios / perfiles)
 - trabajar en un motd (?)
 - id personalizada de usuario (?)
