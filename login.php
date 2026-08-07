@@ -89,5 +89,6 @@
         </div>
         <p id="registrate">¿No tenés cuenta? Registrate <a href="register.php">acá</a></p>
     </div>
+    <?php include("resources/footer.php"); ?>
 </body>
 </html>

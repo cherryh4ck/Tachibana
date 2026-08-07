@@ -166,5 +166,6 @@
     <?php else: ?>
     <?php include("resources/dialog-setup.php"); ?>
     <?php endif; ?>
+    <?php include("resources/footer.php"); ?>
 </body>
 </html>

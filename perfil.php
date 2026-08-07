@@ -243,8 +243,8 @@
                 </div>
             <?php endif; ?>
         <?php endif; ?>
-
         <?php include("resources/dialog-upload.php"); ?>
     </header>
+    <?php include("resources/footer.php"); ?>
 </body>
 </html>

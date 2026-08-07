@@ -73,5 +73,6 @@
         </div>
         <p id="registrate">¿Tenés cuenta? Iniciá sesión <a href="login.php">acá</a></p>
     </div>
+    <?php include("resources/footer.php"); ?>
 </body>
 </html>

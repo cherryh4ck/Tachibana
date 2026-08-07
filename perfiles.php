@@ -84,7 +84,7 @@
         ?>
         </div>
     </div>
-
     <?php include("resources/dialog-upload.php"); ?>
+    <?php include("resources/footer.php"); ?>
 </body>
 </html>
