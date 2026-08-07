@@ -1956,17 +1956,29 @@ header h1{
     color: rgb(211, 199, 199);
 }
  
-#registrate a{
+#registrate a, #reglas-aviso a {
     color: rgb(49, 168, 79);
     text-decoration: none;
     transition: all 200ms;
 }
  
 #registrate a:hover{
-    color: rgb(34, 119, 56);
+    color: rgb(34, 119, 56) !important;
     cursor: pointer;
 }
- 
+
+#reglas-aviso {
+    color: rgba(211, 199, 199, 0.623);
+    font-size: 12px;
+    margin-top: 0.5em;
+    font-style: italic;
+    letter-spacing: 0.03em;
+}
+
+#reglas-aviso a {
+    color: rgb(49, 168, 79, 0.623);
+}
+
 #formulario-mensaje, #formulario-mensaje2{
     width: 100%;
     margin-top: 1em;
@@ -2518,3 +2530,47 @@ header h1{
     opacity: .6;
     transform: scale(1.05);
 }
+
+/* reglas.php */
+
+.reglas-contenedor {
+    display: block;
+    width: 100%;
+}
+
+.reglas-contenedor h1, .reglas-contenedor h2 {
+    font-size: 22px;
+    color: rgb(211, 199, 199);
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+.reglas-contenedor h2 {
+    font-size: 18px;
+    margin-top: 1.5em;
+}
+
+#romper {
+    margin-top: 1.5em;
+    color: rgb(211, 199, 199);
+}
+
+.regla {
+    display: grid;
+    grid-template-columns: 25% 50% 25%; 
+    align-items: center;
+    padding: 5px 0;
+}
+
+.regla-espacio {
+    text-align: right;
+    padding-right: 10px;
+    font-weight: bold;
+    color: rgb(156, 146, 146);
+}
+
+.regla-texto {
+    text-align: left;
+    color: rgb(211, 199, 199);
+}
+
