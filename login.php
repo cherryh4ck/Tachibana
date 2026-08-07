@@ -15,6 +15,7 @@
 
         if (empty($username) || empty($password)){
             $mensaje = "<span>Error:</span> Los campos están vacios.";
+            $_SESSION['last_user'] = $username;
         }
         else{
             try{
@@ -41,6 +42,7 @@
                 }
                 else{
                     $mensaje = "<span>Error:</span> Usuario o contraseña incorrecta";
+                    $_SESSION['last_user'] = $username;
                 }
             }
             catch(PDOException $e){
@@ -72,7 +74,7 @@
             <form action="login.php" method="post" id="formulario-login">
                 <div class="auth-campo">
                     <p>Usuario</p>
-                    <input type="text" name="user" placeholder="Nombre de usuario" id="user-input" required>
+                    <input type="text" name="user" placeholder="Nombre de usuario" id="user-input" required value ="<?php if (isset($_SESSION['last_user'])) { echo htmlspecialchars($_SESSION['last_user']); unset($_SESSION['last_user']); } ?>">
                 </div>
                 <div class="auth-campo">
                     <p>Contraseña</p>
