@@ -72,6 +72,7 @@
             </form>
         </div>
         <p id="registrate">¿Tenés cuenta? Iniciá sesión <a href="login.php">acá</a></p>
+        <p id="reglas-aviso">Al registrarte, aceptás nuestras <a href="reglas.php">reglas</a></p>
     </div>
     <?php include("resources/footer.php"); ?>
 </body>
