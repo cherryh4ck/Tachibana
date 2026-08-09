@@ -1,5 +1,11 @@
 <?php
     require "php/db/config.php";
+    /*
+        IMPORTANTE:
+         Puedes modificar este archivo como se te antoje. 
+         No necesariamente estas reglas son definitivas.
+         Como tal, no deberías usar el contenido de las reglas de este archivo, ya que solo está lo más básico.
+    */
 ?>
 
 <!DOCTYPE html>
