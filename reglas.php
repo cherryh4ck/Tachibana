@@ -13,11 +13,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesión - Tachibana</title>
+    <title>Reglas - Tachibana</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="shortcut icon" href="favicon.ico" />
-
-    <script src="js/login/sanidad.js" defer></script>
 </head>
 <body>
     <?php include("resources/nav.php"); ?>
