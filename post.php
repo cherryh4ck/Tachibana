@@ -155,10 +155,10 @@
                 echo "</h1>";
                 echo "<div class='post-contenido-tags'>";
                 if ($post_sticky == 1){
-                    echo "<span id='input-tag-amarillo'>Sticky</span>";
+                    echo "<span id='post-categoria-sticky'>Sticky</span>";
                 }
                 else{
-                    echo "<span id='input-tag-rojo'>$post_categoria</span>";
+                    echo "<span id='post-categoria'>$post_categoria</span>";
                 }
 
                 $sql = $conn->prepare("SELECT tags.nombre, tags.usos FROM posts_tags INNER JOIN tags ON tags.id = posts_tags.id_tag WHERE posts_tags.id_post = ? ORDER BY tags.nombre ASC");

@@ -1277,7 +1277,7 @@ header h1{
     user-select: none;
 }
 
-#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user{
+#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user, #post-categoria, #post-categoria-sticky{
     background-color: rgb(49, 168, 79);
     border-radius: 8px;
     height: 25px;
@@ -1336,12 +1336,12 @@ header h1{
     margin-bottom: auto;
 }
 
-#input-tag-rojo{
+#input-tag-rojo, #post-categoria{
     background-color: rgb(219, 64, 64);
     padding: 0 15px;
 }
 
-#input-tag-amarillo{
+#input-tag-amarillo, #post-categoria-sticky{
     background-color: rgb(219, 170, 64);
     padding: 0 15px;
 }
