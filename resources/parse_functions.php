@@ -31,7 +31,6 @@
                         $texto_respuesta = "&gt;&gt;" . $id_salida . ($es_op ? " (OP)" : "");
 
                         if ($es_preview) {
-                            // dentro de un preview no armamos otro tooltip anidado, solo coloreamos
                             $salida .= "<p class='$clase_respuesta' id='post-comentarios-respuesta'>$texto_respuesta</p>";
                         }
                         else {
