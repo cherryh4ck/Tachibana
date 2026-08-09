@@ -1,5 +1,23 @@
 <?php
     require __DIR__ . "/../db/config.php";
+
+    function eliminarPost(int $post_id) {
+        if (file_exists(__DIR__ . "/../../galeria/$post_id.jpg")) {
+            unlink(__DIR__ . "/../../galeria/$post_id.jpg");
+            unlink(__DIR__ . "/../../galeria/fullsize/$post_id.jpg");
+        }
+        else{
+            if (extension_loaded("imagick")){
+                unlink(__DIR__ . "/../../galeria/$post_id.gif");
+                unlink(__DIR__ . "/../../galeria/fullsize/$post_id.gif");
+            }
+            else{
+                unlink(__DIR__ . "/../../galeria/$post_id.jpg");
+                unlink(__DIR__ . "/../../galeria/fullsize/$post_id.gif");
+            }
+        }
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && ($_SESSION['cuenta_rol'] == "admin" || $_SESSION['cuenta_rol'] == "mod")) {
         try {
             $accion = $_POST["accion"];
@@ -30,20 +48,7 @@
                 $sql->execute([$post_id]);
 
                 if ($eliminar_recursos === "true") {
-                    if (file_exists(__DIR__ . "/../../galeria/$post_id.jpg")) {
-                        unlink(__DIR__ . "/../../galeria/$post_id.jpg");
-                        unlink(__DIR__ . "/../../galeria/fullsize/$post_id.jpg");
-                    }
-                    else{
-                        if (extension_loaded("imagick")){
-                            unlink(__DIR__ . "/../../galeria/$post_id.gif");
-                            unlink(__DIR__ . "/../../galeria/fullsize/$post_id.gif");
-                        }
-                        else{
-                            unlink(__DIR__ . "/../../galeria/$post_id.jpg");
-                            unlink(__DIR__ . "/../../galeria/fullsize/$post_id.gif");
-                        }
-                    }
+                    eliminarPost($post_id);
                 }
 
                 http_response_code(200);
@@ -53,6 +58,24 @@
                     "ok" => true,
                     "mensaje" => "Post $post_id baneado con motivo: $motivo.",
                     "eliminar_recursos" => $eliminar_recursos
+                ]);
+            }
+            else if ($accion == "delete") {
+                // eliminamos recursos antes por si acaso
+                eliminarPost($post_id);
+                // ahora si la query
+                $sql = $conn->prepare("DELETE FROM posts_tags WHERE id_post = ?");
+                $sql->execute([$post_id]);
+                $sql = $conn->prepare("DELETE FROM posts_comentarios WHERE id_post = ?");
+                $sql->execute([$post_id]);
+                $sql = $conn->prepare("DELETE FROM posts WHERE id = ?");
+                $sql->execute([$post_id]);
+                http_response_code(200);
+                header("Content-Type: application/json");
+                echo json_encode([
+                    "authorized" => true,
+                    "ok" => true,
+                    "mensaje" => "Post $post_id eliminado."
                 ]);
             }
             else {

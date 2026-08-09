@@ -8,7 +8,7 @@
             <div class="contenido-subir-formulario-error">
                 <p style="display: none;" id="mensaje-error"><span>Error al instalar:</span> Test test</p>
             </div>
-            <input type="submit" value="Eliminar" id="setup-enviar">
+            <input type="submit" value="Eliminar" id="setup-enviar-2">
         </form>
     </div>
 </dialog>

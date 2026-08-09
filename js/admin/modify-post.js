@@ -1,6 +1,8 @@
 const sticky_boton = document.getElementById("post-admin-fijar");
 const banear_form = document.getElementById("formulario-ban");
 const banear_boton = document.getElementById("setup-enviar");
+const eliminar_form = document.getElementById("formulario-delete");
+const eliminar_boton = document.getElementById("setup-enviar-2");
 const post_categoria = document.getElementById("post-categoria");
 const post_titulo_fijado = document.getElementById("post-titulo-fijado");
 const postId = sticky_boton.dataset.id;
@@ -75,5 +77,37 @@ banear_form.addEventListener("submit", function(e){
     })
     .catch(() => {
         banear_boton.disabled = false;
+    });
+});
+
+eliminar_form.addEventListener("submit", function(e){
+    e.preventDefault();
+    accion = "delete";
+
+    const dialog = document.getElementById("dialog-mod-delete");
+    eliminar_boton.disabled = true;
+
+    fetch("php/admin/modify-post.php", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ accion: accion, post_id: postId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok){
+            console.log(data);
+            dialog.close();
+            dialog.style.display = "none";
+            notify("Post eliminado", "exito");
+            setTimeout(() => {
+                window.location.href = "index.php";
+            }, 3000);
+        }
+        else {
+            console.log("malito");
+        }
+    })
+    .catch(() => {
+        eliminar_boton.disabled = false;
     });
 });
