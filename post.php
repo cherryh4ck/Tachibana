@@ -212,6 +212,7 @@
                 
                 if (isset($_SESSION["cuenta_rol"]) && ($_SESSION["cuenta_rol"] === "admin" || $_SESSION["cuenta_rol"] === "mod")){
                     require "resources/dialog-mod-ban.php";
+                    require "resources/dialog-mod-delete.php";
                     echo "<div class='post-admin-panel'>";
                     echo "<div class='post-admin-panel-info'>";
                     echo "<span id='input-tag-" . $_SESSION["cuenta_rol"] . "' class='comentar-input-tag-op'>" . strtoupper($_SESSION["cuenta_rol"]) . "</span>";
@@ -238,7 +239,8 @@
                     }
                     echo "</div>";
                     echo "</div>";
-                    echo "<script src='js/post/modal_ban.js' defer></script>";
+                    echo "<script src='js/post/modal-ban.js' defer></script>";
+                    echo "<script src='js/post/modal-delete.js' defer></script>";
                 }
             ?>
             <?php
