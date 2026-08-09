@@ -334,70 +334,7 @@
                                 echo "<div class='post-comentarios-comentario-texto'>";
                                 // es mejor hacer esto cuando se comenta pq si no, le da mucha carga al servidor
                                 // aparte ayuda a no tener que hacer chequeos extras (como por ej si se referencia a un comentario que no existe todavia)
-                                $comentario_texto = str_replace(["<br>", "<br />"], "</p><p>", $comentario_texto);
-                                $comentario_texto = "<p>$comentario_texto</p>";
-
-                                $lineas = explode("</p><p>", $comentario_texto);
-                                $salida = "";
-
-                                foreach ($lineas as $linea) {
-                                    $linea = preg_replace("/^<p>/", "", $linea);
-                                    $linea = preg_replace("/<\/p>$/", "", $linea);
-                                    $contenido = trim($linea);
-
-                                    if (preg_match("/^(?:&gt;&gt;|>>)\s*(\d+)\s*$/", $contenido, $m)) {
-                                        $id_salida = (int)$m[1];
-                                        $sql = $conn->prepare("SELECT * FROM posts_comentarios WHERE id = ?");
-                                        $sql->execute([$id_salida]);
-                                        $newFetch = $sql->fetch(PDO::FETCH_ASSOC);
-                                        if (($newFetch) && !($comentario_id <= $id_salida)){
-                                            if ($newFetch["id_post"] == $id){
-                                                if (!($newFetch["id_autor"] == 0)){
-                                                    $sql = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
-                                                    $sql->execute([$newFetch["id_autor"]]);
-                                                    $infoAutor = $sql->fetch(PDO::FETCH_ASSOC);
-                                                }
-                                                
-                                                $dateTime = new DateTime($newFetch["fecha_creacion"]);
-                                                $año_comentario = (int)$dateTime->format('Y');
-                                                if ($año_comentario == $año_actual){
-                                                    $comentario_fecha_creacion = $dateTime->format("d/m \a \l\a\s H:i");
-                                                }
-                                                else{
-                                                    $comentario_fecha_creacion = $dateTime->format("d/m/Y \a \l\a\s H:i");
-                                                }
-
-                                                if ($newFetch["id_autor"] == 0){
-                                                    $contenido = "<div class='post-preview-username'><p><b>Anónimo</b><span id='post-preview-username-fecha2'>" . $comentario_fecha_creacion . "</span></p></div><div class='post-preview-comentario'>" . str_replace(["<br>", "<br />"], "</p><p>", nl2br(htmlspecialchars($newFetch["comentario"]))) . "</div>";
-                                                }
-                                                else{
-                                                    $contenido = "<div class='post-preview-username'><p><b>" . $infoAutor["nickname"] . "</b><span id='post-preview-username-nickname'>@" . $infoAutor["username"] . "</span><span id='post-preview-username-fecha'>" . $comentario_fecha_creacion . "</span></p></div><div class='post-preview-comentario'>" . str_replace(["<br>", "<br />"], "</p><p>", nl2br(htmlspecialchars($newFetch["comentario"]))) . "</div>";
-                                                }
-
-
-                                                if ($newFetch["original_poster"] == 1){
-                                                    $salida .= "<p class='respuesta' id='post-comentarios-respuesta' data-id='$m[1]' data-content='" . htmlspecialchars($contenido, ENT_QUOTES) . "'>&gt;&gt;" . $m[1] . " (OP)</p>";
-                                                }
-                                                else{
-                                                    $salida .= "<p class='respuesta' id='post-comentarios-respuesta' data-id='$m[1]' data-content='" . htmlspecialchars($contenido, ENT_QUOTES) . "'>&gt;&gt;" . $m[1] . "</p>";
-                                                }
-                                            }
-                                            else{
-                                                $salida .= "<p id='post-comentarios-respuesta-invalida'>>>Respuesta inválida</p>";
-                                            }
-                                        }
-                                        else{
-                                            $salida .= "<p id='post-comentarios-respuesta-invalida'>>>Respuesta inválida</p>";
-                                        }
-                                    }
-                                    elseif (preg_match("/^(?:&gt;|>)(.*)$/", $contenido, $m)) {
-                                        $salida .= "<p id='post-comentarios-greentext'>$contenido</p>";
-                                    }
-                                    else {
-                                        $salida .= "<p>$contenido</p>";
-                                    }
-                                }
-                                echo $salida;
+                                echo parsear_comentario_texto($comentario_texto, $conn, $id, $comentario_id, $año_actual, $chequeo_estricto_imagen);
                                 if ($comentario_imagen_adjuntada == 1){
                                     $archivo_existe = file_exists("resources/posts/$id/$comentario_id.png");
                                     if ($chequeo_estricto_imagen == 1){

@@ -6,6 +6,89 @@
         return htmlspecialchars($decodificado, ENT_QUOTES, 'UTF-8');
     }
 
+    function parsear_comentario_texto(string $comentario_texto, PDO $conn, int $id_post, int $comentario_id_actual, int $año_actual, bool $chequeo_estricto_imagen, bool $es_preview = false): string {
+        $comentario_texto = str_replace(["<br>", "<br />"], "</p><p>", $comentario_texto);
+        $comentario_texto = "<p>$comentario_texto</p>";
+
+        $lineas = explode("</p><p>", $comentario_texto);
+        $salida = "";
+
+        foreach ($lineas as $linea) {
+            $linea = preg_replace("/^<p>/", "", $linea);
+            $linea = preg_replace("/<\/p>$/", "", $linea);
+            $contenido = trim($linea);
+
+            if (preg_match("/^(?:&gt;&gt;|>>)\s*(\d+)\s*$/", $contenido, $m)) {
+                $id_salida = (int)$m[1];
+                $sql = $conn->prepare("SELECT * FROM posts_comentarios WHERE id = ?");
+                $sql->execute([$id_salida]);
+                $newFetch = $sql->fetch(PDO::FETCH_ASSOC);
+
+                if (($newFetch) && !($comentario_id_actual <= $id_salida)) {
+                    if ($newFetch["id_post"] == $id_post) {
+                        $es_op = ($newFetch["original_poster"] == 1);
+                        $clase_respuesta = $es_op ? "respuesta respuesta-op" : "respuesta";
+                        $texto_respuesta = "&gt;&gt;" . $id_salida . ($es_op ? " (OP)" : "");
+
+                        if ($es_preview) {
+                            // dentro de un preview no armamos otro tooltip anidado, solo coloreamos
+                            $salida .= "<p class='$clase_respuesta' id='post-comentarios-respuesta'>$texto_respuesta</p>";
+                        }
+                        else {
+                            if (!($newFetch["id_autor"] == 0)) {
+                                $sql = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+                                $sql->execute([$newFetch["id_autor"]]);
+                                $infoAutor = $sql->fetch(PDO::FETCH_ASSOC);
+                            }
+
+                            $dateTime = new DateTime($newFetch["fecha_creacion"]);
+                            $año_comentario = (int)$dateTime->format('Y');
+                            if ($año_comentario == $año_actual) {
+                                $fecha_citada = $dateTime->format("d/m \a \l\a\s H:i");
+                            }
+                            else {
+                                $fecha_citada = $dateTime->format("d/m/Y \a \l\a\s H:i");
+                            }
+
+                            if ($newFetch["id_autor"] == 0) {
+                                $contenido_preview = "<div class='post-preview-username'><p><b>Anónimo</b><span id='post-preview-username-fecha2'>" . $fecha_citada . "</span></p></div>";
+                            }
+                            else {
+                                $contenido_preview = "<div class='post-preview-username'><p><b>" . $infoAutor["nickname"] . "</b><span id='post-preview-username-nickname'>@" . $infoAutor["username"] . "</span><span id='post-preview-username-fecha'>" . $fecha_citada . "</span></p></div>";
+                            }
+
+                            $contenido_preview .= "<div class='post-preview-comentario'>" . parsear_comentario_texto($newFetch["comentario"], $conn, $id_post, $comentario_id_actual, $año_actual, $chequeo_estricto_imagen, true) . "</div>";
+
+                            if ($newFetch["imagen_adjuntada"] == 1) {
+                                $ruta_imagen_citada = "resources/posts/$id_post/{$newFetch['id']}.png";
+                                $imagen_citada_existe = file_exists($ruta_imagen_citada);
+                                if ($imagen_citada_existe || !$chequeo_estricto_imagen) {
+                                    $contenido_preview .= "<img src='$ruta_imagen_citada' id='post-preview-comentario-imagen'>";
+                                }
+                            }
+
+                            $salida .= "<p class='$clase_respuesta' id='post-comentarios-respuesta' data-id='$id_salida' data-content='" . htmlspecialchars($contenido_preview, ENT_QUOTES) . "'>$texto_respuesta</p>";
+                        }
+                    }
+                    else {
+                        $salida .= "<p id='post-comentarios-respuesta-invalida'>&gt;&gt;Respuesta inválida</p>";
+                    }
+                }
+                else {
+                    $salida .= "<p id='post-comentarios-respuesta-invalida'>&gt;&gt;Respuesta inválida</p>";
+                }
+            }
+            elseif (preg_match("/^(?:&gt;|>)(.*)$/", $contenido, $m)) {
+                $salida .= "<p id='post-comentarios-greentext'>$contenido</p>";
+            }
+            else {
+                $salida .= "<p>$contenido</p>";
+            }
+        }
+
+        return $salida;
+    }
+
     function avatar_img(string $ruta, string $atributos_extra = ''): string {
         if (file_exists($ruta)) {
             $src = e($ruta) . '?v=' . filemtime($ruta);

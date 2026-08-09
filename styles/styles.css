@@ -412,6 +412,13 @@ header h1{
     white-space: normal;
 }
 
+#post-preview-comentario-imagen{
+    display: block;
+    max-width: 100%;
+    margin-top: 0.5em;
+    border-radius: 6px;
+}
+
 .contenido-post img{
     display: block;
     max-width: 700px;
@@ -753,6 +760,11 @@ header h1{
     color: rgb(29, 108, 211);
     text-decoration: underline;
     cursor: default;
+}
+
+#post-comentarios-respuesta.respuesta-op{
+    color: rgb(219, 84, 97);
+    font-weight: bold;
 }
 
 #post-comentarios-respuesta-invalida{
