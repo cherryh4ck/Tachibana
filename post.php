@@ -121,6 +121,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($post_titulo) ?> - Tachibana</title>
+    <script>
+        const categoria = "<?= e($post_categoria) ?>";
+    </script>
     <script src="js/notifications.js" defer></script>
     <script src="js/post/comentar.js" defer></script>
     <script src="js/post/anonimo.js" defer></script>

@@ -1,6 +1,7 @@
 const sticky_boton = document.getElementById("post-admin-fijar");
 const banear_form = document.getElementById("formulario-ban");
 const banear_boton = document.getElementById("setup-enviar");
+const post_categoria = document.getElementById("post-categoria");
 const post_titulo_fijado = document.getElementById("post-titulo-fijado");
 const postId = sticky_boton.dataset.id;
 var accion = "";
@@ -19,18 +20,23 @@ sticky_boton.addEventListener("click", function(e){
     .then(response => response.json())
     .then(data => {
         if (data.ok){
-            console.log(data);
             if (data.value == 1){
                 post_titulo_fijado.style.display = "inline";
                 sticky_boton.textContent = "Desfijar post";
+                post_categoria.textContent = "Sticky";
+                post_categoria.id = "post-categoria-sticky";
+                notify("Post fijado", "exito");
             }
             else{
                 post_titulo_fijado.style.display = "none";
                 sticky_boton.textContent = "Fijar post";
+                post_categoria.textContent = categoria;
+                post_categoria.id = "post-categoria";
+                notify("Post desfijado");
             }
         }
         else {
-            console.log("malito");
+            notify("No se pudo actualizar el post", "error");
         }
         sticky_boton.disabled = false;
     })
