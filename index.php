@@ -43,6 +43,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tachibana</title>
+    <script src="js/notifications.js" defer></script>
     <script src="js/index/selectores.js" defer></script>
     <script src="js/index/query.js" defer></script>
     <script src="js/index/tags.js" defer></script>

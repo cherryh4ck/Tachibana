@@ -33,6 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error!1! - Tachibana</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <script src="js/notificaciones.js" defer></script>
     <script src="js/archivos.js" defer></script>
     <link rel="shortcut icon" href="favicon.ico" />
 </head>

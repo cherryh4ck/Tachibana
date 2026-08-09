@@ -29,6 +29,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios - Tachibana</title>
+    <script src="js/notifications.js" defer></script>
     <script src="js/subir_modal.js" defer></script>
     <script src="js/perfiles/q_check.js" defer></script>
 

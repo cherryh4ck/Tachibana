@@ -73,6 +73,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($nickname) ?> - Tachibana</title>
+    <script src="js/notifications.js" defer></script>
     <script src="js/subir_modal.js" defer></script>
 
     <link rel="stylesheet" href="styles/styles.css">

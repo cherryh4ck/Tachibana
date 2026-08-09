@@ -2574,3 +2574,126 @@ header h1{
     color: rgb(211, 199, 199);
 }
 
+
+.notif-contenedor{
+    position: fixed;
+    bottom: 1.5em;
+    right: 1.5em;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.6em;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.notif{
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7em;
+    width: 310px;
+    padding: 0.85em 2.1em 0.85em 0.9em;
+    background-color: rgb(20, 20, 19);
+    border: 1px solid rgb(40, 38, 38);
+    border-radius: 8px;
+    box-shadow: 5px 1px 30px rgba(17, 17, 17, 0.6);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(24px);
+    transition: transform 220ms ease, opacity 220ms ease;
+    pointer-events: auto;
+}
+
+.notif-entrar{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notif-salir{
+    opacity: 0;
+    transform: translateX(24px);
+}
+
+.notif-icono{
+    flex-shrink: 0;
+    width: 19px;
+    height: 19px;
+    margin-top: 0.15em;
+}
+
+.notif-icono svg{
+    width: 100%;
+    height: 100%;
+}
+
+.notif-texto{
+    flex: 1;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: rgb(211, 199, 199);
+    word-break: break-word;
+}
+
+.notif-cerrar{
+    position: absolute;
+    top: 0.65em;
+    right: 0.65em;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: rgb(112, 108, 108);
+    cursor: pointer;
+    transition: color 150ms;
+}
+
+.notif-cerrar:hover{
+    color: rgb(211, 199, 199);
+}
+
+.notif-cerrar svg{
+    width: 100%;
+    height: 100%;
+}
+
+.notif-barra{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: rgb(141, 192, 129);
+    animation: notif-progreso linear forwards;
+    transform-origin: left;
+}
+
+@keyframes notif-progreso{
+    from{ transform: scaleX(1); }
+    to{ transform: scaleX(0); }
+}
+
+.notif-info .notif-icono{ color: rgb(170, 168, 168); }
+.notif-info .notif-barra{ background-color: rgb(170, 168, 168); }
+
+.notif-exito .notif-icono{ color: rgb(141, 192, 129); }
+.notif-exito .notif-barra{ background-color: rgb(141, 192, 129); }
+
+.notif-error{ background-color: rgb(30, 20, 20); border-color: rgb(53, 33, 33); }
+.notif-error .notif-icono{ color: rgb(255, 154, 154); }
+.notif-error .notif-barra{ background-color: rgb(255, 154, 154); }
+
+.notif-advertencia .notif-icono{ color: rgb(224, 191, 122); }
+.notif-advertencia .notif-barra{ background-color: rgb(224, 191, 122); }
+
+@media (max-width: 500px){
+    .notif-contenedor{
+        left: 1em;
+        right: 1em;
+        bottom: 1em;
+    }
+
+    .notif{
+        width: auto;
+    }
+}

@@ -16,6 +16,7 @@
     <title>Reglas - Tachibana</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="shortcut icon" href="favicon.ico" />
+    <script src="js/notifications.js" defer></script>
 </head>
 <body>
     <?php include("resources/nav.php"); ?>

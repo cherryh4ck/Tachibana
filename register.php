@@ -40,6 +40,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrarse - Tachibana</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <script src="js/notifications.js" defer></script>
     <script src="js/register/verify.js" defer></script>
     <link rel="shortcut icon" href="favicon.ico" />
 </head>

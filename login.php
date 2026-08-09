@@ -65,6 +65,7 @@
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="shortcut icon" href="favicon.ico" />
 
+    <script src="js/notifications.js" defer></script>
     <script src="js/login/sanidad.js" defer></script>
 </head>
 <body>
