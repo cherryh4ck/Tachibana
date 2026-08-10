@@ -11,7 +11,6 @@ var accion = "";
 
 sticky_boton.addEventListener("click", function(e){
     accion = "sticky";
-
     sticky_boton.disabled = true;
 
     fetch("php/admin/modify-post.php", {
@@ -56,7 +55,6 @@ banear_form.addEventListener("submit", function(e){
     if (motivo === "") {
         motivo = "Sin especificar.";
     }
-
     banear_boton.disabled = true;
 
     fetch("php/admin/modify-post.php", {
