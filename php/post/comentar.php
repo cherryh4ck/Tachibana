@@ -37,9 +37,10 @@
                     $post_autor_id = $fetch["id_autor"];
                     $post_anonimo = $fetch["anonimo"];
                     $baneado = $fetch["baneado"];
+                    $archivado = $fetch["archivado"];
                     $original_poster = 0;
 
-                    if ($baneado == 1){
+                    if ($baneado == 1 || $archivado == 1){
                         header("Location: ../../post.php?id=$comentario_id");
                         exit();
                     }
