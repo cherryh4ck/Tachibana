@@ -29,6 +29,7 @@
             $post_anonimo = $fetch["anonimo"];
             $post_fecha_creacion = $fetch["fecha_creacion"];
             $post_sticky = $fetch["sticky"];
+            $archivado = $fetch["archivado"];
             $baneado = $fetch["baneado"];
             $baneado_motivo = $fetch["baneado_motivo"];
 
@@ -238,7 +239,15 @@
                     }
                     echo "<button id='post-admin-eliminar' data-id='$id' class='post-admin-peligro'>Eliminar post</button>";
                     if ($baneado == 0){
-                        echo "<button id='post-admin-bloquear-comentarios' data-id='$id'>Bloquear comentarios</button>";
+                        if ($archivado == 0){
+                            echo "<button id='post-admin-bloquear-comentarios' data-id='$id'>Archivar post</button>";
+                        }
+                        else{
+                            echo "<button id='post-admin-bloquear-comentarios' data-id='$id'>Desarchivar post</button>";
+                        }
+                    }
+                    else {
+                        echo "<button id='post-admin-bloquear-comentarios' data-id='$id' style='display: none;'>Bloquear comentarios</button>";
                     }
                     echo "</div>";
                     echo "</div>";
@@ -360,7 +369,7 @@
                     }
                 ?>
             </div>
-            <?php if ($baneado == 0): ?>
+            <?php if ($baneado == 0 && $archivado == 0): ?>
             <h2 id="post-comentarios-comentar">Comentar</h2>
             <div class="post-comentarios-comentar">
                 <div class="post-comentarios-comentar-seccion-avatar">

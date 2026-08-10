@@ -3,13 +3,13 @@ const banear_form = document.getElementById("formulario-ban");
 const banear_boton = document.getElementById("setup-enviar");
 const eliminar_form = document.getElementById("formulario-delete");
 const eliminar_boton = document.getElementById("setup-enviar-2");
+const bloquear_comentarios_boton = document.getElementById("post-admin-bloquear-comentarios");
 const post_categoria = document.getElementById("post-categoria");
 const post_titulo_fijado = document.getElementById("post-titulo-fijado");
 const postId = sticky_boton.dataset.id;
 var accion = "";
 
 sticky_boton.addEventListener("click", function(e){
-    e.preventDefault();
     accion = "sticky";
 
     sticky_boton.disabled = true;
@@ -109,5 +109,37 @@ eliminar_form.addEventListener("submit", function(e){
     })
     .catch(() => {
         eliminar_boton.disabled = false;
+    });
+});
+
+bloquear_comentarios_boton.addEventListener("click", function(e){
+    accion = "archive";
+    bloquear_comentarios_boton.disabled = true;
+
+    fetch("php/admin/modify-post.php", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ accion: accion, post_id: postId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok){
+            console.log(data);
+            if (data.value == 1){
+                bloquear_comentarios_boton.textContent = "Desarchivar post";
+                notify("Post archivado", "exito");
+            }
+            else {
+                bloquear_comentarios_boton.textContent = "Archivar post";
+                notify("Post desarchivado", "exito");
+            }
+            bloquear_comentarios_boton.disabled = false;
+        }
+        else {
+            console.log("malito");
+        }
+    })
+    .catch(() => {
+        bloquear_comentarios_boton.disabled = false;
     });
 });

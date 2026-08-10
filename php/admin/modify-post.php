@@ -78,6 +78,21 @@
                     "mensaje" => "Post $post_id eliminado."
                 ]);
             }
+            else if ($accion == "archive") {
+                $sql = $conn->prepare("UPDATE posts SET archivado = (@new := CASE WHEN archivado = 1 THEN 0 ELSE 1 END) WHERE id = ?");
+                $sql->execute([$post_id]);
+
+                $newValue = $conn->query("SELECT @new")->fetchColumn();
+
+                http_response_code(200);
+                header("Content-Type: application/json");
+                echo json_encode([
+                    "authorized" => true,
+                    "ok" => true,
+                    "mensaje" => "Post $post_id archivado.",
+                    "value" => $newValue
+                ]);
+            }
             else {
                 http_response_code(400);
                 header("Content-Type: application/json");
