@@ -18,7 +18,6 @@ perfiles.php:
 
 post.php:
 - pasar la carga a php/post/comentar.php
-- hover con soporte de imagenes?? (claude je)
 - incluir contador de caracteres al comentar
 
 php/subida.php:
