@@ -223,6 +223,9 @@
         else{
             $html .= "<span id='input-tag-amarillo'>Sticky</span>";
         }
+        if ($post["archivado"] == 1){
+            $html .= "<span id='post-card-archivado' title='Post archivado'><svg viewBox='0 0 24 24' width='14' height='14' fill='currentColor'><path d='M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 0 1 6 0v3z'/></svg></span>";
+        }
         $html .= "</div>";
         if ($post["baneado"] == 1){
             $html .= "<a href='post.php?id=" . $post["id"] . "'><img src='resources/notfound.jpg' alt=''></a>";

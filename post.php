@@ -155,6 +155,7 @@
                 echo "<h1 id='post-titulo'><span id='post-titulo-texto'>$post_titulo</span>";
             ?>
                 <span id='post-titulo-fijado' title='Post fijado' <?php if ($post_sticky == 0) { echo "style='display: none;'"; } ?>><svg viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg></span>
+                <span id='post-titulo-archivado' title='Post archivado' <?php if ($archivado == 0) { echo "style='display: none;'"; } ?>><svg viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 0 1 6 0v3z'/></svg></span>
             <?php
                 echo "</h1>";
                 echo "<div class='post-contenido-tags'>";

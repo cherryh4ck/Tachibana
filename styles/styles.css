@@ -541,6 +541,12 @@ header h1{
     color: rgb(219, 147, 64);
 }
 
+#post-titulo-archivado{
+    display: flex;
+    flex-shrink: 0;
+    color: rgb(180, 180, 180);
+}
+
 .post-autor{
     margin-top: 1em;
     display: flex;
@@ -1760,7 +1766,24 @@ header h1{
     position: absolute;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
     padding: 10px 10px;
+    z-index: 1;
+}
+
+#post-card-archivado{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 25px;
+    height: 25px;
+    border-radius: 8px;
+    background-color: rgba(20, 20, 19, 0.75);
+    color: rgb(141, 192, 129);
+    box-shadow: 3px 4px 6px rgba(17, 17, 17, 0.7);
 }
 
 .contenido-bloque-phantom{
