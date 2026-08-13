@@ -6,6 +6,23 @@
         return htmlspecialchars($decodificado, ENT_QUOTES, 'UTF-8');
     }
 
+    function esta_baneado(PDO $conn, int $id) : ?array {
+        $sql = $conn->prepare("SELECT * FROM bans WHERE id_usuario = ?");
+        $sql->execute([$id]);
+        $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if ($fetch) {
+            $data = [
+                "motivo" => $fetch["motivo"],
+                "expira" => $fetch["expira"]
+            ];
+            return $data;
+        }
+        else {
+            return null;
+        }
+    }
+
     function parsear_comentario_texto(string $comentario_texto, PDO $conn, int $id_post, int $comentario_id_actual, int $año_actual, bool $chequeo_estricto_imagen, bool $es_preview = false): string {
         $comentario_texto = str_replace(["<br>", "<br />"], "</p><p>", $comentario_texto);
         $comentario_texto = "<p>$comentario_texto</p>";
