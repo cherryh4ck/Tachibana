@@ -392,7 +392,7 @@
                     }
                 ?>
                 </div>
-                <form action="php/post/comentar.php" enctype="multipart/form-data" method="POST">
+                <form action="php/post/comentar.php" enctype="multipart/form-data" method="POST" id="formulario-comentar">
                     <input type="hidden" name="id_comentario" value="<?php echo $id; ?>">
                     <input type="file" accept=".png, .jpg, .jpeg, .jfif, .webp" name="imagen" id="post-comentarios-adjuntar-imagen" style="display: none;">
                     <img src="" id="post-comentarios-imagen" style="display: none;">
