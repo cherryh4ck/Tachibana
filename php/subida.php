@@ -3,12 +3,13 @@
     if ($_SERVER["REQUEST_METHOD"] != "POST"){
         echo json_encode([
             "ok" => false,
-            "mensaje" => "Método de solicitud incorrecto."
+            "mensaje" => "Inválido."
         ]);
         exit();
     }
 
     require "db/config.php";
+    require "../resources/parse_functions.php";
 
     if ($conn_test == 0){
         echo json_encode([
@@ -26,6 +27,17 @@
             "mensaje" => "Sin autorización."
         ]);
         exit();
+    }
+
+    if (isset($_SESSION["cuenta_id"])) {
+        if (esta_baneado($conn, $_SESSION["cuenta_id"])) {
+            echo json_encode([
+                "ok" => false,
+                "baneado" => true,
+                "mensaje" => "Baneado."
+            ]);
+            exit();
+        }
     }
 
     $maxSize = 6228792; // esta variable es para el tamaño maximo del archivo, se cambia si el archivo es de tipo gif

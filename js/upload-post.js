@@ -20,6 +20,14 @@ formSubir.addEventListener("submit", function(e){
         else{
             botonSubir.disabled = false;
             botonSubir.value = "Subir";
+            if (data.baneado) {
+                notify("Tu cuenta está suspendida.", "error");
+            }
+            else {
+                notify("Hubo un error inesperado al subir el post.", "error");
+            }
+            ventana_subir.close();
+            ventana_subir.style.display = "none";
         }
     })
 });
