@@ -1,9 +1,6 @@
 <?php
     require "php/db/config.php";
     require "resources/parse_functions.php";
-    if ($mantenimiento == 0 && $conn_test == 1){
-        session_start();
-    }
 
     // No empieza en 0, sino en 1
     $errores = [

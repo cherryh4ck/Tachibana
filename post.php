@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require "php/db/config.php";
     require "resources/parse_functions.php";
 
