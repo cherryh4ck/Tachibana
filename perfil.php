@@ -80,7 +80,9 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
-    <?php include("resources/nav.php"); ?>
+    <?php 
+        include("resources/warning-bar.php");
+        include("resources/nav.php"); ?>
     <header>
         <div class="perfil-div">
             <div class="perfil-banner">

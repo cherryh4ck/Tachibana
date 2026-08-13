@@ -56,8 +56,9 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body class="galerias">
-    <?php include("resources/nav.php"); ?>
-    <?php if ($instalado): ?>
+    <?php include("resources/warning-bar.php"); 
+        include("resources/nav.php");
+        if ($instalado): ?>
     <div class="galeria">
         <div class="galeria-panel">
             <div class="galeria-herramientas">

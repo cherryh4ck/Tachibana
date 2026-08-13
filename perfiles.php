@@ -37,7 +37,8 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
-    <?php include("resources/nav.php"); ?>
+    <?php include("resources/warning-bar.php"); 
+        include("resources/nav.php"); ?>
     <div class="contenido-perfiles">
         <p>Buscar un usuario</p>
         <form action="perfiles.php" method="GET" id="formulario-buscar-usuario">

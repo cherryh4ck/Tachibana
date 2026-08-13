@@ -137,7 +137,8 @@
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
-    <?php include("resources/nav.php"); ?>
+    <?php include("resources/warning-bar.php");
+        include("resources/nav.php"); ?>
     <header>
         <!-- datos enviados por php -->
         <span style="display: none;" id="es_anonimo"><?=$post_anonimo?></span>
