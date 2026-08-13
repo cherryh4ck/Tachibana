@@ -2609,6 +2609,7 @@ header h1{
     color: rgb(211, 199, 199);
 }
 
+/* notificaciones */
 
 .notif-contenedor{
     position: fixed;
@@ -2731,4 +2732,69 @@ header h1{
     .notif{
         width: auto;
     }
+}
+
+/* barra d baneos */
+
+.warning-bar{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    padding: 0.85em 1.5em;
+    box-sizing: border-box;
+    background-color: rgb(46, 27, 27);
+    border-left: 5px solid rgb(219, 64, 64);
+}
+
+.warning-bar-icono{
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    color: rgb(219, 64, 64);
+}
+
+.warning-bar-contenido{
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+    flex: 1;
+    min-width: 0;
+}
+
+.warning-bar-fila-superior{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.warning-bar-titulo{
+    font-size: 15px;
+    font-weight: 700;
+    color: rgb(255, 154, 154);
+}
+
+.warning-bar-expira{
+    flex-shrink: 0;
+    padding: 0.3em 0.8em;
+    border: 1px solid rgb(219, 64, 64);
+    border-radius: 6px;
+    background-color: rgba(219, 64, 64, 0.15);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: rgb(255, 190, 190);
+    white-space: nowrap;
+}
+
+.warning-bar-motivo{
+    font-size: 14px;
+    color: rgb(226, 219, 219);
+}
+
+.warning-bar-motivo b{
+    font-weight: 600;
+    color: rgb(255, 255, 255);
 }
