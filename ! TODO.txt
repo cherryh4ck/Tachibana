@@ -3,7 +3,10 @@
 Conceptos generales:
 - añadir funciones para los administradores (faltan algunos apartados) (SI, siguen faltando apartados)
 - añadir más parametros al config.ini
-- suspensión de cuentas
+- suspensión de cuentas (!):
+    - suspensión por cuenta = terminado
+    - FALTA suspensión por ip
+    - TODAVÍA FALTA bloquear funciones si el usuario está suspendido (pero antes por ej el comentar debería ser AJAX, por el bien de todos je)
 - info de tachibana en un admin panel o apartado
 - modo anonimato (deshabilita la creación de cuentas y el panel de usuarios / perfiles)
 - trabajar en un motd (?)
