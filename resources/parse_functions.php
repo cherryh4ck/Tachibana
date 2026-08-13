@@ -6,21 +6,25 @@
         return htmlspecialchars($decodificado, ENT_QUOTES, 'UTF-8');
     }
 
-    function esta_baneado(PDO $conn, int $id) : ?array {
-        $sql = $conn->prepare("SELECT * FROM bans WHERE id_usuario = ?");
+    function esta_baneado(PDO $conn, int $id): ?array {
+        $sql = $conn->prepare("SELECT * FROM bans WHERE id_usuario = ? ORDER BY id DESC LIMIT 1");
         $sql->execute([$id]);
         $fetch = $sql->fetch(PDO::FETCH_ASSOC);
 
-        if ($fetch) {
-            $data = [
-                "motivo" => $fetch["motivo"],
-                "expira" => $fetch["expira"]
-            ];
-            return $data;
-        }
-        else {
+        if (!$fetch) {
             return null;
         }
+
+        if ($fetch["expira"] !== null && strtotime($fetch["expira"]) <= time()) {
+            $sql = $conn->prepare("DELETE FROM bans WHERE id = ?");
+            $sql->execute([$fetch["id"]]);
+            return null;
+        }
+
+        return [
+            "motivo" => $fetch["motivo"],
+            "expira" => $fetch["expira"]
+        ];
     }
 
     function parsear_comentario_texto(string $comentario_texto, PDO $conn, int $id_post, int $comentario_id_actual, int $año_actual, bool $chequeo_estricto_imagen, bool $es_preview = false): string {
