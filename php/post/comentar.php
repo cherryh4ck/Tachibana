@@ -7,6 +7,7 @@
         ]);
         exit();
     }
+    
 
     require "../db/config.php";
     require "../../resources/parse_functions.php";
@@ -28,6 +29,17 @@
             "mensaje" => "Datos inválidos."
         ]);
         exit();
+    }
+
+    if (isset($_SESSION["cuenta_id"])) {
+        if (esta_baneado($conn, $_SESSION["cuenta_id"])) {
+            echo json_encode([
+                "ok" => false,
+                "baneado" => true,
+                "mensaje" => "Baneado."
+            ]);
+            exit();
+        }
     }
 
     $comentario_id = $_POST["id_comentario"];

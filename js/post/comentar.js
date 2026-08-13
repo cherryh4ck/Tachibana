@@ -46,7 +46,12 @@ formularioComentar.addEventListener("submit", function(e){
             imagen_data.textContent = "";
         }
         else{
-            notify("Hubo un error inesperado al comentar.", "error");
+            if (data.baneado) {
+                notify("Tu cuenta está suspendida.", "error");
+            }
+            else {
+                notify("Hubo un error inesperado al comentar.", "error");
+            }
         }
         enviar.disabled = false;
     });
