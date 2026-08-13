@@ -1,15 +1,15 @@
 <?php 
-    $baneado = false;
+    $usuario_baneado = false; // nombre "más largo" porque tenía conflictos con post.php, por eso nombren bien sus variables je
     if (isset($_SESSION["cuenta_id"])) {
         $ban_data = esta_baneado($conn, $_SESSION["cuenta_id"]);
         if ($ban_data !== null) {
-            $baneado = true;
+            $usuario_baneado = true;
             $expira_texto = $ban_data["expira"] === null
                 ? "Suspensión permanente"
                 : "Expira el " . (new DateTime($ban_data["expira"]))->format("d/m/Y \\a \\l\\a\\s H:i");
         }
     }
-    if($baneado):  ?>
+    if($usuario_baneado):  ?>
 <div class="warning-bar">
     <svg class="warning-bar-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 3.5 22 20.5H2Z"/>
