@@ -23,8 +23,6 @@
 
     if (isset($_SESSION["cuenta_id"]) && isset($_SESSION["cuenta_usuario"])){
         try{
-            $conn = new PDO("mysql:host=$host:$puerto;dbname=$db", $user, $pass);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             if (isset($_POST["nickname"])){
                 $_POST["nickname"] = preg_replace("/\s\s+/", "", $_POST["nickname"]);
                 if ((strlen($_POST["nickname"]) < 3) || (strlen($_POST["nickname"]) > 19) || (empty($_POST["nickname"]))){
@@ -66,6 +64,8 @@
                 if ($ultima_actividad == 1){
                     $sql = $conn->prepare("UPDATE usuarios SET ult_act_activo = ? WHERE id = ?;");
                     $sql->execute([1, $_SESSION["cuenta_id"]]);
+                    $sql = $conn->prepare("UPDATE usuarios SET ult_act = CURRENT_TIMESTAMP WHERE id = ?;");
+                    $sql->execute([$_SESSION["cuenta_id"]]);
                     setcookie("ult_act", "1", time() + (86400 * 30), "/"); 
                 }
                 else{
