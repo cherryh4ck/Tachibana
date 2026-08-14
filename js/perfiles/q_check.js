@@ -6,7 +6,7 @@ formulario.addEventListener("submit", function(event) {
     if (query.value.length < 2 && query.value.trim().length !== 0) {
         event.preventDefault();
     }
-    else {
+    else if (query.value.trim().length == 0) {
         event.preventDefault();
         window.location.href = "perfiles.php";
     }
