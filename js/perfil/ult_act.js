@@ -9,3 +9,7 @@ ult_vez_checkbox.addEventListener("change", function(e) {
         ult_vez.value = 0;
     }
 });
+
+ult_vez_checkbox.addEventListener("change", function(e) {
+    submit.disabled = false;
+});
