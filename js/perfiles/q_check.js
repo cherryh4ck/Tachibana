@@ -3,7 +3,11 @@ const query = document.getElementById("nombreUsuario");
 
 formulario.addEventListener("submit", function(event) {
     query.value = query.value.trim();
-    if (query.value.length <= 2) {
+    if (query.value.length < 2 && query.value.trim().length !== 0) {
         event.preventDefault();
+    }
+    else {
+        event.preventDefault();
+        window.location.href = "perfiles.php";
     }
 });
