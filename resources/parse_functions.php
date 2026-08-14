@@ -142,8 +142,9 @@
     define("POSTS_POR_PAGINA", 24);
 
     function construir_filtro_posts(PDO $conn): array {
-        if (isset($_GET["orden"])){
-            $orden = strtoupper($_GET["orden"]) == "ASC" ? "ASC" : "DESC";
+        $ordenes_validos = ["ASC", "DESC", "ACTIVITY"];
+        if (isset($_GET["orden"]) && in_array($_GET["orden"], $ordenes_validos, true)){
+            $orden = strtoupper($_GET["orden"]);
         }
         else{
             $orden = "DESC";

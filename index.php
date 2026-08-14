@@ -23,9 +23,16 @@
             $where = $filtro["where"];
             $parametros = $filtro["parametros"];
 
-            $sql = $conn->prepare("SELECT * from posts $where ORDER BY sticky DESC, id $orden LIMIT " . POSTS_POR_PAGINA . " OFFSET 0");
-            $sql->execute($parametros);
-            $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
+            if ($orden != "ACTIVITY") {
+                $sql = $conn->prepare("SELECT * from posts $where ORDER BY sticky DESC, id $orden LIMIT " . POSTS_POR_PAGINA . " OFFSET 0");
+                $sql->execute($parametros);
+                $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
+            }
+            else {
+                $sql = $conn->prepare("SELECT p.*, ultimo_comentario.fecha_mas_reciente FROM posts p INNER JOIN (SELECT id_post, MAX(fecha_creacion) AS fecha_mas_reciente FROM posts_comentarios GROUP BY id_post) ultimo_comentario ON ultimo_comentario.id_post = p.id $where ORDER BY ultimo_comentario.fecha_mas_reciente DESC LIMIT " . POSTS_POR_PAGINA . " OFFSET 0");
+                $sql->execute($parametros);
+                $fetch_posts = $sql->fetchAll(PDO::FETCH_ASSOC);
+            }
 
             $sql = $conn->prepare("SELECT * FROM tags ORDER BY usos DESC LIMIT 5");
             $sql->execute();
@@ -130,6 +137,7 @@
                         <select name="ordenar" id="categoria-input-categoria" size="1">
                                 <option value="desc" <?php if ($orden == "DESC") { echo "selected";} ?>>Más reciente</option>
                                 <option value="asc" <?php if ($orden == "ASC") { echo "selected";} ?>>Más antiguo</option>
+                                <option value="activity" <?php if ($orden == "ACTIVITY") { echo "selected";} ?>>Actividad</option>
                         </select>
                     </div>
                 </div>
