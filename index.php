@@ -1,13 +1,8 @@
 <?php
-    // TODO: Sistema de busqueda ?
-    // Sistema de indexado (Yo creo que estaría feo mostrar las imágenes borradas como inaccesibles)
-    // Arreglar lo de que si el ID 1 no existe, colapsa todo el sistema xd
-    session_start();
     require "php/db/config.php";
     require "resources/parse_functions.php";
-
+    
     $instalado = is_dir("galeria");
-
     if ($instalado && $conn_test == 0){
         $_SESSION["error"] = 9;
         header("Location: error.php");
