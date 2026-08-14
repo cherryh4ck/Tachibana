@@ -4,7 +4,7 @@
 
     $mostrarUltimosUsuarios = false; 
     if (isset($_GET["q"])){
-        if ((strlen($_GET["q"]) > 2) && !(empty($_GET["q"]))){
+        if ((strlen($_GET["q"]) > 1) && !(empty($_GET["q"]))){
             $query = "%" . $_GET["q"] . "%";
             try{
                 $sql = $conn->prepare("SELECT * FROM usuarios WHERE lower(username) LIKE ?");
