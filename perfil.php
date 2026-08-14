@@ -66,6 +66,13 @@
     $ultima_actividad       = $usuario["ult_act"];
     $ultima_actividad_activo = $usuario["ult_act_activo"];
     $avatar                 = "resources/avatars/" . $id_perfil . ".png";
+
+    if (esta_baneado($conn, $id_perfil)) {
+        $esta_ban = true;
+    }
+    else {
+        $esta_ban = false;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +101,9 @@
                                 <p><b><?= e($nickname) ?></b></p>
                                 <?php if ($rol === "admin" || $rol === "mod"): ?>
                                     <span id="input-tag-<?= e($rol) ?>" class="comentar-input-tag-op"><?= strtoupper(e($rol)) ?></span>
+                                <?php endif; ?>
+                                <?php if ($esta_ban): ?>
+                                    <span id="input-tag-ban" class="comentar-input-tag-op">BAN</span>
                                 <?php endif; ?>
                             </div>
                             <p id="contenido-perfil-bloque-info-username">@<?= e($nombre_usuario) ?></p>
@@ -225,10 +235,14 @@
             <div class="perfil-div perfil-div-separacion">
                 <div class="perfil-descripcion">
                     <p id="perfil-descripcion-texto">Descripción</p>
-                    <?php if (!empty($descripcion)): ?>
-                        <?= formatear_descripcion($descripcion) ?>
+                    <?php if (!$esta_ban): ?>
+                        <?php if (!empty($descripcion)): ?>
+                            <?= formatear_descripcion($descripcion) ?>
+                        <?php else: ?>
+                            <p>No hay descripción.</p>
+                        <?php endif; ?>
                     <?php else: ?>
-                        <p>No hay descripción.</p>
+                        <p id="perfil-descripcion-texto-suspendido">Este usuario se encuentra suspendido.</p>
                     <?php endif; ?>
                 </div>
             </div>

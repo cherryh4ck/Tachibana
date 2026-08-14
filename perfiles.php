@@ -77,10 +77,13 @@
                         else if ($usuario["rol"] == "mod"){
                             echo "<span id='input-tag-mod' class='comentar-input-tag-op'>MOD</span>";
                         }
+                        if (esta_baneado($conn, $usuario["id"])) {
+                            echo "<span id='input-tag-ban' class='comentar-input-tag-op'>BAN</span>";
+                        }
                         echo "</div>";
                         echo "<p id='contenido-perfil-bloque-info-username'>@" . e($usuario["username"]) . "</p>";
                         echo "<p id='contenido-perfil-bloque-info-alta'>Se unió hace " . calcular_tiempo($usuario["fecha_creacion"]) . "</p>";
-                        if (!empty($usuario["descripcion"])){
+                        if (!empty($usuario["descripcion"]) && !esta_baneado($conn, $usuario["id"])){
                             echo "<p>" . strip_tags($usuario["descripcion"]) . "</p>";
                         }
                         else{

@@ -1295,7 +1295,7 @@ header h1{
     user-select: none;
 }
 
-#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user, #post-categoria, #post-categoria-sticky{
+#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user, #input-tag-ban, #post-categoria, #post-categoria-sticky{
     background-color: rgb(49, 168, 79);
     border-radius: 8px;
     height: 25px;
@@ -1347,6 +1347,15 @@ header h1{
 
 #input-tag-user{
     background-color: rgb(207, 76, 196);
+    height: 18px;
+    margin-left: 0.5em;
+    font-size: 12px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#input-tag-ban{
+    background-color: rgb(207, 76, 93);
     height: 18px;
     margin-left: 0.5em;
     font-size: 12px;
@@ -2272,6 +2281,11 @@ header h1{
     color: rgb(136, 131, 131);
     margin-bottom: 0.25em;
     transition: all 200ms;
+}
+
+#perfil-descripcion-texto-suspendido{
+    color: rgba(136, 131, 131, 0.75);
+    letter-spacing: 0.8px;
 }
 
 .perfil-descripcion:hover{
