@@ -2,13 +2,11 @@
     require "php/db/config.php";
     require "resources/parse_functions.php";
 
+    $mostrarUltimosUsuarios = false; 
     if (isset($_GET["q"])){
         if ((strlen($_GET["q"]) > 2) && !(empty($_GET["q"]))){
             $query = "%" . $_GET["q"] . "%";
             try{
-                $conn = new PDO("mysql:host=$host:$puerto;dbname=$db", $user, $pass);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                 $sql = $conn->prepare("SELECT * FROM usuarios WHERE lower(username) LIKE ?");
                 $sql->execute([$query]);
                 $fetch = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -19,6 +17,12 @@
                 exit();
             }
         }
+    }
+    else {
+        $mostrarUltimosUsuarios = true;
+        $sql = $conn->prepare("SELECT * FROM usuarios WHERE ult_act_activo = 1 ORDER BY ult_act DESC LIMIT 6;");
+        $sql->execute();
+        $fetch = $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 ?>
 
@@ -47,13 +51,18 @@
     <div class="contenido-perfiles-usuarios">
         <?php
             if (isset($fetch)){
-                if (count($fetch) == 0){
+                if (count($fetch) == 0 && $mostrarUltimosUsuarios == false){
                     echo "<p>Usuarios</p>";
                     echo "<p id='no-se-ha-encontrado'>No se han encontrado usuarios.</p>";
                 }
                 else{
                     $cantidad = count($fetch);
-                    echo "<p>" . $cantidad . " usuario" . ($cantidad != 1 ? "s" : "") . " encontrado" . ($cantidad != 1 ? "s" : "") . "</p>";
+                    if ($mostrarUltimosUsuarios == false) {
+                        echo "<p>" . $cantidad . " usuario" . ($cantidad != 1 ? "s" : "") . " encontrado" . ($cantidad != 1 ? "s" : "") . "</p>";
+                    }
+                    else {
+                        echo "<p>Últimos usuarios conectados</p>";
+                    }
                     echo "<div class='contenido-perfiles-usuarios-lista'>";
                     foreach ($fetch as $usuario){
                         $avatar = "resources/avatars/" . $usuario["id"] . ".png";
