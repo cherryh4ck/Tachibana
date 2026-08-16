@@ -3,7 +3,7 @@ const ventana_ban_boton = document.getElementById("boton-bloquear-usuario");
 
 ventana_ban_boton.addEventListener("click", function(e) {
     e.preventDefault();
-    if (data_mode === "ban") {
+    if (ventana_ban_boton.dataset.mode === "ban") {
         ventana_ban.showModal();
         ventana_ban.style.display = "flex";
     }

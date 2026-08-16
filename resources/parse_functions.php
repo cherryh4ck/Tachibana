@@ -6,6 +6,28 @@
         return htmlspecialchars($decodificado, ENT_QUOTES, 'UTF-8');
     }
 
+    function formatear_descripcion(string $descripcion): string {
+        $descripcion = str_replace(["<br>", "<br />"], "</p><p>", $descripcion);
+        $descripcion = "<p>$descripcion</p>";
+        $descripcion = preg_replace(
+            '/<p>\s*(&gt;|>)(.*)<\/p>/',
+            '<p id="post-comentarios-greentext">&gt;$2</p>',
+            $descripcion
+        );
+        return $descripcion;
+    }
+
+    function rango_rol(string $rol): int {
+        switch ($rol) {
+            case "admin":
+                return 2;
+            case "mod":
+                return 1;
+            default:
+                return 0;
+        }
+    }
+
     function esta_baneado(PDO $conn, int $id): ?array {
         $sql = $conn->prepare("SELECT * FROM bans WHERE id_usuario = ? ORDER BY id DESC LIMIT 1");
         $sql->execute([$id]);

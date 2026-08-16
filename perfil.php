@@ -1,17 +1,6 @@
 <?php
     require "php/db/config.php";
     require "resources/parse_functions.php";
-    
-    function formatear_descripcion(string $descripcion): string {
-        $descripcion = str_replace(["<br>", "<br />"], "</p><p>", $descripcion);
-        $descripcion = "<p>$descripcion</p>";
-        $descripcion = preg_replace(
-            '/<p>\s*(&gt;|>)(.*)<\/p>/',
-            '<p id="post-comentarios-greentext">&gt;$2</p>',
-            $descripcion
-        );
-        return $descripcion;
-    }
 
     if (isset($_GET["id"])) {
         if (!is_numeric($_GET["id"])) {
@@ -99,12 +88,9 @@
                         <div class="perfil-info">
                             <div class="perfil-info-nickname-tags">
                                 <p><b><?= e($nickname) ?></b></p>
-                                <?php if ($rol === "admin" || $rol === "mod"): ?>
-                                    <span id="input-tag-<?= e($rol) ?>" class="comentar-input-tag-op"><?= strtoupper(e($rol)) ?></span>
-                                <?php endif; ?>
-                                <?php if ($esta_ban): ?>
-                                    <span id="input-tag-ban" class="comentar-input-tag-op">BAN</span>
-                                <?php endif; ?>
+                                <span id="perfil-tag-mod" class="comentar-input-tag-op"<?= $rol === "mod" ? "" : " style='display:none;'" ?>>MOD</span>
+                                <span id="perfil-tag-admin" class="comentar-input-tag-op"<?= $rol === "admin" ? "" : " style='display:none;'" ?>>ADMIN</span>
+                                <span id="input-tag-ban" class="comentar-input-tag-op"<?= $esta_ban ? "" : " style='display:none;'" ?>>BAN</span>
                             </div>
                             <p id="contenido-perfil-bloque-info-username">@<?= e($nombre_usuario) ?></p>
                             <div class="perfil-info-avanzada">
@@ -235,36 +221,54 @@
             <div class="perfil-div perfil-div-separacion">
                 <div class="perfil-descripcion">
                     <p id="perfil-descripcion-texto">Descripción</p>
-                    <?php if (!$esta_ban): ?>
-                        <?php if (!empty($descripcion)): ?>
-                            <?= formatear_descripcion($descripcion) ?>
-                        <?php else: ?>
-                            <p>No hay descripción.</p>
+                    <div id="perfil-descripcion-contenido"<?= $esta_ban ? " style='display:none;'" : "" ?>>
+                        <?php if (!$esta_ban): ?>
+                            <?php if (!empty($descripcion)): ?>
+                                <?= formatear_descripcion($descripcion) ?>
+                            <?php else: ?>
+                                <p>No hay descripción.</p>
+                            <?php endif; ?>
                         <?php endif; ?>
-                    <?php else: ?>
-                        <p id="perfil-descripcion-texto-suspendido">Este usuario se encuentra suspendido.</p>
-                    <?php endif; ?>
+                    </div>
+                    <p id="perfil-descripcion-texto-suspendido"<?= $esta_ban ? "" : " style='display:none;'" ?>>Este usuario se encuentra suspendido.</p>
                 </div>
             </div>
 
-            <?php if (($_SESSION['cuenta_rol'] === 'admin' || $_SESSION['cuenta_rol'] === 'mod') && !$es_el_dueño): ?>
-                <?php require "resources/dialog-user-ban.php";
-                      echo "<script src='js/perfil/modal-ban.js' defer></script>" ?>
+            <?php if (($_SESSION['cuenta_rol'] === 'admin' || $_SESSION['cuenta_rol'] === 'mod') && !$es_el_dueño):
+                $rango_actor = rango_rol($_SESSION['cuenta_rol']);
+                $rango_objetivo = rango_rol($rol);
+                $puede_banear = $rango_actor > $rango_objetivo;
+                $puede_ascender = $_SESSION['cuenta_rol'] === 'admin' && ($rol === "user" || $rol === "mod");
+            ?>
+                <?php if ($puede_banear):
+                    require "resources/dialog-user-ban.php";
+                    echo "<script src='js/perfil/modal-ban.js' defer></script>";
+                endif; ?>
                 <div class="perfil-div perfil-div-separacion">
                     <div class="perfil-descripcion">
                         <p id="perfil-descripcion-texto">Acciones administrativas (<?php echo $_SESSION['cuenta_rol']; ?>)</p>
                         <div class="perfil-descripcion-acciones">
-                            <?php if (esta_baneado($conn, $id_perfil)): ?>
-                            <button id="boton-bloquear-usuario" data-id="<?= $id_perfil ?>" data-mode="unban">Desbanear usuario</button>
-                            <?php else: ?>
-                            <button id="boton-bloquear-usuario" data-id="<?= $id_perfil ?>" data-mode="ban">Suspender usuario</button>
+                            <?php if ($puede_banear): ?>
+                                <?php if ($esta_ban): ?>
+                                <button id="boton-bloquear-usuario" data-id="<?= $id_perfil ?>" data-mode="unban">Desbanear usuario</button>
+                                <?php else: ?>
+                                <button id="boton-bloquear-usuario" data-id="<?= $id_perfil ?>" data-mode="ban">Suspender usuario</button>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <?php if ($puede_ascender): ?>
+                                <?php if ($rol === "user"): ?>
+                                <button id="boton-ascender-usuario" data-id="<?= $id_perfil ?>" data-objetivo="mod">Ascender a moderador</button>
+                                <?php elseif ($rol === "mod"): ?>
+                                <button id="boton-ascender-usuario" data-id="<?= $id_perfil ?>" data-objetivo="admin">Ascender a administrador</button>
+                                <?php endif; ?>
                             <?php endif; ?>
                             <button onclick="window.location.href='perfil.php?editar=1'">Eliminar usuario</button>
                             <button onclick="window.location.href='php/db/logout.php'" id="boton-cerrar-sesion">Modificar datos</button>
                         </div>
                     </div>
                 </div>
-                <?php echo "<script src='js/admin/modify-user.js' defer></script>" ?>
+                <?php if ($puede_banear): echo "<script src='js/admin/modify-user.js' defer></script>"; endif; ?>
+                <?php if ($puede_ascender): echo "<script src='js/admin/promote-user.js' defer></script>"; endif; ?>
             <?php endif; ?>
         <?php endif; ?>
         <?php include("resources/dialog-upload.php"); ?>

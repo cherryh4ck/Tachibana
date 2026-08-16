@@ -1335,7 +1335,7 @@ header h1{
     user-select: none;
 }
 
-#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user, #input-tag-ban, #input-tag-ban2, #post-categoria, #post-categoria-sticky{
+#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user, #input-tag-ban, #input-tag-ban2, #post-categoria, #post-categoria-sticky, #perfil-tag-mod, #perfil-tag-admin{
     background-color: rgb(49, 168, 79);
     border-radius: 8px;
     height: 25px;
@@ -1367,7 +1367,7 @@ header h1{
     font-size: 12px;
 }
 
-#input-tag-admin{
+#input-tag-admin, #perfil-tag-admin{
     background-color: rgb(219, 147, 64);
     height: 18px;
     margin-left: 0.5em;
@@ -1376,7 +1376,7 @@ header h1{
     margin-bottom: auto;
 }
 
-#input-tag-mod{
+#input-tag-mod, #perfil-tag-mod{
     background-color: rgb(219, 64, 116);
     height: 18px;
     margin-left: 0.5em;
