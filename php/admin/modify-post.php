@@ -1,5 +1,6 @@
 <?php
     require __DIR__ . "/../db/config.php";
+    header("Content-Type: application/json");
 
     function eliminarPost(int $post_id) {
         if (file_exists(__DIR__ . "/../../galeria/$post_id.jpg")) {
@@ -30,7 +31,6 @@
                 $newValue = $conn->query("SELECT @new")->fetchColumn();
 
                 http_response_code(200);
-                header("Content-Type: application/json");
                 echo json_encode([
                     "authorized" => true,
                     "ok" => true,
@@ -52,7 +52,6 @@
                 }
 
                 http_response_code(200);
-                header("Content-Type: application/json");
                 echo json_encode([
                     "authorized" => true,
                     "ok" => true,
@@ -71,7 +70,6 @@
                 $sql = $conn->prepare("DELETE FROM posts WHERE id = ?");
                 $sql->execute([$post_id]);
                 http_response_code(200);
-                header("Content-Type: application/json");
                 echo json_encode([
                     "authorized" => true,
                     "ok" => true,
@@ -85,7 +83,6 @@
                 $newValue = $conn->query("SELECT @new")->fetchColumn();
 
                 http_response_code(200);
-                header("Content-Type: application/json");
                 echo json_encode([
                     "authorized" => true,
                     "ok" => true,
@@ -95,7 +92,6 @@
             }
             else {
                 http_response_code(400);
-                header("Content-Type: application/json");
                 echo json_encode([
                     "authorized" => true,
                     "ok" => false,
@@ -105,7 +101,6 @@
         }
         catch (PDOException $e) {
             http_response_code(500);
-            header("Content-Type: application/json");
             echo json_encode([
                 "authorized" => true,
                 "ok" => false,
@@ -115,7 +110,6 @@
     }
     else {
         http_response_code(403);
-        header("Content-Type: application/json");
         echo json_encode([
             "authorized" => false,
             "mensaje" => "No autorizado."
