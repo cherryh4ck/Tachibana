@@ -1,7 +1,6 @@
 <dialog style="display: none;" class="contenido-subir contenido-setup" id="dialog-user-ban">
     <div class="contenido-subir-formulario">
         <h2 class="contenido-setup-titulo">Banear usuario</h2>
-        <script src="js/admin/modify-user.js" defer></script>
         <form id="formulario-ban">
             <div class="contenido-subir-formulario-fila1">
                 <div class="contenido-subir-formulario-fila1-input-allspace">
@@ -18,7 +17,7 @@
             <div class="contenido-subir-formulario-error">
                 <p style="display: none;" id="mensaje-error"><span>Error al instalar:</span> Test test</p>
             </div>
-            <input type="submit" value="Banear" id="setup-enviar">
+            <input type="submit" value="Banear" id="banear-enviar">
         </form>
     </div>
 </dialog>

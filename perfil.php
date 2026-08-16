@@ -248,16 +248,19 @@
             </div>
 
             <?php if (($_SESSION['cuenta_rol'] === 'admin' || $_SESSION['cuenta_rol'] === 'mod') && !$es_el_dueño): ?>
+                <?php require "resources/dialog-user-ban.php";
+                      echo "<script src='js/perfil/modal-ban.js' defer></script>" ?>
                 <div class="perfil-div perfil-div-separacion">
                     <div class="perfil-descripcion">
                         <p id="perfil-descripcion-texto">Acciones administrativas (<?php echo $_SESSION['cuenta_rol']; ?>)</p>
                         <div class="perfil-descripcion-acciones">
-                            <button onclick="window.location.href='perfil.php?editar=1'">Bloquear usuario</button>
+                            <button id="boton-bloquear-usuario" data-id="<?= $id_perfil ?>">Bloquear usuario</button>
                             <button onclick="window.location.href='perfil.php?editar=1'">Eliminar usuario</button>
                             <button onclick="window.location.href='php/db/logout.php'" id="boton-cerrar-sesion">Modificar datos</button>
                         </div>
                     </div>
                 </div>
+                <?php echo "<script src='js/admin/modify-user.js' defer></script>" ?>
             <?php endif; ?>
         <?php endif; ?>
         <?php include("resources/dialog-upload.php"); ?>
