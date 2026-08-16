@@ -109,7 +109,7 @@
             echo json_encode([
                 "authorized" => true,
                 "ok" => false,
-                "mensaje" => "Error: $e"
+                "mensaje" => "Error: $e" // no hace falta ocultar el error, supongo
             ]);
         }
     }
