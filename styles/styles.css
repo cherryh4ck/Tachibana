@@ -2137,14 +2137,20 @@ header h1{
     min-height: 120px;
     border-radius: 8px;
     align-items: center;
-    transition: all 200ms;
+    border-left: 3px solid transparent;
+    transition: transform 200ms, background-color 200ms, box-shadow 200ms, border-color 200ms;
 }
 
 .contenido-perfil-bloque:hover{
-    margin: 0.15em;
+    transform: scale(1.05);
     background-color: rgb(34, 33, 33);
     cursor: pointer;
-    box-shadow: 5px 1px 40px rgb(56, 55, 55);
+    border-left-color: rgb(141, 192, 129);
+    box-shadow: 0 2px 30px rgba(141, 192, 129, 0.18), 5px 1px 40px rgb(56, 55, 55);
+}
+
+.contenido-perfil-bloque:hover img{
+    box-shadow: 0 0 0 2px rgba(141, 192, 129, 0.5);
 }
 
 .contenido-perfil-bloque img{
@@ -2155,6 +2161,7 @@ header h1{
     background-color: gray;
     margin-left: 1em;
     border-radius: 6px;
+    transition: box-shadow 200ms;
 }
 
 .contenido-perfil-bloque-info{
