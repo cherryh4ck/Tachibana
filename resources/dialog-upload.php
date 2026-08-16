@@ -60,7 +60,7 @@
             </div>
             <div class="contenido-subir-formulario-error">
                 <!-- div para mostrar errores / avisos mediante js/archivos.js -->
-                <p style="display: none;" id="mensaje-error"><span>Error al subir la imagen:</span> Test test</p>
+                <p style="display: none;" id="mensaje-error-subir"><span>Error al subir la imagen:</span> Test test</p>
                 <p style="display: none;" id="mensaje-aviso"><span id="mensaje-aviso2">Aviso:</span> Tu ID de usuario se seguirá guardando en la base de datos como identificación, pero esto es solamente visible para administradores.</p>
             </div>
             <input type="submit" value="Subir" id="btn-enviar" disabled>

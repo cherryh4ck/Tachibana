@@ -7,7 +7,7 @@ const imagen_res = document.getElementById("imagen-res");
 const textbox = document.getElementById("titulo-input");
 const textarea = document.getElementById("descripcion-input");
 const enviar = document.getElementById("btn-enviar");
-const mensaje_error = document.getElementById("mensaje-error");
+const mensaje_error_subir = document.getElementById("mensaje-error-subir");
 const anonimo_checkbox = document.getElementById("anonimo-checkbox");
 const mensaje_aviso = document.getElementById("mensaje-aviso");
 
@@ -17,14 +17,14 @@ let maxSize = 6228792; // 5 MB
 export let req1 = false, req2 = false, req3 = false;
 import {tags_introducidos} from "./tags.js";
 
-mensaje_error.style.transition = "opacity 0.3s ease";
+mensaje_error_subir.style.transition = "opacity 0.3s ease";
 mensaje_aviso.style.transition = "opacity 0.3s ease";
-mensaje_error.style.opacity = 0;
+mensaje_error_subir.style.opacity = 0;
 mensaje_aviso.style.opacity = 0;
 
 archivo.addEventListener("change", (event) => {
     const imagen = event.target.files[0];
-    mensaje_error.style.opacity = 0;
+    mensaje_error_subir.style.opacity = 0;
     if (!imagen) {
         req1 = false;
         imagen_texto.textContent = "Imagen no seleccionada";
@@ -59,11 +59,11 @@ archivo.addEventListener("change", (event) => {
             imagen_res.textContent = "";
             image.src = "";
             
-            mensaje_error.innerHTML = "<span>Error al subir la imagen: </span> La resolución mínima es de 400x300";
-            mensaje_error.style.display = "block";
-            mensaje_error.style.opacity = 0;
+            mensaje_error_subir.innerHTML = "<span>Error al subir la imagen: </span> La resolución mínima es de 400x300";
+            mensaje_error_subir.style.display = "block";
+            mensaje_error_subir.style.opacity = 0;
             requestAnimationFrame(() => {
-                mensaje_error.style.opacity = 1; 
+                mensaje_error_subir.style.opacity = 1; 
             });
         }
 
@@ -85,11 +85,11 @@ archivo.addEventListener("change", (event) => {
         imagen_res.textContent = "";
         image.src = "";
 
-        mensaje_error.innerHTML = "<span>Error al subir la imagen: </span> El tamaño mínimo es de 10 KB";
-        mensaje_error.style.display = "block";
-        mensaje_error.style.opacity = 0;
+        mensaje_error_subir.innerHTML = "<span>Error al subir la imagen: </span> El tamaño mínimo es de 10 KB";
+        mensaje_error_subir.style.display = "block";
+        mensaje_error_subir.style.opacity = 0;
         requestAnimationFrame(() => {
-            mensaje_error.style.opacity = 1; 
+            mensaje_error_subir.style.opacity = 1; 
         });
     }
     if (imagen.size < maxSize) {
@@ -104,15 +104,15 @@ archivo.addEventListener("change", (event) => {
         image.src = "";
 
         if (!(imagen.type == "image/gif")){
-            mensaje_error.innerHTML = "<span>Error al subir la imagen: </span> El tamaño máximo es de 5 MB";
+            mensaje_error_subir.innerHTML = "<span>Error al subir la imagen: </span> El tamaño máximo es de 5 MB";
         }
         else{
-            mensaje_error.innerHTML = "<span>Error al subir la imagen: </span> El tamaño máximo es de 25 MB";
+            mensaje_error_subir.innerHTML = "<span>Error al subir la imagen: </span> El tamaño máximo es de 25 MB";
         }   
-        mensaje_error.style.display = "block";
-        mensaje_error.style.opacity = 0;
+        mensaje_error_subir.style.display = "block";
+        mensaje_error_subir.style.opacity = 0;
         requestAnimationFrame(() => {
-            mensaje_error.style.opacity = 1; 
+            mensaje_error_subir.style.opacity = 1; 
         });
     }
 });
@@ -148,9 +148,9 @@ anonimo_checkbox.addEventListener("change", (e) => {
     }
 });
 
-mensaje_error.addEventListener('transitionend', e=>{
-  if (e.propertyName === "opacity" && getComputedStyle(mensaje_error).opacity === "0") {
-    mensaje_error.style.display = "none";
+mensaje_error_subir.addEventListener('transitionend', e=>{
+  if (e.propertyName === "opacity" && getComputedStyle(mensaje_error_subir).opacity === "0") {
+    mensaje_error_subir.style.display = "none";
   }
 });
 
