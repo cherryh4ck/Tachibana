@@ -1,10 +1,11 @@
 const banear_form = document.getElementById("formulario-ban");
 const banear_boton = document.getElementById("banear-enviar");
-const user_id = document.getElementById("boton-bloquear-usuario").dataset.id;
+const banear_modal_boton = document.getElementById("boton-bloquear-usuario");
+const user_id = banear_modal_boton.dataset.id;
+var data_mode = banear_modal_boton.dataset.mode;
 var accion = "";
 
-banear_form.addEventListener("submit", function(e){
-    e.preventDefault();
+function banear() {
     accion = "ban";
     var motivo = document.getElementById("ban-motivo").value;
     var fecha_expiracion = document.getElementById("ban-fecha-expiracion").value;
@@ -32,4 +33,15 @@ banear_form.addEventListener("submit", function(e){
     .catch(() => {
         banear_boton.disabled = false;
     });
+}
+
+banear_modal_boton.addEventListener("click", function(e){
+    if (data_mode === "unban") {
+        banear();
+    }
+});
+
+banear_form.addEventListener("submit", function(e){
+    e.preventDefault();
+    banear();
 });

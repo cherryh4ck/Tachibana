@@ -254,7 +254,11 @@
                     <div class="perfil-descripcion">
                         <p id="perfil-descripcion-texto">Acciones administrativas (<?php echo $_SESSION['cuenta_rol']; ?>)</p>
                         <div class="perfil-descripcion-acciones">
-                            <button id="boton-bloquear-usuario" data-id="<?= $id_perfil ?>">Bloquear usuario</button>
+                            <?php if (esta_baneado($conn, $id_perfil)): ?>
+                            <button id="boton-bloquear-usuario" data-id="<?= $id_perfil ?>" data-mode="unban">Desbanear usuario</button>
+                            <?php else: ?>
+                            <button id="boton-bloquear-usuario" data-id="<?= $id_perfil ?>" data-mode="ban">Suspender usuario</button>
+                            <?php endif; ?>
                             <button onclick="window.location.href='perfil.php?editar=1'">Eliminar usuario</button>
                             <button onclick="window.location.href='php/db/logout.php'" id="boton-cerrar-sesion">Modificar datos</button>
                         </div>
