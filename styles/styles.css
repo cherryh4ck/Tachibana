@@ -1295,7 +1295,7 @@ header h1{
     user-select: none;
 }
 
-#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user, #input-tag-ban, #post-categoria, #post-categoria-sticky{
+#input-tag, #input-tag2, #input-tag-rojo, #input-tag-amarillo, #input-tag-op, #input-tag-admin, #input-tag-mod, #input-tag-user, #input-tag-ban, #input-tag-ban2, #post-categoria, #post-categoria-sticky{
     background-color: rgb(49, 168, 79);
     border-radius: 8px;
     height: 25px;
@@ -1354,13 +1354,17 @@ header h1{
     margin-bottom: auto;
 }
 
-#input-tag-ban{
+#input-tag-ban, #input-tag-ban2{
     background-color: rgb(207, 76, 93);
     height: 18px;
     margin-left: 0.5em;
     font-size: 12px;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+#input-tag-ban2 {
+    height: 20px !important;
 }
 
 #input-tag-rojo, #post-categoria{

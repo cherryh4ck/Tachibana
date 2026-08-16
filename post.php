@@ -336,8 +336,14 @@
                                 }
 
                                 if ($comentario_op == 1){
-                                    echo "<span id='input-tag-op'>OP</span>";
+                                    echo "<span id='input-tag-op' title='El usuario es el autor del post.'>OP</span>";
                                 }
+                                if ($comentario_autor_id != 0){
+                                    if (esta_baneado($conn, $comentario_autor_id)) {
+                                        echo "<span id='input-tag-ban2' title='El usuario se encuentra suspendido.'>BAN</span>";
+                                    }
+                                }
+
                                 echo "</div>";
                                 echo "<p id='post-comentarios-comentario-fecha'>$comentario_fecha_creacion</p>";
                                 echo "</div>";
