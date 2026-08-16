@@ -1117,6 +1117,46 @@ header h1{
     color: rgb(228, 221, 221);
 }
 
+.contenido-subir-formulario form input[type=date], .contenido-subir-formulario form input[type=datetime-local]{
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 35px;
+    margin-top: 0.25em;
+    border-radius: 8px;
+    background-color: #191b1b;
+    border: 2px solid #282b2b;
+    color: rgb(211, 199, 199);
+    padding: 0.5em;
+    transition: all 200ms;
+    font-size: 16px;
+    color-scheme: dark;
+    cursor: pointer;
+}
+
+.contenido-subir-formulario form input[type=date]:hover, .contenido-subir-formulario form input[type=datetime-local]:hover{
+    background-color: rgb(37, 35, 35);
+    box-shadow: 5px 1px 40px rgb(36, 35, 35);
+}
+
+.contenido-subir-formulario form input[type=date]:focus, .contenido-subir-formulario form input[type=datetime-local]:focus{
+    outline: none;
+    border: 2px solid #464949;
+    box-shadow: 5px 1px 40px rgb(56, 55, 55);
+    color: rgb(228, 221, 221);
+}
+
+.contenido-subir-formulario form input[type=date]::-webkit-calendar-picker-indicator, .contenido-subir-formulario form input[type=datetime-local]::-webkit-calendar-picker-indicator{
+    filter: invert(70%);
+    cursor: pointer;
+    transition: filter 200ms;
+    border-radius: 4px;
+}
+
+.contenido-subir-formulario form input[type=date]::-webkit-calendar-picker-indicator:hover, .contenido-subir-formulario form input[type=datetime-local]::-webkit-calendar-picker-indicator:hover{
+    filter: invert(85%);
+}
+
 .contenido-subir-formulario form input[type=submit]{
     display: block;
     width: 150px;
