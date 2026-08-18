@@ -171,6 +171,11 @@
     <?php else: ?>
     <?php include("resources/dialog-setup.php"); ?>
     <?php endif; ?>
-    <?php include("resources/footer.php"); ?>
+    <?php include("resources/footer.php"); 
+        if (isset($_SESSION["cuenta_id"])) {
+            if (($_SESSION['cuenta_rol'] == "admin" || $_SESSION['cuenta_rol'] == "mod")) {
+                echo "<script src='js/admin-temp/deletedPost.js' defer></script>";
+            }
+        } ?>
 </body>
 </html>

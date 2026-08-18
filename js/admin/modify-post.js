@@ -96,10 +96,8 @@ eliminar_form.addEventListener("submit", function(e){
             console.log(data);
             dialog.close();
             dialog.style.display = "none";
-            notify("Post eliminado", "exito");
-            setTimeout(() => {
-                window.location.href = "index.php";
-            }, 3000);
+            document.cookie = "postEliminado=1; max-age=86400; path=/; Secure; SameSite=Strict";
+            window.location.href = "index.php";
         }
         else {
             console.log("malito");
