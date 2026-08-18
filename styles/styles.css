@@ -209,6 +209,80 @@ nav ul li{
     color: rgb(109, 109, 155);
 }
 
+@media (max-width: 760px){
+    nav{
+        box-sizing: border-box;
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        row-gap: 0.5em;
+        padding: 0.5em 0.6em;
+    }
+ 
+    #nav-logo{
+        order: 1;
+        margin-left: 0.2em;
+    }
+ 
+    .nav-cuenta{
+        order: 2;
+        margin-right: 0;
+    }
+ 
+    nav ul{
+        order: 3;
+        position: static;
+        flex-basis: 100%;
+        width: 100%;
+        height: auto;
+        flex-wrap: wrap;
+        row-gap: 0.4em;
+    }
+ 
+    nav ul li{
+        margin: 0;
+        padding: 0 3px;
+    }
+ 
+    .nav-link{
+        padding: 0.45em 0.7em;
+        font-size: 14px;
+    }
+}
+ 
+@media (max-width: 420px){
+    nav{
+        padding: 0.5em 0.4em;
+    }
+ 
+    #nav-logo{
+        font-size: 22px;
+    }
+ 
+    .nav-link span{
+        display: none;
+    }
+ 
+    .nav-link{
+        padding: 0.55em;
+    }
+ 
+    .nav-link-icono{
+        width: 20px;
+        height: 20px;
+    }
+ 
+    .nav-username{
+        font-size: 14px;
+    }
+ 
+    .nav-avatar{
+        width: 32px;
+        height: 32px;
+    }
+}
+
 header h1{
     text-align: center;
     color: rgb(255, 255, 255);
