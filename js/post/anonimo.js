@@ -1,7 +1,9 @@
 const anonimo_checkbox = document.getElementById("anonimo-checkbox");
 const avatar = document.getElementsByClassName("comentar-avatar")[0];
-const comentar_op = document.getElementsByClassName("comentar-input-tag-op")[0];
+const comentar_op = document.getElementsByClassName("comentar-input-tag-op-script")[0];
 const es_anonimo = parseInt(document.getElementById("es_anonimo").textContent);
+
+const formulario_comentar_2 = document.getElementById("formulario-comentar");
 
 let avatar_actual = "";
 
@@ -17,7 +19,7 @@ else if (avatar.src.endsWith("resources/avatar.png") == true ){
     avatar_actual = "resources/avatar.png";
 }
 
-anonimo_checkbox.addEventListener("change", function(e) {
+function chequearAnonimato() {
     if (anonimo_checkbox.checked){
         avatar.src = "resources/avatar.png";
         if (comentar_op != null && es_anonimo == 1){
@@ -36,4 +38,14 @@ anonimo_checkbox.addEventListener("change", function(e) {
             comentar_op.style.opacity = 1;
         }
     }
+}
+
+formulario_comentar_2.addEventListener("reset", function(e) {
+    queueMicrotask(() => {
+        chequearAnonimato();
+    });
+});
+
+anonimo_checkbox.addEventListener("change", function(e) {
+    chequearAnonimato();
 });
