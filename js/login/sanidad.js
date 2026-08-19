@@ -1,9 +1,9 @@
 const form_login = document.getElementById("formulario-login");
 const user_input = document.getElementById("user-input");
 const password_input = document.getElementById("password-input");
+const regex = /^(?!.*_{2,})[a-zA-Z0-9_]{3,16}$/;
 
 const mensaje_error = document.getElementById("formulario-mensaje");
-
 let error = false;
 
 mensaje_error.style.transition = "opacity 0.3s ease";
@@ -18,9 +18,9 @@ form_login.addEventListener("submit", function (e){
         mensaje_error.innerHTML = "<span>Error:</span> Los campos no pueden estar vacios";
         error = true;
     }
-    else if (user_input.value.length < 4 || user_input.value.length > 19){
+    else if (!regex.test(user_input.value)){
         e.preventDefault();
-        mensaje_error.innerHTML = "<span>Error:</span> El usuario es muy corto o es muy largo";
+        mensaje_error.innerHTML = "<span>Error:</span> El nombre de usuario es inválido";
         error = true;
     }
 
