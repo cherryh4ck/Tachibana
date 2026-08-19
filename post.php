@@ -232,6 +232,11 @@
                     else if ($baneado == 1) {
                         echo "<button id='post-admin-fijar' data-id='$id' style='display: none;'>Fijar post</button>";
                     }
+
+                    if ($_SESSION["cuenta_rol"] === "mod") {
+                        echo "<button id='post-admin-fijar' data-id='$id' style='display: none;'>Fijar post</button>";
+                    }
+
                     if ($baneado == 0){
                         echo "<button id='post-admin-banear' data-id='$id'>Banear post</button>";
                     }
