@@ -20,6 +20,7 @@
             try{
                 $sql = $conn->prepare("INSERT INTO usuarios(username, password, nickname) VALUES (?, ?, ?);");
                 $sql->execute([$username, $password, $username]);
+                setcookie("login_user", $username, time() + 86400, "/");
                 header("Location: login.php?reg=1");
                 exit();
             }
