@@ -8,6 +8,7 @@ html{
 *{
     margin: 0;
     font-family: "Lato", Arial;
+    box-sizing: border-box;
 }
 
 body{
@@ -586,7 +587,15 @@ header h1{
 @media (max-width: 500px){
     .post-admin-panel{
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+    }
+
+    .post-admin-panel-acciones{
+        width: 100%;
+    }
+
+    .post-admin-panel-acciones button{
+        flex: 1 1 auto;
     }
 }
 
@@ -709,6 +718,7 @@ header h1{
 
 .post-comentarios-comentar-seccion-avatar{
     display: block;
+    flex-shrink: 0;
 }
 
 .post-comentarios-comentar-seccion-avatar span{
@@ -762,10 +772,12 @@ header h1{
     margin: 0;
     background-color: transparent;
     border-radius: 6px;
+    flex-shrink: 0;
 }
 
 .post-comentarios-comentario-avatar-div{
     display: block;
+    flex-shrink: 0;
 }
 
 .post-comentarios-comentario-avatar-div p{
@@ -773,6 +785,13 @@ header h1{
     font-size: 12px;
     color: rgb(136, 131, 131) !important;
     margin-top: 0.2em;
+}
+
+.post-comentarios-comentario-info{
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .post-comentarios-comentario-autor {
@@ -871,6 +890,7 @@ header h1{
 .post-comentarios-comentar form{
     display: block;
     width: 100%;
+    min-width: 0;
 }
 
 .post-comentarios-comentar-botones{
@@ -1047,6 +1067,18 @@ header h1{
     }
     .post-comentarios-comentar-botones{
         flex-wrap: wrap;
+    }
+    .post-comentarios-comentario{
+        max-width: 100%;
+        padding: 0.75em;
+        gap: 0.4em;
+    }
+    .post-comentarios-comentar{
+        flex-wrap: wrap;
+        margin-left: 0;
+    }
+    .post-comentarios, .post-descripcion, #post-comentarios-textarea{
+        margin-left: 0;
     }
 }
 
