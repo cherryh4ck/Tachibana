@@ -531,7 +531,7 @@ header h1{
     border-left: 3px solid rgb(219, 64, 64);
     border-radius: 8px;
     padding: 0.6em 1em;
-    margin: 0.6em 0.3em 0.3em 0.3em;
+    margin: 0.6em 0 0.3em 0.3em;
 }
  
 .post-admin-panel-info{
