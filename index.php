@@ -96,7 +96,7 @@
                             echo "<div class='galeria-tags-populares'>";
                             if ($fetch_tags){
                                 foreach ($fetch_tags as $tag){
-                                    echo "<span id='input-tag' class='tag-popular' data-tag='" . htmlspecialchars($tag["nombre"]) . "'>" . $tag["nombre"] . "<b>" . $tag["usos"] . "</b></span>";
+                                    echo "<span id='input-tag' class='tag-popular' style='cursor: pointer;' data-tag='" . htmlspecialchars($tag["nombre"]) . "'>" . $tag["nombre"] . "<b>" . $tag["usos"] . "</b></span>";
                                 }
                             }
                             else{
