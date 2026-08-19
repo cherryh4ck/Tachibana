@@ -199,7 +199,7 @@ nav ul li{
 #nav-logo { /* logo */
     font-size: 28px;
     color: rgb(141, 192, 129);
-    margin-left: 0.3em;
+    margin-left: 0.45em;
     margin-top: auto;
     margin-bottom: auto;
     font-weight: 600;
@@ -2352,6 +2352,8 @@ header h1{
     display: flex;
     justify-content: center;
     width: 100%;
+    padding: 0 1em;
+    box-sizing: border-box;
 }
 
 .perfil-div-separacion{
@@ -2360,6 +2362,8 @@ header h1{
 
 .perfil-banner{
     display: block;
+    width: 100%;
+    max-width: 600px;
     background-color: rgb(24, 23, 23);
     border-radius: 8px;
     transition: all 200ms;
@@ -2367,10 +2371,13 @@ header h1{
 
 .perfil-banner-parte1{
     display: flex;
-    width: 600px;
-    height: 80px;
-    align-items: flex-end;
+    width: 100%;
+    height: auto;
+    min-height: 80px;
+    align-items: center;
     padding: 1em;
+    gap: 1em;
+    box-sizing: border-box;
     transition: all 200ms;
 }
 
@@ -2402,8 +2409,10 @@ header h1{
     align-items:center;
     background-color: rgb(24, 23, 23);
     border-radius: 8px;
-    width: 600px;
-    min-width: 40px;
+    width: 100%;
+    max-width: 600px;
+    min-width: 0;
+    box-sizing: border-box;
     padding: 1em;
     transition: all 200ms;
 }
@@ -2438,20 +2447,27 @@ header h1{
 
 .perfil-banner-parte1 img{
     display: block;
+    width: 80px;
+    height: 80px;
     max-width: 80px;
     max-height: 80px;
+    flex-shrink: 0;
     margin: 0;
     background-color: transparent;
     border-radius: 6px;
 }
 
 .perfil-info{
-    padding: 0 1em;
+    padding: 0;
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .perfil-info p{
     color: rgb(136, 131, 131);
     font-size: 14px;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .perfil-info p b{
@@ -2461,11 +2477,19 @@ header h1{
 
 .perfil-info-nickname-tags{
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4em;
 }
 
 .perfil-info-avanzada{
     display: block;
     margin-top: 0.35em;
+}
+
+.perfil-info-avanzada p{
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 #viñeta{
@@ -2474,7 +2498,8 @@ header h1{
 
 .perfil-banner-parte2{
     display: flex;
-    align-items: flex-end;
+    flex-wrap: wrap;
+    align-items: center;
     padding: 1em;
     padding-top: 0;
     transition: all 200ms;
@@ -2484,17 +2509,26 @@ header h1{
 .perfil-banner-parte2 button, .perfil-descripcion-acciones button{
     display: block;
     width: auto;
+    flex: 1 1 auto;
+    min-width: fit-content;
     height: 40px;
+    padding: 0 1em;
     background-color: rgb(20, 20, 19);
     color: rgb(211, 199, 199);
     border: none;
-    font-size: 16px;
+    font-size: 15px;
+    white-space: nowrap;
     transition: all 200ms;
     border-radius: 8px;
 }
 
+.perfil-banner-parte2 button:first-child{
+    color: rgb(141, 192, 129);
+}
+
 #boton-cerrar-sesion{
     margin-left: auto;
+    color: rgb(219, 64, 64);
 }
 
 .perfil-banner-parte2 button:hover, .perfil-descripcion-acciones button:hover{
@@ -2506,8 +2540,21 @@ header h1{
     transform: scale(1.05);
 }
 
+.perfil-banner-parte2 button:first-child:hover{
+    background-color: rgba(141, 192, 129, 0.1);
+    color: rgb(158, 206, 147);
+    opacity: 1;
+}
+
+#boton-cerrar-sesion:hover{
+    background-color: rgba(219, 64, 64, 0.1);
+    color: rgb(224, 100, 100);
+    opacity: 1;
+}
+
 .perfil-descripcion-acciones {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5em;
     margin: 0;
     margin-top: 1em;
@@ -2515,20 +2562,25 @@ header h1{
 
 .perfil-banner-parte1-fila{
     display: flex;
-    gap: 2.5em;
+    flex-wrap: wrap;
+    gap: 1em 2em;
 }
 
 .perfil-banner-parte1-modificado{
     display: flex;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     height: auto;
     padding: 1em;
+    box-sizing: border-box;
     transition: all 200ms;
 }
 
 .perfil-banner-parte1-modificado form{
     padding: 0 0.75em;
     width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .perfil-banner-parte1-modificado form p{
@@ -2539,18 +2591,25 @@ header h1{
 
 .perfil-banner-parte1-modificado-input{
     display: block;
+    min-width: 0;
     margin-top: 1em;
+}
+
+.perfil-banner-parte1-fila .perfil-banner-parte1-modificado-input{
+    flex: 1 1 140px;
+    margin-top: 0;
 }
 
 .perfil-banner-parte1-modificado-input-gap{
     display: flex;
+    flex-wrap: wrap;
     gap: 1em;
 }
 
 .perfil-banner-parte1-modificado-input input[type=text], .perfil-banner-parte1-modificado-input input[type=password]{
     display: block;
     box-sizing: border-box;
-    width: 180px;
+    width: 100%;
     height: 35px;
     margin-top: 0.25em;
     border-radius: 8px;
@@ -2561,10 +2620,6 @@ header h1{
     transition: all 200ms;
     font-size: 16px;
     color: rgb(211, 199, 199);
-}
-
-.perfil-banner-parte1-modificado-input input[type=password]{
-    width: 220px;
 }
 
 #perfil-banner-parte1-modificado-input-caracteres{
@@ -2619,18 +2674,18 @@ header h1{
 }
 
 .perfil-banner-parte1-modificado-input input[type=submit], .perfil-banner-parte1-modificado-input input[type=button]{
+    flex: 1 1 auto;
+    min-width: fit-content;
     width: 140px;
     height: 50px;
+    padding: 0 1em;
     background-color: rgb(20, 20, 19);
     color: rgb(211, 199, 199);
     border: none;
     font-size: 16px;
+    white-space: nowrap;
     transition: all 200ms;
     border-radius: 8px;
-}
-
-#guardar-cambios-seguridad{
-    width: 180px;
 }
 
 .perfil-banner-parte1-modificado-input input[type=submit]:not([disabled]):hover, .perfil-banner-parte1-modificado-input input[type=button]:hover{
@@ -2649,6 +2704,8 @@ header h1{
 
 .perfil-banner-parte1-modificado-input-avatar{
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 0.5em;
 }
 
@@ -2679,6 +2736,7 @@ header h1{
 .perfil-banner-parte1-modificado-input-avatar input[type=file]{
     transition: all 200ms;
     width: 125px;
+    flex-shrink: 0;
     max-height: 50px;
     margin-top: auto;
     margin-bottom: auto;
