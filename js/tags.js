@@ -10,7 +10,7 @@ const tags_input = document.getElementById("tags-input");
 const titulo_input = document.getElementById("titulo-input")
 const textarea = document.getElementById("descripcion-input");
 const enviar = document.getElementById("btn-enviar");
-const mensaje_error = document.getElementById("mensaje-error");
+const mensaje_error = document.getElementById("mensaje-error-subir");
 const tagsValue = document.getElementById("tags-value");
 let no_tags = document.getElementById("no-hay-tags");
 
