@@ -19,6 +19,12 @@
         }
     }
 
+    function eliminarComentario(int $comentario_id, int $post_id) {
+        if (file_exists(__DIR__ . "/../../resources/posts/$post_id/$comentario_id.png")) {
+            unlink(__DIR__ . "/../../resources/posts/$post_id/$comentario_id.png");
+        }
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && ($_SESSION['cuenta_rol'] == "admin" || $_SESSION['cuenta_rol'] == "mod")) {
         try {
             $accion = $_POST["accion"];
