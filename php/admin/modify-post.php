@@ -25,6 +25,28 @@
         }
     }
 
+    function eliminarDirectorio(string $dirPath): void {
+        if (!is_dir($dirPath)) {
+            return;
+        }
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($iterator as $object) {
+            if ($object->isDir()) {
+                rmdir($object->getRealPath());
+            } else {
+                unlink($object->getRealPath());
+            }
+        }
+
+        rmdir($dirPath);
+    }
+
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && ($_SESSION['cuenta_rol'] == "admin" || $_SESSION['cuenta_rol'] == "mod")) {
         try {
             $accion = $_POST["accion"];
@@ -66,8 +88,11 @@
                 ]);
             }
             else if ($accion == "delete") {
-                // eliminamos recursos antes por si acaso
+                // eliminamos recursos del post antes por si acaso
                 eliminarPost($post_id);
+                // eliminamos los recursos de los comentarios
+                $dir = __DIR__ . "/../../resources/posts/$post_id"; 
+                eliminarDirectorio($dir);
                 // ahora si la query
                 $sql = $conn->prepare("DELETE FROM posts_tags WHERE id_post = ?");
                 $sql->execute([$post_id]);
