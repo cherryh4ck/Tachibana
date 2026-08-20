@@ -3,6 +3,50 @@
     require __DIR__ . "/../../resources/parse_functions.php";
     header("Content-Type: application/json");
 
+    function eliminarPost(int $post_id) {
+        if (file_exists(__DIR__ . "/../../galeria/$post_id.jpg")) {
+            unlink(__DIR__ . "/../../galeria/$post_id.jpg");
+            unlink(__DIR__ . "/../../galeria/fullsize/$post_id.jpg");
+        }
+        else{
+            if (extension_loaded("imagick")){
+                unlink(__DIR__ . "/../../galeria/$post_id.gif");
+                unlink(__DIR__ . "/../../galeria/fullsize/$post_id.gif");
+            }
+            else{
+                unlink(__DIR__ . "/../../galeria/$post_id.jpg");
+                unlink(__DIR__ . "/../../galeria/fullsize/$post_id.gif");
+            }
+        }
+    }
+
+    function eliminarComentario(int $comentario_id, int $post_id) {
+        if (file_exists(__DIR__ . "/../../resources/posts/$post_id/$comentario_id.png")) {
+            unlink(__DIR__ . "/../../resources/posts/$post_id/$comentario_id.png");
+        }
+    }
+
+    function eliminarDirectorio(string $dirPath): void {
+        if (!is_dir($dirPath)) {
+            return;
+        }
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($iterator as $object) {
+            if ($object->isDir()) {
+                rmdir($object->getRealPath());
+            } else {
+                unlink($object->getRealPath());
+            }
+        }
+
+        rmdir($dirPath);
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && ($_SESSION['cuenta_rol'] == "admin" || $_SESSION['cuenta_rol'] == "mod")) {
         try {
             $accion = $_POST["accion"];
@@ -134,6 +178,49 @@
                     "accion" => "ascender",
                     "rol" => $nuevo_rol,
                     "mensaje" => "El usuario fue ascendido a $nuevo_rol.",
+                ]);
+            }
+            elseif ($accion == "delete") {
+                // antes de empezar esta acción, tenemos que eliminar todos los posts
+                // y comentarios hecho por la persona
+                // empezamos con los comentarios con imagenes hechos por el usuario 
+                $sql = $conn->prepare("SELECT * FROM posts_comentarios WHERE id_autor = ? AND imagen_adjuntada = 1");
+                $sql->execute([$user_id]);
+                $comentarios = $sql->fetchAll(PDO::FETCH_ASSOC);
+                if ($comentarios) {
+                    foreach ($comentarios as $comentario) {
+                        eliminarComentario($comentario["id"], $comentario["id_post"]);
+                    }
+                }
+                // eliminamos todos los comentarios
+                $sql = $conn->prepare("DELETE FROM posts_comentarios WHERE id_autor = ?");
+                $sql->execute([$user_id]);
+                // eliminamos todos los posts del usuario
+                $sql = $conn->prepare("SELECT * FROM posts WHERE id_autor = ?");
+                $sql->execute([$user_id]);
+                $posts = $sql->fetchAll(PDO::FETCH_ASSOC);
+                if ($posts) {
+                    foreach ($posts as $post) {
+                        eliminarPost($post["id"]);
+                        $dir = __DIR__ . "/../../resources/posts/" . $post["id"]; 
+                        eliminarDirectorio($dir);
+                        $sql = $conn->prepare("DELETE FROM posts_tags WHERE id_post = ?");
+                        $sql->execute([$post["id"]]);
+                        $sql = $conn->prepare("DELETE FROM posts_comentarios WHERE id_post = ?");
+                        $sql->execute([$post["id"]]);
+                        $sql = $conn->prepare("DELETE FROM posts WHERE id = ?");
+                        $sql->execute([$post["id"]]);
+                    }
+                }
+                $sql = $conn->prepare("DELETE FROM bans WHERE id_usuario = ?");
+                $sql->execute([$user_id]);
+                $sql = $conn->prepare("DELETE FROM usuarios WHERE id = ?");
+                $sql->execute([$user_id]);
+                http_response_code(200);
+                echo json_encode([
+                    "authorized" => true,
+                    "ok" => true,
+                    "mensaje" => "Usuario $user_id eliminado."
                 ]);
             }
             else {

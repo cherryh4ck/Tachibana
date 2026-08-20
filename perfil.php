@@ -242,7 +242,9 @@
             ?>
                 <?php if ($puede_banear):
                     require "resources/dialog-user-ban.php";
+                    require "resources/dialog-user-delete.php";
                     echo "<script src='js/perfil/modal-ban.js' defer></script>";
+                    echo "<script src='js/perfil/modal-delete.js' defer></script>";
                 endif; ?>
                 <div class="perfil-div perfil-div-separacion">
                     <div class="perfil-descripcion">
@@ -262,7 +264,7 @@
                                 <button id="boton-ascender-usuario" data-id="<?= $id_perfil ?>" data-objetivo="admin">Ascender a administrador</button>
                                 <?php endif; ?>
                             <?php endif; ?>
-                            <button onclick="window.location.href='perfil.php?editar=1'">Eliminar usuario</button>
+                            <button id="boton-delete-usuario" data-id="<?= $id_perfil ?>">Eliminar usuario</button>
                             <button onclick="window.location.href='php/db/logout.php'" id="boton-cerrar-sesion">Modificar datos</button>
                         </div>
                     </div>

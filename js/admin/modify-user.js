@@ -9,6 +9,9 @@ const descripcion_contenido = document.getElementById("perfil-descripcion-conten
 const descripcion_suspendido = document.getElementById("perfil-descripcion-texto-suspendido");
 const boton_ascender = document.getElementById("boton-ascender-usuario");
 
+const delete_form = document.getElementById("formulario-delete");
+const delete_boton = document.getElementById("delete-enviar");
+
 function actualizarUIBaneo(data) {
     if (data.accion === "ban") {
         tag_ban.style.removeProperty("display");
@@ -73,6 +76,35 @@ function banear() {
     });
 }
 
+function eliminarUsuario() {
+    delete_boton.disabled = true;
+
+    fetch("php/admin/modify-user.php", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ accion: "delete", user_id: user_id })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok){
+            notify("El usuario ha sido eliminado", "exito");
+            const dialog = document.getElementById("dialog-delete-usuario");
+            if (dialog && dialog.open) {
+                dialog.close();
+                dialog.style.display = "none";
+            }
+        }
+        else {
+            notify("No se pudo eliminar el usuario", "error");
+        }
+        delete_boton.disabled = false;
+    })
+    .catch(() => {
+        notify("No se pudo eliminar el usuario", "error");
+        delete_boton.disabled = false;
+    });
+}
+
 banear_modal_boton.addEventListener("click", function(e){
     if (banear_modal_boton.dataset.mode === "unban") {
         banear();
@@ -83,3 +115,8 @@ banear_form.addEventListener("submit", function(e){
     e.preventDefault();
     banear();
 });
+
+delete_form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    eliminarUsuario();
+})
