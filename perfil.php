@@ -84,10 +84,10 @@
             <div class="perfil-banner">
                 <?php if ($modo === "ver"): ?>
                     <div class="perfil-banner-parte1">
-                        <?= avatar_img($avatar) ?>
+                        <?= avatar_img($avatar, "id='perfil-avatar-grande'") ?>
                         <div class="perfil-info">
                             <div class="perfil-info-nickname-tags">
-                                <p><b><?= e($nickname) ?></b></p>
+                                <p><b id="perfil-nickname-texto"><?= e($nickname) ?></b></p>
                                 <span id="perfil-tag-mod" class="comentar-input-tag-op"<?= $rol === "mod" ? "" : " style='display:none;'" ?>>MOD</span>
                                 <span id="perfil-tag-admin" class="comentar-input-tag-op"<?= $rol === "admin" ? "" : " style='display:none;'" ?>>ADMIN</span>
                                 <span id="input-tag-ban" class="comentar-input-tag-op"<?= $esta_ban ? "" : " style='display:none;'" ?>>BAN</span>
@@ -243,8 +243,10 @@
                 <?php if ($puede_banear):
                     require "resources/dialog-user-ban.php";
                     require "resources/dialog-user-delete.php";
+                    require "resources/dialog-user-edit.php";
                     echo "<script src='js/perfil/modal-ban.js' defer></script>";
                     echo "<script src='js/perfil/modal-delete.js' defer></script>";
+                    echo "<script src='js/perfil/modal-edit.js' defer></script>";
                 endif; ?>
                 <div class="perfil-div perfil-div-separacion">
                     <div class="perfil-descripcion">
@@ -265,7 +267,9 @@
                                 <?php endif; ?>
                             <?php endif; ?>
                             <button id="boton-delete-usuario" data-id="<?= $id_perfil ?>">Eliminar usuario</button>
-                            <button onclick="window.location.href='php/db/logout.php'" id="boton-cerrar-sesion">Modificar datos</button>
+                            <?php if ($puede_banear): ?>
+                            <button id="boton-modificar-datos" data-id="<?= $id_perfil ?>">Modificar datos</button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

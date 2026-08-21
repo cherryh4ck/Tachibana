@@ -2720,7 +2720,7 @@ header h1{
     border-radius: 8px;
 }
 
-.perfil-banner-parte1-modificado-input input[type=submit]:not([disabled]):hover, .perfil-banner-parte1-modificado-input input[type=button]:hover{
+.perfil-banner-parte1-modificado-input input[type=submit]:not([disabled]):hover, .perfil-banner-parte1-modificado-input input[type=button]:not([disabled]):hover{
     background-color: rgb(27, 26, 26);
     color: rgb(255, 255, 255);
     box-shadow: 5px 1px 30px rgb(54, 53, 53);
@@ -2729,7 +2729,7 @@ header h1{
     transform: scale(1.05);
 }
 
-.perfil-banner-parte1-modificado-input input[type=submit]:disabled{
+.perfil-banner-parte1-modificado-input input[type=submit]:disabled, .perfil-banner-parte1-modificado-input input[type=button]:disabled{
     opacity: .3;
     cursor: not-allowed;
 }

@@ -223,6 +223,96 @@
                     "mensaje" => "Usuario $user_id eliminado."
                 ]);
             }
+            elseif ($accion == "edit") {
+                if ($rango_objetivo >= $rango_actor) {
+                    http_response_code(403);
+                    echo json_encode([
+                        "ok" => false,
+                        "mensaje" => "No podés modificar a un usuario de igual o mayor jerarquía.",
+                    ]);
+                    exit();
+                }
+
+                $nickname = preg_replace("/\s\s+/", "", trim($_POST["nickname"] ?? ""));
+                if (strlen($nickname) < 3 || strlen($nickname) > 19) {
+                    http_response_code(400);
+                    echo json_encode([
+                        "ok" => false,
+                        "mensaje" => "El nickname debe tener entre 3 y 19 caracteres.",
+                    ]);
+                    exit();
+                }
+
+                $username = trim($_POST["username"] ?? "");
+                if (!preg_match('/^(?!.*_{2,})[a-zA-Z0-9_]{3,16}$/', $username)) {
+                    http_response_code(400);
+                    echo json_encode([
+                        "ok" => false,
+                        "mensaje" => "El username debe tener entre 3 y 16 caracteres (letras, números y guiones bajos).",
+                    ]);
+                    exit();
+                }
+
+                $descripcion = $_POST["descripcion"] ?? "";
+                if (strlen($descripcion) > 500) {
+                    http_response_code(400);
+                    echo json_encode([
+                        "ok" => false,
+                        "mensaje" => "La descripción es demasiado larga.",
+                    ]);
+                    exit();
+                }
+                $descripcion_guardada = nl2br(htmlspecialchars($descripcion));
+
+                $sql = $conn->prepare("UPDATE usuarios SET username = ?, nickname = ?, descripcion = ? WHERE id = ?");
+                $sql->execute([$username, htmlspecialchars($nickname), $descripcion_guardada, $user_id]);
+
+                if (!empty($descripcion_guardada)) {
+                    $descripcion_html = formatear_descripcion($descripcion_guardada);
+                }
+                else {
+                    $descripcion_html = "<p>No hay descripción.</p>";
+                }
+
+                http_response_code(200);
+                echo json_encode([
+                    "ok" => true,
+                    "accion" => "edit",
+                    "nickname" => htmlspecialchars($nickname),
+                    "username" => $username,
+                    "descripcion_html" => $descripcion_html,
+                    "mensaje" => "Los datos del usuario fueron actualizados.",
+                ]);
+            }
+            elseif ($accion == "delete_avatar") {
+                if ($rango_objetivo >= $rango_actor) {
+                    http_response_code(403);
+                    echo json_encode([
+                        "ok" => false,
+                        "mensaje" => "No podés modificar a un usuario de igual o mayor jerarquía.",
+                    ]);
+                    exit();
+                }
+
+                $ruta_avatar = __DIR__ . "/../../resources/avatars/$user_id.png";
+                if (!file_exists($ruta_avatar)) {
+                    http_response_code(400);
+                    echo json_encode([
+                        "ok" => false,
+                        "mensaje" => "Este usuario no tiene un avatar personalizado.",
+                    ]);
+                    exit();
+                }
+
+                unlink($ruta_avatar);
+
+                http_response_code(200);
+                echo json_encode([
+                    "ok" => true,
+                    "accion" => "delete_avatar",
+                    "mensaje" => "El avatar fue eliminado.",
+                ]);
+            }
             else {
                 http_response_code(400);
                 echo json_encode([
@@ -232,11 +322,20 @@
             }
         }
         catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode([
-                "ok" => false,
-                "mensaje" => "Error: $e"
-            ]);
+            if ($e->getCode() === '23000') {
+                http_response_code(409);
+                echo json_encode([
+                    "ok" => false,
+                    "mensaje" => "Ese nombre de usuario ya está en uso.",
+                ]);
+            }
+            else {
+                http_response_code(500);
+                echo json_encode([
+                    "ok" => false,
+                    "mensaje" => "Error: $e"
+                ]);
+            }
         }
     }
     else {
