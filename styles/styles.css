@@ -2855,6 +2855,15 @@ header h1{
     gap: 0.6em;
     z-index: 9999;
     pointer-events: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    overflow: visible;
+    inset: auto 1.5em 1.5em auto;
+    max-height: none;
+    max-width: none;
 }
 
 .notif{

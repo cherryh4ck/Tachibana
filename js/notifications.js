@@ -3,9 +3,12 @@
 
     const contenedor = document.createElement("div");
     contenedor.className = "notif-contenedor";
+    contenedor.popover = "manual";
 
     function montar() {
         if (!contenedor.isConnected) document.body.appendChild(contenedor);
+        if (contenedor.matches(":popover-open")) contenedor.hidePopover();
+        try { contenedor.showPopover(); } catch (e) {}
     }
 
     if (document.body) montar();
