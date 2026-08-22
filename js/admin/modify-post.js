@@ -51,6 +51,7 @@ banear_form.addEventListener("submit", function(e){
     accion = "ban";
     var motivo = document.getElementById("ban-motivo").value;
     var eliminar_recursos = document.getElementById("subir-eliminar-recursos").checked;
+    var banear_usuario = document.getElementById("subir-suspender-cuenta").checked;
 
     if (motivo === "") {
         motivo = "Sin especificar.";
@@ -60,7 +61,7 @@ banear_form.addEventListener("submit", function(e){
     fetch("php/admin/modify-post.php", {
         method: "POST",
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ accion: accion, motivo: motivo, eliminar_recursos: eliminar_recursos, post_id: postId })
+        body: new URLSearchParams({ accion: accion, motivo: motivo, eliminar_recursos: eliminar_recursos, banear_usuario: banear_usuario, post_id: postId })
     })
     .then(response => response.json())
     .then(data => {
@@ -74,6 +75,7 @@ banear_form.addEventListener("submit", function(e){
         banear_boton.disabled = false;
     })
     .catch(() => {
+        notify("Ocurrió un error inesperado", "error");
         banear_boton.disabled = false;
     });
 });
