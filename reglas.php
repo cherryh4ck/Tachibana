@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="shortcut icon" href="favicon.ico" />
     <script src="js/notifications.js" defer></script>
+
+    <script src="js/subir_modal.js" defer></script>
 </head>
 <body>
     <?php include("resources/warning-bar.php"); 
@@ -71,6 +73,7 @@
             </div>   
         </div>
         <h2>¡Feliz posteo!</h2>
+        <?php include("resources/dialog-upload.php"); ?>
     </div>
     <?php include("resources/footer.php"); ?>
 </body>
