@@ -18,6 +18,9 @@ ventana_delete.addEventListener("click", (event) => {
 
     if (!clickInside) {
         ventana_delete.close();
-        ventana_delete.style.display = "none";
     }
+});
+
+ventana_delete.addEventListener("close", () => {
+    ventana_delete.style.display = "none";
 });

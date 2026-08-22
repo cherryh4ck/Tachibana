@@ -17,6 +17,9 @@ ventana_editar_usuario.addEventListener("click", (event) => {
 
     if (!clickInside) {
         ventana_editar_usuario.close();
-        ventana_editar_usuario.style.display = "none";
     }
+});
+
+ventana_editar_usuario.addEventListener("close", () => {
+    ventana_editar_usuario.style.display = "none";
 });

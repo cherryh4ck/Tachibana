@@ -19,6 +19,9 @@ ventana_subir.addEventListener("click", (event) => {
 
     if (!clickInside && posible_setup === null) {
         ventana_subir.close();
-        ventana_subir.style.display = "none";
     }
+});
+
+ventana_subir.addEventListener("close", () => {
+    ventana_subir.style.display = "none";
 });

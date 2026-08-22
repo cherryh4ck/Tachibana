@@ -20,6 +20,9 @@ ventana_ban.addEventListener("click", (event) => {
 
     if (!clickInside) {
         ventana_ban.close();
-        ventana_ban.style.display = "none";
     }
+});
+
+ventana_ban.addEventListener("close", () => {
+    ventana_ban.style.display = "none";
 });
