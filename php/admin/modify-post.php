@@ -1,5 +1,6 @@
 <?php
     require __DIR__ . "/../db/config.php";
+    require __DIR__ . "/../../resources/parse_functions.php";
     header("Content-Type: application/json");
 
     function eliminarPost(int $post_id) {
@@ -69,6 +70,7 @@
             else if ($accion == "ban") {
                 $motivo = $_POST["motivo"];
                 $eliminar_recursos = $_POST["eliminar_recursos"] ?? "false";
+                $banear_usuario = $_POST["banear_usuario"] ?? "false";
                 $sql = $conn->prepare("UPDATE posts SET baneado = 1, baneado_motivo = ? WHERE id = ?");
                 $sql->execute([$motivo, $post_id]);
 
@@ -77,6 +79,47 @@
 
                 if ($eliminar_recursos === "true") {
                     eliminarPost($post_id);
+                }
+
+                if ($banear_usuario === "true") {
+                    $sql = $conn->prepare("SELECT * FROM posts WHERE id = ?");
+                    $sql->execute([$post_id]);
+                    $fetch = $sql->fetch(PDO::FETCH_ASSOC);
+                    $user_id = (int) $fetch["id_autor"];
+                    if ($user_id === (int) $_SESSION["cuenta_id"]) {
+                        http_response_code(200);
+                        echo json_encode([
+                            "authorized" => true,
+                            "ok" => true,
+                            "mensaje" => "Post $post_id baneado con motivo: $motivo. Sin embargo, no se pudo banear la cuenta.",
+                            "eliminar_recursos" => $eliminar_recursos
+                        ]);
+                        exit();
+                    }
+
+                    $sql = $conn->prepare("SELECT rol FROM usuarios WHERE id = ?");
+                    $sql->execute([$user_id]);
+                    $objetivo = $sql->fetch(PDO::FETCH_ASSOC);
+
+                    $rango_actor = rango_rol($_SESSION['cuenta_rol']);
+                    $rango_objetivo = rango_rol($objetivo["rol"]);
+
+                    if ($rango_objetivo >= $rango_actor) {
+                        http_response_code(200);
+                        echo json_encode([
+                            "authorized" => true,
+                            "ok" => true,
+                            "mensaje" => "Post $post_id baneado con motivo: $motivo. Sin embargo, no se pudo banear la cuenta.",
+                            "eliminar_recursos" => $eliminar_recursos
+                        ]);
+                        exit();
+                    }
+
+                    $motivo = "Un post tuyo fue moderado";
+                    $expira = date('Y-m-d H:i:s', strtotime('+12 hours'));
+
+                    $sql = $conn->prepare("INSERT INTO bans(id_usuario, motivo, expira) VALUES (?, ?, ?)");
+                    $sql->execute([$user_id, $motivo, $expira]);
                 }
 
                 http_response_code(200);
