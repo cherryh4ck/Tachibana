@@ -279,6 +279,10 @@
         <?php endif; ?>
         <?php include("resources/dialog-upload.php"); ?>
     </header>
-    <?php include("resources/footer.php"); ?>
+    <?php include("resources/footer.php"); 
+    if (isset($_COOKIE["perfil_error"])) { 
+        echo "<script src='js/perfil/cuentaSuspendida.js' defer></script>";
+    }
+    ?>
 </body>
 </html>
