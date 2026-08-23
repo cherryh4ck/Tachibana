@@ -1,8 +1,6 @@
 <?php
     require "../db/config.php";
     require "../../resources/parse_functions.php";
-    error_reporting(E_ERROR | E_PARSE);
-    session_start();
 
     // pequeño algoritmo sacado de https://stackoverflow.com/questions/14649645/resize-image-in-php :3
     function resize_image($file, $w, $h) {
