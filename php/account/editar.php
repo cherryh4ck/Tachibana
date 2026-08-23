@@ -1,5 +1,6 @@
 <?php
     require "../db/config.php";
+    require "../../resources/parse_functions.php";
     error_reporting(E_ERROR | E_PARSE);
     session_start();
 
@@ -22,6 +23,12 @@
     }
 
     if (isset($_SESSION["cuenta_id"]) && isset($_SESSION["cuenta_usuario"])){
+        if (esta_baneado($conn, $_SESSION["cuenta_id"])) {
+            setcookie("perfil_error", "1", time() + (86400 * 30), "/"); 
+            header("Location: ../../perfil.php");
+            exit();
+        }
+
         try{
             if (isset($_POST["nickname"])){
                 $_POST["nickname"] = preg_replace("/\s\s+/", "", $_POST["nickname"]);
