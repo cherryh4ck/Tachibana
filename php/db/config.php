@@ -38,5 +38,18 @@
         require "cookie_auth.php";
         require "ult_act.php";
         session_start();
+
+        if (isset($_SESSION["cuenta_id"])) {
+            $sql = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+            $sql->execute([$_SESSION["cuenta_id"]]);
+            if (!$sql->fetch(PDO::FETCH_ASSOC)) {
+                session_unset();
+                session_destroy();
+                unset($_COOKIE["auth"]);
+                unset($_COOKIE["ult_act"]);
+                setcookie("auth", "", 1, "/");
+                setcookie("ult_act", "", 1, "/");
+            }
+        }
     }
 ?>
