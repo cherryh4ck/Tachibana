@@ -996,6 +996,10 @@ header h1{
     box-shadow: 5px 1px 40px rgb(56, 55, 55);
 }
 
+#post-comentarios-texto-sesion {
+    margin-top: 0.5em;
+}
+
 #post-comentarios-texto-sesion a{
     margin-left: 0.3em;
     margin-top: 0.3em;
