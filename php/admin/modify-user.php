@@ -220,8 +220,13 @@
                         $sql->execute([$post["id"]]);
                     }
                 }
+                // cualquier ban pendiente, chau
                 $sql = $conn->prepare("DELETE FROM bans WHERE id_usuario = ?");
                 $sql->execute([$user_id]);
+                // eliminamos todas las notificaciones
+                $sql = $conn->prepare("DELETE FROM notificaciones WHERE id_usuario = ?");
+                $sql->execute([$user_id]);
+                // y ahora sip, el usuario
                 $sql = $conn->prepare("DELETE FROM usuarios WHERE id = ?");
                 $sql->execute([$user_id]);
                 http_response_code(200);
