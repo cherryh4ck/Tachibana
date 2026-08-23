@@ -49,6 +49,11 @@
         ];
     }
 
+    function create_notification(PDO $conn, int $user_id, string $type, string $text): void {
+        $sql = $conn->prepare("INSERT INTO notificaciones(id_usuario, tipo, texto) VALUES (?, ?, ?)");
+        $sql->execute([$user_id, $type, $text]);
+    }
+
     function parsear_comentario_texto(string $comentario_texto, PDO $conn, int $id_post, int $comentario_id_actual, int $año_actual, bool $chequeo_estricto_imagen, bool $es_preview = false): string {
         $comentario_texto = str_replace(["<br>", "<br />"], "</p><p>", $comentario_texto);
         $comentario_texto = "<p>$comentario_texto</p>";

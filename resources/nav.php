@@ -28,6 +28,23 @@
         </li>
     </ul>
     <div class="nav-cuenta">
+        <?php if (isset($_SESSION["cuenta_usuario"])): ?>
+            <div class="nav-bell" id="nav-bell">
+                <button type="button" id="nav-bell-button" class="nav-bell-button" aria-haspopup="true" aria-expanded="false" aria-label="Notificaciones">
+                    <svg class="nav-bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 3.2 1 4.8 1.8 5.8.5.6.1 1.5-.6 1.5H4.8c-.7 0-1.1-.9-.6-1.5C5 13.8 6 12.2 6 9Z"/><path d="M9.5 18a2.5 2.5 0 0 0 5 0"/></svg>
+                    <span id="nav-bell-badge" class="nav-bell-badge" hidden></span>
+                </button>
+                <div id="nav-bell-panel" class="nav-bell-panel" hidden>
+                    <div class="nav-bell-panel-header">
+                        <h4>Notificaciones</h4>
+                        <button type="button" id="nav-bell-mark-all" class="nav-bell-mark-all">Marcar todo como leído</button>
+                    </div>
+                    <div id="nav-bell-list" class="nav-bell-list">
+                        <p class="nav-bell-empty">No tenés notificaciones.</p>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
         <?php if (!isset($_SESSION["cuenta_usuario"])): ?>
             <a href="php/cuenta.php" class="nav-cuenta-link">
                 <span class="nav-status-cuenta">
@@ -50,3 +67,7 @@
         <?php endif; ?>
     </div>
 </nav>
+
+<?php if (isset($_SESSION["cuenta_usuario"])): ?>
+    <script src="js/notification-bell.js" defer></script>
+<?php endif; ?>

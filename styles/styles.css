@@ -3043,4 +3043,198 @@ header h1{
     color: rgb(255, 255, 255);
 }
 
+/* notificacione e s */
+
+.nav-bell{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 0.4em;
+}
+
+.nav-bell-button{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: rgb(211, 199, 199);
+    cursor: pointer;
+    transition: background-color 200ms, color 200ms;
+}
+
+.nav-bell-button:hover{
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgb(228, 221, 221);
+}
+
+.nav-bell-icon{
+    width: 20px;
+    height: 20px;
+}
+
+.nav-bell-badge{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background-color: rgb(219, 64, 64);
+    box-shadow: 0 0 0 2px rgb(20, 20, 19);
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 16px;
+    text-align: center;
+}
+
+.nav-bell-panel{
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 340px;
+    max-height: 420px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(20, 20, 19);
+    border: 1px solid rgb(40, 38, 38);
+    border-radius: 10px;
+    box-shadow: 5px 1px 30px rgba(17, 17, 17, 0.6);
+    overflow: hidden;
+    z-index: 50;
+}
+
+.nav-bell-panel[hidden]{
+    display: none;
+}
+
+.nav-bell-panel-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    padding: 0.8em 1em;
+    border-bottom: 1px solid rgb(40, 38, 38);
+}
+
+.nav-bell-panel-header h4{
+    font-size: 14px;
+    font-weight: 700;
+    color: rgb(211, 199, 199);
+}
+
+.nav-bell-mark-all{
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: rgb(141, 192, 129);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 150ms;
+}
+
+.nav-bell-mark-all:hover{
+    color: rgb(158, 206, 147);
+    text-decoration: underline;
+}
+
+.nav-bell-list{
+    overflow-y: auto;
+    max-height: 360px;
+}
+
+.nav-bell-empty{
+    padding: 1.8em 1em;
+    text-align: center;
+    font-size: 13px;
+    color: rgb(150, 148, 148);
+}
+
+.nav-bell-item{
+    display: flex;
+    gap: 0.7em;
+    padding: 0.75em 1em;
+    border-bottom: 1px solid rgb(40, 38, 38);
+    transition: background-color 150ms;
+}
+
+.nav-bell-item:last-child{
+    border-bottom: none;
+}
+
+.nav-bell-unread{
+    background-color: rgba(141, 192, 129, 0.06);
+    cursor: pointer;
+}
+
+.nav-bell-unread:hover{
+    background-color: rgba(141, 192, 129, 0.12);
+}
+
+.nav-bell-item-icon{
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 0.15em;
+    color: rgb(170, 168, 168);
+}
+
+.nav-bell-item-icon svg{
+    width: 100%;
+    height: 100%;
+}
+
+.nav-bell-ban .nav-bell-item-icon,
+.nav-bell-post_banned .nav-bell-item-icon,
+.nav-bell-post_deleted .nav-bell-item-icon{
+    color: rgb(255, 154, 154);
+}
+
+.nav-bell-unban .nav-bell-item-icon{
+    color: rgb(141, 192, 129);
+}
+
+.nav-bell-item-content{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+.nav-bell-item-text{
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgb(211, 199, 199);
+    word-break: break-word;
+}
+
+.nav-bell-unread .nav-bell-item-text{
+    color: rgb(228, 221, 221);
+    font-weight: 600;
+}
+
+.nav-bell-item-date{
+    font-size: 11px;
+    color: rgb(112, 108, 108);
+}
+
+@media (max-width: 500px){
+    .nav-bell-panel{
+        position: fixed;
+        top: 56px;
+        right: 0.6em;
+        left: 0.6em;
+        width: auto;
+    }
+}
+
 /* a */

@@ -103,6 +103,7 @@
                         $descripcion_html = "<p>No hay descripción.</p>";
                     }
 
+                    create_notification($conn, $user_id, "unban", "Tu cuenta fue desbaneada a petición de un moderador.");
                     http_response_code(200);
                     echo json_encode([
                         "ok" => true,
@@ -134,6 +135,13 @@
                     $sql->execute([$nuevo_rol, $user_id]);
                 }
 
+                if ($expira !== null) {
+                    $notification_text = "Tu cuenta fue suspendida hasta el " . date("d/m/Y H:i", strtotime($expira)) . ". Motivo: $motivo";
+                }
+                else {
+                    $notification_text = "Tu cuenta fue suspendida permanentemente. Motivo: $motivo";
+                }
+                create_notification($conn, $user_id, "ban", $notification_text);
                 http_response_code(200);
                 echo json_encode([
                     "ok" => true,

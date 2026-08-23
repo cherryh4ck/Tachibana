@@ -68,11 +68,18 @@
                 ]);
             }
             else if ($accion == "ban") {
+                $sql = $conn->prepare("SELECT titulo, id_autor FROM posts WHERE id = ?");
+                $sql->execute([$post_id]);
+                $original_post = $sql->fetch(PDO::FETCH_ASSOC);
                 $motivo = $_POST["motivo"];
                 $eliminar_recursos = $_POST["eliminar_recursos"] ?? "false";
                 $banear_usuario = $_POST["banear_usuario"] ?? "false";
                 $sql = $conn->prepare("UPDATE posts SET baneado = 1, baneado_motivo = ? WHERE id = ?");
                 $sql->execute([$motivo, $post_id]);
+
+                if ($original_post && (int) $original_post["id_autor"] !== (int) $_SESSION["cuenta_id"]) {
+                    create_notification($conn, (int) $original_post["id_autor"], "post_banned", "Tu post \"" . $original_post["titulo"] . "\" fue baneado. Motivo: $motivo");
+                }
 
                 $sql = $conn->prepare("UPDATE posts SET sticky = 0 WHERE id = ?");
                 $sql->execute([$post_id]);
@@ -120,6 +127,7 @@
 
                     $sql = $conn->prepare("INSERT INTO bans(id_usuario, motivo, expira) VALUES (?, ?, ?)");
                     $sql->execute([$user_id, $motivo, $expira]);
+                    create_notification($conn, $user_id, "ban", "Tu cuenta fue suspendida hasta el " . date("d/m/Y H:i", strtotime($expira)) . ". Motivo: $motivo");
                 }
 
                 http_response_code(200);
@@ -131,6 +139,13 @@
                 ]);
             }
             else if ($accion == "delete") {
+                $sql = $conn->prepare("SELECT titulo, id_autor FROM posts WHERE id = ?");
+                $sql->execute([$post_id]);
+                $original_post = $sql->fetch(PDO::FETCH_ASSOC);
+
+                if ($original_post && (int) $original_post["id_autor"] !== (int) $_SESSION["cuenta_id"]) {
+                    create_notification($conn, (int) $original_post["id_autor"], "post_deleted", "Tu post \"" . $original_post["titulo"] . "\" fue eliminado por un moderador.");
+                }
                 // eliminamos recursos del post antes por si acaso
                 eliminarPost($post_id);
                 // eliminamos los recursos de los comentarios
