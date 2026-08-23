@@ -1,21 +1,14 @@
 /// LISTA DE TODO GENERAL ///
 
 Conceptos generales:
-- añadir funciones para los administradores (faltan algunos apartados) (SI, siguen faltando apartados)
-- añadir más parametros al config.ini
+- añadir funciones para los administradores (falta mod panel)
+- añadir más parametros al config
 - suspensión de cuentas (!):
     - suspensión por cuenta = terminado
     - FALTA suspensión por ip
 - info de tachibana en un admin panel o apartado
 - modo anonimato (deshabilita la creación de cuentas y el panel de usuarios / perfiles)
 - trabajar en un motd (?)
-
-perfil.php:
-- terminar apartado de seguridad (uh, no sé que falta)
-
-perfiles.php:
-- añadir más chequeos de sanidad (estoy confundido)
-- que se muestren los últimos usuarios conectados y yap
 
 post.php:
 - pasar la carga a php/post/comentar.php
@@ -29,5 +22,4 @@ php/post/comentar.php:
 - añadir chequeos de sanidad
 
 diseño:
-- hacer todo responsive
 - futura optimizacion: procesar comentarios del lado backend
