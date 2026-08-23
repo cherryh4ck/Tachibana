@@ -399,7 +399,7 @@
                         }
                     }
                     else{
-                        echo "<img src='resources/avatar.png' alt='' id='post-comentarios-comentario-avatar' class='comentar-avatar'>";
+                        echo "<img src='resources/avatar.png' alt='' id='post-comentarios-comentario-avatar' class='comentar-avatar' style='opacity: 0.35;'>";
                     }
                 ?>
                 </div>
