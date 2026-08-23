@@ -6,8 +6,6 @@ Conceptos generales:
 - suspensión de cuentas (!):
     - suspensión por cuenta = terminado
     - FALTA suspensión por ip
-    - falta bloquear la función de editar perfil
-    - falta mostrar el tag de ban en ciertos apartados (post.php por ej)
 - info de tachibana en un admin panel o apartado
 - modo anonimato (deshabilita la creación de cuentas y el panel de usuarios / perfiles)
 - trabajar en un motd (?)
