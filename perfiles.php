@@ -61,7 +61,9 @@
                         echo "<p>" . $cantidad . " usuario" . ($cantidad != 1 ? "s" : "") . " encontrado" . ($cantidad != 1 ? "s" : "") . "</p>";
                     }
                     else {
-                        echo "<p>Últimos usuarios conectados</p>";
+                        if ($fetch) {
+                            echo "<p>Últimos usuarios conectados</p>";
+                        }
                     }
                     echo "<div class='contenido-perfiles-usuarios-lista'>";
                     foreach ($fetch as $usuario){
