@@ -78,6 +78,12 @@
                 if (!data.ok) return;
                 updateBadge(data.unread);
                 render(data.notifications);
+                if (data.unread < 1) { 
+                    markAllButton.hidden = true;
+                }
+                else {
+                    markAllButton.hidden = false;
+                }
             })
             .catch(() => {});
     }
