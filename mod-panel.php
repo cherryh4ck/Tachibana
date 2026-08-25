@@ -32,6 +32,7 @@
     <script src="js/mod-panel/posts.js" defer></script>
     <script src="js/mod-panel/tags.js" defer></script>
     <script src="js/mod-panel/notifications.js" defer></script>
+    <script src="js/mod-panel/tachibana.js" defer></script>
 
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="shortcut icon" href="favicon.ico" />
@@ -52,6 +53,7 @@
             <button type="button" class="modpanel-tab" data-tab="posts">Posts</button>
             <button type="button" class="modpanel-tab" data-tab="tags">Tags</button>
             <button type="button" class="modpanel-tab" data-tab="notificaciones">Notificaciones</button>
+            <button type="button" class="modpanel-tab" data-tab="tachibana">Tachibana</button>
         </div>
 
         <section class="modpanel-panel modpanel-panel-activo" id="modpanel-usuarios">
@@ -169,6 +171,12 @@
 
                 <input type="submit" value="Enviar notificación" id="modpanel-notif-enviar">
             </form>
+        </section>
+
+        <section class="modpanel-panel" id="modpanel-tachibana">
+            <div class="modpanel-tachibana">
+                <p id="modpanel-tachibana-version">?</p>
+            </div>
         </section>
     </div>
 
