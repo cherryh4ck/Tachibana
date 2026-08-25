@@ -10,13 +10,13 @@
 
     if ($_SESSION['cuenta_rol'] == "admin" || $_SESSION['cuenta_rol'] == "mod") {
         $tachibana_version = $configuracion["general"]["version"];
-        http_response_code(403);
+        http_response_code(200);
         echo json_encode([
             "ok" => true,
             "version" => $tachibana_version
         ]);
     } else {
-        http_response_code(403);
+        http_response_code(401);
         echo json_encode([
             "authorized" => false,
             "mensaje" => "No autorizado."
