@@ -25,7 +25,7 @@
     <?php include("resources/warning-bar.php"); 
         include("resources/nav.php"); ?>
     <div class="reglas-contenedor">
-        <h1>Reglas de Tachibana</h1>
+        <h1>Reglas de <span>Tachibana</span></h1>
         <div class="regla">
             <div class="regla-espacio">
                 <p>1.</p>

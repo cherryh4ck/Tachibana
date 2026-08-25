@@ -2819,9 +2819,15 @@ header h1{
     text-align: center;
 }
 
+.reglas-contenedor h1 span {
+    color: rgb(141, 192, 129);
+}
+
 .reglas-contenedor h2 {
-    font-size: 18px;
+    font-size: 16px;
     margin-top: 1.5em;
+    letter-spacing: 0.16em;
+    font-weight: 500;
 }
 
 #romper {
