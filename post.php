@@ -125,11 +125,12 @@
         const categoria = "<?= e($post_categoria) ?>";
     </script>
     <script src="js/notifications.js" defer></script>
+    <?php if ($baneado == 0 && $archivado == 0): ?>
     <script src="js/post/comentar.js" defer></script>
     <script src="js/post/anonimo.js" defer></script>
     <script src="js/post/adjuntar_imagen.js" defer></script>
     <script src="js/post/respuestas.js" defer></script>
-
+    <?php endif; ?>
     <script src="js/subir_modal.js" defer></script>
 
     <link rel="stylesheet" href="styles/styles.css">
