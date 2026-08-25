@@ -497,6 +497,9 @@ header h1{
 .contenido-post img{
     display: block;
     max-width: 700px;
+    max-height: 85vh;
+    width: auto;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
 }
