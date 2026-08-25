@@ -167,6 +167,7 @@
     }
 
     define("POSTS_POR_PAGINA", 24);
+    define("MOD_POR_PAGINA", 40);
 
     function construir_filtro_posts(PDO $conn): array {
         $ordenes_validos = ["ASC", "DESC", "ACTIVITY"];

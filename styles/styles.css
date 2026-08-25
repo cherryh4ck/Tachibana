@@ -3241,4 +3241,532 @@ header h1{
     }
 }
 
+/* mod-panel.php */
+.modpanel{
+    display: block;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 3em;
+}
+
+.modpanel-header{
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin-bottom: 1em;
+}
+
+.modpanel-header h1{
+    color: rgb(226, 219, 219);
+    font-size: 22px;
+}
+
+.modpanel-tabs{
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #282b2b;
+    margin-bottom: 1em;
+}
+
+.modpanel-tab{
+    background: transparent;
+    border: none;
+    color: rgb(150, 148, 148);
+    padding: 0.7em 1em;
+    font-size: 14px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 200ms;
+}
+
+.modpanel-tab:hover{
+    color: rgb(211, 199, 199);
+}
+
+.modpanel-tab-activa{
+    color: rgb(141, 192, 129);
+    border-bottom-color: rgb(141, 192, 129);
+}
+
+.modpanel-panel{
+    display: none;
+}
+
+.modpanel-panel-activo{
+    display: block;
+}
+
+.modpanel-toolbar{
+    display: flex;
+    gap: 0.6em;
+    flex-wrap: wrap;
+    margin-bottom: 0.8em;
+}
+
+.modpanel-toolbar input[type=text], .modpanel-toolbar select{
+    background: rgb(24, 23, 23);
+    border: 2px solid #282b2b;
+    border-radius: 8px;
+    color: rgb(211, 199, 199);
+    padding: 0.5em 0.8em;
+    font-size: 14px;
+    transition: all 200ms;
+}
+
+.modpanel-toolbar input[type=text]{
+    flex: 1 1 220px;
+}
+
+.modpanel-toolbar input[type=text]:hover, .modpanel-toolbar select:hover{
+    border-color: #3a3d3d;
+}
+
+.modpanel-toolbar input[type=text]:focus, .modpanel-toolbar select:focus{
+    border-color: rgb(141, 192, 129);
+    outline: none;
+}
+
+.modpanel-bulkbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6em;
+    background-color: #191b1b;
+    border: 2px solid #282b2b;
+    border-left: 3px solid rgb(141, 192, 129);
+    border-radius: 8px;
+    padding: 0.6em 1em;
+    margin-bottom: 0.8em;
+}
+
+.modpanel-checkbox{
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    color: rgb(211, 199, 199);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.modpanel-checkbox input[type=checkbox], .modpanel-fila-checkbox{
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #191b1b;
+    border: 2px solid #282b2b;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 200ms all;
+    flex-shrink: 0;
+}
+
+.modpanel-checkbox input[type=checkbox]:hover, .modpanel-fila-checkbox:hover{
+    background-color: rgb(37, 35, 35);
+    box-shadow: 5px 1px 40px rgb(36, 35, 35);
+}
+
+.modpanel-checkbox input[type=checkbox]:checked, .modpanel-fila-checkbox:checked{
+    background-color: #343636;
+    position: relative;
+}
+
+.modpanel-bulkbar-acciones{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.modpanel-bulkbar-acciones button, .modpanel-fila-acciones button, .modpanel-cargar-mas{
+    height: 34px;
+    padding: 0 1em;
+    background-color: rgb(20, 20, 19);
+    color: rgb(211, 199, 199);
+    border: none;
+    font-size: 13px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+.modpanel-bulkbar-acciones button:hover, .modpanel-fila-acciones button:hover, .modpanel-cargar-mas:hover{
+    background-color: rgb(27, 26, 26);
+    color: rgb(255, 255, 255);
+    box-shadow: 5px 1px 30px rgb(54, 53, 53);
+    opacity: .6;
+    transform: scale(1.03);
+}
+
+.modpanel-peligro{
+    color: rgb(255, 154, 154) !important;
+}
+
+.modpanel-peligro:hover{
+    background-color: rgb(46, 20, 20) !important;
+    box-shadow: 5px 1px 30px rgba(219, 64, 64, 0.35) !important;
+}
+
+.modpanel-lista{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.modpanel-fila{
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    background-color: rgb(24, 23, 23);
+    border-radius: 8px;
+    border-left: 3px solid transparent;
+    padding: 0.6em 0.8em;
+    transition: all 200ms;
+}
+
+.modpanel-fila:hover{
+    background-color: rgb(30, 29, 29);
+    border-left-color: rgb(141, 192, 129);
+}
+
+.modpanel-fila img{
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: gray;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.modpanel-fila-info{
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.modpanel-fila-info p{
+    margin: 0;
+    font-size: 13px;
+    color: rgb(211, 199, 199);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.modpanel-fila-info p a{
+    color: inherit;
+    text-decoration: none;
+}
+
+.modpanel-fila-info p a:hover{
+    text-decoration: underline;
+}
+
+.modpanel-fila-info p b{
+    color: rgb(226, 219, 219);
+}
+
+.modpanel-fila-meta{
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 11px;
+    color: rgb(150, 148, 148);
+    flex-shrink: 0;
+}
+
+.modpanel-fila-acciones{
+    display: flex;
+    gap: 0.4em;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.modpanel-fila-acciones button{
+    height: 30px;
+    font-size: 12px;
+    padding: 0 0.8em;
+}
+
+.modpanel-vacio{
+    color: rgb(150, 148, 148);
+    font-size: 14px;
+    text-align: center;
+    margin: 2em 0;
+}
+
+.modpanel-cargar-mas{
+    display: block;
+    margin: 1em auto 0;
+}
+
+.modpanel-cargar-mas[hidden]{
+    display: none;
+}
+
+.modpanel-tags-lista{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6em;
+}
+
+.modpanel-tag-chip{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    background-color: rgb(24, 23, 23);
+    border-radius: 8px;
+    padding: 0.5em 0.7em;
+    font-size: 13px;
+    color: rgb(211, 199, 199);
+    transition: all 200ms;
+}
+
+.modpanel-tag-chip:hover{
+    background-color: rgb(30, 29, 29);
+}
+
+.modpanel-tag-chip b{
+    color: rgb(226, 219, 219);
+}
+
+.modpanel-tag-chip span{
+    color: rgb(150, 148, 148);
+    font-size: 11px;
+}
+
+.modpanel-tag-chip button{
+    background: transparent;
+    border: none;
+    color: rgb(219, 64, 64);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0 0.2em;
+}
+
+.modpanel-notif-form{
+    display: block;
+    width: 100%;
+    max-width: 480px;
+}
+
+.modpanel-notif-form p{
+    color: rgb(211, 199, 199);
+    font-size: 14px;
+    margin-top: 1em;
+    margin-bottom: 0.4em;
+}
+
+.modpanel-notif-form textarea{
+    display: block;
+    width: 100%;
+    background: rgb(24, 23, 23);
+    border: 2px solid #282b2b;
+    border-radius: 8px;
+    color: rgb(211, 199, 199);
+    padding: 0.6em 0.8em;
+    font-size: 14px;
+    resize: vertical;
+    transition: all 200ms;
+}
+
+.modpanel-notif-form textarea:hover{
+    border-color: #3a3d3d;
+}
+
+.modpanel-notif-form textarea:focus{
+    border-color: rgb(141, 192, 129);
+    outline: none;
+}
+
+.modpanel-notif-form input[type=submit]{
+    display: block;
+    width: 100%;
+    height: 44px;
+    margin-top: 1.2em;
+    background-color: rgb(20, 20, 19);
+    color: rgb(211, 199, 199);
+    border: none;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+.modpanel-notif-form input[type=submit]:hover{
+    background-color: rgb(27, 26, 26);
+    color: rgb(255, 255, 255);
+    box-shadow: 5px 1px 30px rgb(54, 53, 53);
+    opacity: .6;
+}
+
+.modpanel-notif-form input[type=submit]:disabled{
+    opacity: .3;
+    cursor: not-allowed;
+}
+
+.modpanel-icon-picker{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.modpanel-icon-opcion{
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background-color: rgb(20, 20, 19);
+    border: 2px solid transparent;
+    color: rgb(211, 199, 199);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 200ms;
+}
+
+.modpanel-icon-opcion svg{
+    width: 20px;
+    height: 20px;
+}
+
+.modpanel-icon-opcion:hover{
+    background-color: rgb(27, 26, 26);
+    color: rgb(255, 255, 255);
+}
+
+.modpanel-icon-activo{
+    border-color: rgb(141, 192, 129);
+    color: rgb(141, 192, 129);
+}
+
+.modpanel-autocomplete{
+    position: relative;
+}
+
+.modpanel-autocomplete input[type=text]{
+    display: block;
+    width: 100%;
+    background: rgb(24, 23, 23);
+    border: 2px solid #282b2b;
+    border-radius: 8px;
+    color: rgb(211, 199, 199);
+    padding: 0.6em 0.8em;
+    font-size: 14px;
+    transition: all 200ms;
+}
+
+.modpanel-autocomplete input[type=text]:hover{
+    border-color: #3a3d3d;
+}
+
+.modpanel-autocomplete input[type=text]:focus{
+    border-color: rgb(141, 192, 129);
+    outline: none;
+}
+
+.modpanel-autocomplete-resultados{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: rgb(24, 23, 23);
+    border: 2px solid #282b2b;
+    border-radius: 8px;
+    margin-top: 0.3em;
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 5;
+}
+
+.modpanel-autocomplete-item{
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.5em 0.7em;
+    cursor: pointer;
+    font-size: 13px;
+    color: rgb(211, 199, 199);
+}
+
+.modpanel-autocomplete-item:hover{
+    background-color: rgb(34, 33, 33);
+}
+
+.modpanel-autocomplete-item img{
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.modpanel-autocomplete-item small{
+    color: rgb(150, 148, 148);
+    margin-left: 0.3em;
+}
+
+.modpanel-seleccionado{
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    background-color: rgb(24, 23, 23);
+    border-radius: 8px;
+    padding: 0.5em 0.8em;
+    margin-top: 0.5em;
+    font-size: 13px;
+    color: rgb(211, 199, 199);
+}
+
+#modpanel-tags-contador {
+    color: rgb(211, 199, 199);
+}
+
+.modpanel-seleccionado img{
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.modpanel-seleccionado small{
+    color: rgb(150, 148, 148);
+    margin-left: 0.3em;
+}
+
+.modpanel-seleccionado button{
+    margin-left: auto;
+    background: transparent;
+    border: none;
+    color: rgb(219, 64, 64);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@media (max-width: 900px){
+    .modpanel-fila-info{
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 700px){
+    .modpanel{
+        width: 94%;
+    }
+
+    .modpanel-fila{
+        flex-wrap: wrap;
+    }
+
+    .modpanel-fila-acciones{
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .modpanel-fila-meta{
+        order: 5;
+    }
+}
+
 /* a */

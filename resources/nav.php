@@ -26,6 +26,14 @@
                 <span>Usuarios</span>
             </a>
         </li>
+        <?php if ($nav_rol === "admin" || $nav_rol === "mod"): ?>
+            <li>
+                <a href="mod-panel.php" class="nav-link <?= $nav_actual == "mod-panel.php" ? "nav-link-activo" : "" ?>">
+                    <svg class="nav-link-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l7 2.8v5.2c0 5-3.2 8.3-7 9.5-3.8-1.2-7-4.5-7-9.5V6.3l7-2.8z"/></svg>
+                    <span>Moderación</span>
+                </a>
+            </li>
+        <?php endif; ?>
     </ul>
     <div class="nav-cuenta">
         <?php if (isset($_SESSION["cuenta_usuario"])): ?>
