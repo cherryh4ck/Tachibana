@@ -2,6 +2,7 @@
 return array (
   'general' => 
   array (
+    'version' => '0.8.0',
     'motd_activado' => 1,
     'cuenta_obligatoria' => 1,
     'settings_id' => 1,
