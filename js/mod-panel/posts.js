@@ -69,7 +69,7 @@ function postsCrearFila(post) {
         stickyBoton.textContent = post.sticky ? "Desfijar" : "Fijar";
         stickyBoton.addEventListener("click", () => {
             ejecutarEnLotePosts([post.id], "sticky", {}).then((resultados) => {
-                modpanelResumirResultados(resultados, "post(s) actualizado(s)");
+                modpanelResumirResultados(resultados, "post actualizado", "posts actualizados");
                 postsCargar(true);
             });
         });
@@ -81,7 +81,7 @@ function postsCrearFila(post) {
         archivarBoton.textContent = post.archivado ? "Desarchivar" : "Archivar";
         archivarBoton.addEventListener("click", () => {
             ejecutarEnLotePosts([post.id], "archive", {}).then((resultados) => {
-                modpanelResumirResultados(resultados, "post(s) actualizado(s)");
+                modpanelResumirResultados(resultados, "post actualizado", "posts actualizados");
                 postsCargar(true);
             });
         });
@@ -99,7 +99,7 @@ function postsCrearFila(post) {
     eliminarBoton.addEventListener("click", () => {
         modpanelConfirmar("Eliminar post", 'Se eliminará "' + post.titulo + '" junto con sus comentarios e imágenes. Esta acción no se puede deshacer.', () => {
             ejecutarEnLotePosts([post.id], "delete", {}).then((resultados) => {
-                modpanelResumirResultados(resultados, "post(s) eliminado(s)");
+                modpanelResumirResultados(resultados, "post eliminado", "posts eliminados");
                 postsCargar(true);
             });
         });
@@ -175,7 +175,7 @@ const postsBulkSticky = document.getElementById("modpanel-posts-bulk-sticky");
 if (postsBulkSticky) {
     postsBulkSticky.addEventListener("click", () => {
         ejecutarEnLotePosts(Array.from(postsSeleccionados), "sticky", {}).then((resultados) => {
-            modpanelResumirResultados(resultados, "post(s) actualizado(s)");
+            modpanelResumirResultados(resultados, "post actualizado", "posts actualizados");
             postsCargar(true);
         });
     });
@@ -183,7 +183,7 @@ if (postsBulkSticky) {
 
 document.getElementById("modpanel-posts-bulk-archive").addEventListener("click", () => {
     ejecutarEnLotePosts(Array.from(postsSeleccionados), "archive", {}).then((resultados) => {
-        modpanelResumirResultados(resultados, "post(s) actualizado(s)");
+        modpanelResumirResultados(resultados, "post actualizado", "posts actualizados");
         postsCargar(true);
     });
 });
@@ -194,9 +194,9 @@ document.getElementById("modpanel-posts-bulk-ban").addEventListener("click", () 
 
 document.getElementById("modpanel-posts-bulk-delete").addEventListener("click", () => {
     const ids = Array.from(postsSeleccionados);
-    modpanelConfirmar("Eliminar posts", "Se eliminarán " + ids.length + " post(s) junto con sus comentarios e imágenes. Esta acción no se puede deshacer.", () => {
+    modpanelConfirmar("Eliminar posts", "Se eliminarán " + modpanelPlural(ids.length, "post", "posts") + " junto con sus comentarios e imágenes. Esta acción no se puede deshacer.", () => {
         ejecutarEnLotePosts(ids, "delete", {}).then((resultados) => {
-            modpanelResumirResultados(resultados, "post(s) eliminado(s)");
+            modpanelResumirResultados(resultados, "post eliminado", "posts eliminados");
             postsCargar(true);
         });
     });
@@ -222,7 +222,7 @@ document.getElementById("formulario-modpanel-ban-posts").addEventListener("submi
     const banearUsuario = document.getElementById("modpanel-ban-posts-suspender").checked;
 
     ejecutarEnLotePosts(postsPendientesBan, "ban", { motivo: motivo, eliminar_recursos: eliminarRecursos, banear_usuario: banearUsuario }).then((resultados) => {
-        modpanelResumirResultados(resultados, "post(s) baneado(s)");
+        modpanelResumirResultados(resultados, "post baneado", "posts baneados");
         postsCargar(true);
 
         const dialog = document.getElementById("dialog-modpanel-ban-posts");

@@ -59,16 +59,20 @@ document.getElementById("formulario-modpanel-confirmar").addEventListener("submi
     }
 });
 
-function modpanelResumirResultados(resultados, exitoTexto) {
+function modpanelPlural(cantidad, singular, plural) {
+    return cantidad + " " + (cantidad == 1 ? singular : plural);
+}
+
+function modpanelResumirResultados(resultados, singular, plural) {
     const exitosos = resultados.filter((r) => r.ok).length;
     const fallidos = resultados.length - exitosos;
 
     if (exitosos > 0) {
-        notify(exitosos + " " + exitoTexto, "exito");
+        notify(modpanelPlural(exitosos, singular, plural), "exito");
     }
 
     if (fallidos > 0) {
-        notify(fallidos + " acción" + (fallidos != 1 ? "es" : "") + " no se pudieron completar.", fallidos == resultados.length ? "error" : "advertencia");
+        notify(modpanelPlural(fallidos, "acción", "acciones") + " no se pudieron completar.", fallidos == resultados.length ? "error" : "advertencia");
     }
 }
 

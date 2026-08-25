@@ -33,7 +33,7 @@ function tagsCrearChip(tag) {
     chip.innerHTML =
         '<input type="checkbox" class="modpanel-fila-checkbox">' +
         '<b>' + tag.nombre + '</b>' +
-        '<span>' + tag.en_uso + ' post(s)</span>';
+        '<span>' + modpanelPlural(tag.en_uso, "post", "posts") + '</span>';
 
     const eliminarBoton = document.createElement("button");
     eliminarBoton.type = "button";
@@ -103,9 +103,9 @@ tagsCargarMas.addEventListener("click", () => tagsCargar(false));
 
 document.getElementById("modpanel-tags-bulk-delete").addEventListener("click", () => {
     const ids = Array.from(tagsSeleccionados);
-    modpanelConfirmar("Eliminar tags", "Se eliminarán " + ids.length + " tag(s) de todos los posts que los usan.", () => {
+    modpanelConfirmar("Eliminar tags", "Se eliminarán " + modpanelPlural(ids.length, "tag", "tags") + " de todos los posts que los usan.", () => {
         Promise.all(ids.map((id) => llamarEliminarTag(id))).then((resultados) => {
-            modpanelResumirResultados(resultados, "tag(s) eliminado(s)");
+            modpanelResumirResultados(resultados, "tag eliminado", "tags eliminados");
             tagsCargar(true);
         });
     });

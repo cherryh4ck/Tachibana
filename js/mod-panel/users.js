@@ -71,7 +71,7 @@ function usuariosCrearFila(usuario) {
         banBoton.addEventListener("click", () => {
             if (usuario.baneado) {
                 ejecutarEnLoteUsuarios([usuario.id], "ban", {}).then((resultados) => {
-                    modpanelResumirResultados(resultados, "usuario(s) desbaneado(s)");
+                    modpanelResumirResultados(resultados, "usuario desbaneado", "usuarios desbaneados");
                     usuariosCargar(true);
                 });
             }
@@ -86,7 +86,7 @@ function usuariosCrearFila(usuario) {
             ascenderBoton.textContent = "Ascender";
             ascenderBoton.addEventListener("click", () => {
                 ejecutarEnLoteUsuarios([usuario.id], "ascender", {}).then((resultados) => {
-                    modpanelResumirResultados(resultados, "usuario(s) ascendido(s)");
+                    modpanelResumirResultados(resultados, "usuario ascendido", "usuarios ascendidos");
                     usuariosCargar(true);
                 });
             });
@@ -104,7 +104,7 @@ function usuariosCrearFila(usuario) {
         eliminarBoton.addEventListener("click", () => {
             modpanelConfirmar("Eliminar usuario", "Se eliminará a @" + usuario.username + " junto con todo su contenido. Esta acción no se puede deshacer.", () => {
                 ejecutarEnLoteUsuarios([usuario.id], "delete", {}).then((resultados) => {
-                    modpanelResumirResultados(resultados, "usuario(s) eliminado(s)");
+                    modpanelResumirResultados(resultados, "usuario eliminado", "usuarios eliminados");
                     usuariosCargar(true);
                 });
             });
@@ -189,7 +189,7 @@ document.getElementById("modpanel-usuarios-bulk-ban").addEventListener("click", 
 
 document.getElementById("modpanel-usuarios-bulk-unban").addEventListener("click", () => {
     ejecutarEnLoteUsuarios(Array.from(usuariosSeleccionados), "ban", {}).then((resultados) => {
-        modpanelResumirResultados(resultados, "usuario(s) actualizado(s)");
+        modpanelResumirResultados(resultados, "usuario actualizado", "usuarios actualizados");
         usuariosCargar(true);
     });
 });
@@ -198,7 +198,7 @@ const usuariosBulkAscender = document.getElementById("modpanel-usuarios-bulk-asc
 if (usuariosBulkAscender) {
     usuariosBulkAscender.addEventListener("click", () => {
         ejecutarEnLoteUsuarios(Array.from(usuariosSeleccionados), "ascender", {}).then((resultados) => {
-            modpanelResumirResultados(resultados, "usuario(s) ascendido(s)");
+            modpanelResumirResultados(resultados, "usuario ascendido", "usuarios ascendidos");
             usuariosCargar(true);
         });
     });
@@ -206,9 +206,9 @@ if (usuariosBulkAscender) {
 
 document.getElementById("modpanel-usuarios-bulk-delete").addEventListener("click", () => {
     const ids = Array.from(usuariosSeleccionados);
-    modpanelConfirmar("Eliminar usuarios", "Se eliminarán " + ids.length + " usuario(s) junto con todo su contenido. Esta acción no se puede deshacer.", () => {
+    modpanelConfirmar("Eliminar usuarios", "Se eliminarán " + modpanelPlural(ids.length, "usuario", "usuarios") + " junto con todo su contenido. Esta acción no se puede deshacer.", () => {
         ejecutarEnLoteUsuarios(ids, "delete", {}).then((resultados) => {
-            modpanelResumirResultados(resultados, "usuario(s) eliminado(s)");
+            modpanelResumirResultados(resultados, "usuario eliminado", "usuarios eliminados");
             usuariosCargar(true);
         });
     });
@@ -232,7 +232,7 @@ document.getElementById("formulario-modpanel-ban-usuarios").addEventListener("su
     const expira = document.getElementById("modpanel-ban-usuarios-expiracion").value;
 
     ejecutarEnLoteUsuarios(usuariosPendientesBan, "ban", { motivo: motivo, fecha_expiracion: expira }).then((resultados) => {
-        modpanelResumirResultados(resultados, "usuario(s) suspendido(s)");
+        modpanelResumirResultados(resultados, "usuario suspendido", "usuarios suspendidos");
         usuariosCargar(true);
 
         const dialog = document.getElementById("dialog-modpanel-ban-usuarios");
