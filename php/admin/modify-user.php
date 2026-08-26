@@ -152,6 +152,31 @@
                     "mensaje" => "El usuario fue suspendido.",
                 ]);
             }
+            // esta acción es exclusiva del mod panel
+            // por lo que no se usa en ningún otro lado (por lo menos por ahora u.u)
+            elseif ($accion == "unban") {
+                if ($rango_objetivo >= $rango_actor) {
+                    http_response_code(403);
+                    echo json_encode([
+                        "ok" => false,
+                        "mensaje" => "No podés moderar a un usuario de igual o mayor jerarquía.",
+                    ]);
+                    exit();
+                }
+
+                if (esta_baneado($conn, $user_id)) {
+                    $sql = $conn->prepare("DELETE FROM bans WHERE id_usuario = ?");
+                    $sql->execute([$user_id]); 
+                    http_response_code(200);
+                    echo json_encode([
+                        "ok" => true,
+                        "accion" => "unban",
+                        "rol" => $objetivo["rol"],
+                        "mensaje" => "El usuario fue desbaneado.",
+                    ]);
+                    exit();
+                }
+            }
             elseif ($accion == "ascender") {
                 if ($_SESSION['cuenta_rol'] !== "admin") {
                     http_response_code(403);

@@ -188,7 +188,7 @@ document.getElementById("modpanel-usuarios-bulk-ban").addEventListener("click", 
 });
 
 document.getElementById("modpanel-usuarios-bulk-unban").addEventListener("click", () => {
-    ejecutarEnLoteUsuarios(Array.from(usuariosSeleccionados), "ban", {}).then((resultados) => {
+    ejecutarEnLoteUsuarios(Array.from(usuariosSeleccionados), "unban", {}).then((resultados) => {
         modpanelResumirResultados(resultados, "usuario actualizado", "usuarios actualizados");
         usuariosCargar(true);
     });
