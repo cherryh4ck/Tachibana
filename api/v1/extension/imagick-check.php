@@ -1,5 +1,4 @@
 <?php
-    require __DIR__ . '/../../../php/db/config.php';
     header("Content-Type: application/json");
 
     if (extension_loaded("imagick")){
