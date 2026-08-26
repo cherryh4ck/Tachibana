@@ -1,6 +1,11 @@
 <?php
     $configuracion = require __DIR__ . "/config-data.php";
 
+    if (!is_dir(__DIR__ . "/../../galeria") && !isset($setup_activo)) {
+        header("Location: /../../index.php");
+        exit(); 
+    }
+
     // configuracion
     $settings_id = $configuracion["general"]["settings_id"];
     $motd_activado = $configuracion["general"]["motd_activado"];

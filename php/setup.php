@@ -1,6 +1,7 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST" && !is_dir(__DIR__ . "/../galeria")) {
         header("Content-Type: application/json");
+        $setup_activo = true;
 
         $host = $_POST["host"] ?? "";
         $puerto = $_POST["puerto"] ?? "";

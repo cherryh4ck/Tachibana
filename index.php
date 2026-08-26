@@ -1,8 +1,14 @@
 <?php
+    $instalado = is_dir("galeria");
+    if (!$instalado) {
+        session_start();
+        session_unset();
+        session_destroy();
+        $setup_activo = true;
+    }
     require "php/db/config.php";
     require "resources/parse_functions.php";
     
-    $instalado = is_dir("galeria");
     if ($instalado && $conn_test == 0){
         $_SESSION["error"] = 9;
         header("Location: error.php");
@@ -169,7 +175,7 @@
         <?php include("resources/dialog-upload.php"); ?>
     </div>
     <?php else: ?>
-    <?php include("resources/dialog-setup.php"); ?>
+    <?php include("resources/dialog-setup.php"); ;?>
     <?php endif; ?>
     <?php include("resources/footer.php"); 
         if (isset($_SESSION["cuenta_id"])) {
