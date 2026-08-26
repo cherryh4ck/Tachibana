@@ -70,7 +70,7 @@ function usuariosCrearFila(usuario) {
         banBoton.textContent = usuario.baneado ? "Desbanear" : "Suspender";
         banBoton.addEventListener("click", () => {
             if (usuario.baneado) {
-                ejecutarEnLoteUsuarios([usuario.id], "ban", {}).then((resultados) => {
+                ejecutarEnLoteUsuarios([usuario.id], "unban", {}).then((resultados) => {
                     modpanelResumirResultados(resultados, "usuario desbaneado", "usuarios desbaneados");
                     usuariosCargar(true);
                 });

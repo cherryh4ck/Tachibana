@@ -176,6 +176,12 @@
                     ]);
                     exit();
                 }
+
+                http_response_code(400);
+                echo json_encode([
+                    "ok" => false,
+                    "mensaje" => "El usuario no está suspendido.",
+                ]);
             }
             elseif ($accion == "ascender") {
                 if ($_SESSION['cuenta_rol'] !== "admin") {
