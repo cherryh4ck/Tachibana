@@ -72,7 +72,7 @@ function modpanelResumirResultados(resultados, singular, plural) {
     }
 
     if (fallidos > 0) {
-        notify(modpanelPlural(fallidos, "acción", "acciones") + " no se pudieron completar.", fallidos == resultados.length ? "error" : "advertencia");
+        notify(modpanelPlural(fallidos, "acción no se pudo completar.", "acciones no se pudieron completar."), fallidos == resultados.length ? "error" : "advertencia");
     }
 }
 
