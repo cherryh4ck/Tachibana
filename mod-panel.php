@@ -208,6 +208,7 @@
                 </div>
                 <input type="submit" value="Suspender" id="modpanel-ban-usuarios-enviar">
             </form>
+            <script src="js/modal-validation/banDateModPanel.js" defer></script>
         </div>
     </dialog>
 

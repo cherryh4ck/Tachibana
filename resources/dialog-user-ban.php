@@ -20,4 +20,5 @@
             <input type="submit" value="Banear" id="banear-enviar">
         </form>
     </div>
+    <script src="../js/modal-validation/banDate.js" defer></script>
 </dialog>
