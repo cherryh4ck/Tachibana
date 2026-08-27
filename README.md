@@ -1,5 +1,5 @@
 # Tachibana - Imageboard liviano en PHP
-Tachibana es un imageboard fuertemente inspirado en Devox y 4chan, ofreciendo una interfaz moderna y compacta, y la adición de algunas ideas propias. 
+Tachibana es un imageboard fuertemente inspirado en Devox y 4chan, ofreciendo una interfaz moderna y compacta, junto a la adición de algunas ideas propias. 
 
 ## Requisitos
 - PHP 8.0 o superior, con las siguientes extensiones habilitadas:
