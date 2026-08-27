@@ -10,7 +10,7 @@ Tachibana es un imageboard fuertemente inspirado en Devox y 4chan, ofreciendo un
 - MySQL o MariaDB
 - Servidor web (Apache o nginx)
 
-# Recomendaciones
+## Recomendaciones
 Si bien Tachibana viene con un `.htaccess` para Apache, este no debe ser usado 
 
 ## Instalación
