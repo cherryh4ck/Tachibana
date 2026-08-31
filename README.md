@@ -33,7 +33,7 @@ Es **importante** que cambies las credenciales de la cuenta lo antes posible.
 ## FAQ
 **1. ¿Se usó IA generativa en el proyecto?**
 
-> Sí, se usó IA generativa para crear y desarrollar aun más ciertos apartados, más que nada para acelerar el desarrollo. Obviamente, me hago cargo de testearlo correctamente y modificar algo si es necesario, porque si no, sería cualquier cosa ya. En lo personal no es algo que me guste del todo, pero como este proyecto también es parte de un proyecto escolar, tuve que hacerlo para entregarlo a tiempo.
+> Sí, se usó IA generativa para crear y desarrollar ciertos apartados, más que nada para acelerar el desarrollo. Obviamente, me hice cargo de testearlo correctamente y modificar algo si es necesario, porque si no, ya sería cualquier cosa. En lo personal no es algo que me guste del todo, pero como este proyecto también es parte de un proyecto escolar, tuve que hacerlo para entregarlo a tiempo.
 
 **2. ¿Cuando se lanzará una versión completa?**
 
