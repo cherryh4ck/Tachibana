@@ -2,7 +2,10 @@ const formulario_setup = document.getElementById("formulario-setup");
 const boton = document.getElementById("setup-enviar");
 const mensajeError = document.getElementById("mensaje-error");
 
+const pdoStatus = document.getElementById("mensaje-pdo-status");
+const gdStatus = document.getElementById("mensaje-gd-status");
 const imagickStatus = document.getElementById("mensaje-imagick-status");
+
 
 mensajeError.style.transition = "opacity 0.3s ease";
 mensajeError.style.opacity = 0;
@@ -16,11 +19,21 @@ function mostrarError(texto){
     });
 }
 
-function chequearImagick(){
-    fetch("api/v1/extension/imagick-check.php")
+function chequearExtensiones(){
+    fetch("api/v1/extension/check.php")
     .then(response => response.json())
     .then(data => {
-        if (data.ok){
+        if (data.pdo_mysql){
+            pdoStatus.innerText = "OK";
+            pdoStatus.style.color = "#54ca77";
+            pdoStatus.title = "pdo_mysql está instalado en el servidor.";
+        }
+        else{
+            gdStatus.innerText = "NO";
+            gdStatus.style.color = "#d7da3f";
+            gdStatus.title = "pdo_mysql no está instalado en el servidor, por lo que Tachibana no podrá instalarse.";
+        }
+        if (data.imagick){
             imagickStatus.innerText = "OK";
             imagickStatus.style.color = "#54ca77";
             imagickStatus.title = "Imagick está instalado en el servidor, lo que permite crear miniaturas de tipo GIF.";
@@ -29,6 +42,16 @@ function chequearImagick(){
             imagickStatus.innerText = "NO";
             imagickStatus.style.color = "#d7da3f";
             imagickStatus.title = "Imagick no está instalado en el servidor. Si bien no afecta el funcionamiento de la página, no se podrán crear miniaturas de tipo GIF.";
+        }
+        if (data.gd){
+            gdStatus.innerText = "OK";
+            gdStatus.style.color = "#54ca77";
+            gdStatus.title = "gd está instalado en el servidor.";
+        }
+        else{
+            gdStatus.innerText = "NO";
+            gdStatus.style.color = "#d7da3f";
+            gdStatus.title = "gd no está instalado en el servidor, por lo que no se podrá postear.";
         }
     })
 }
@@ -63,4 +86,4 @@ formulario_setup.addEventListener("submit", function(e){
     });
 });
 
-chequearImagick();
+chequearExtensiones();
