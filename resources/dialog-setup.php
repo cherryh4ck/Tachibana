@@ -34,7 +34,7 @@
                 <label for="setup-cuenta-obligatoria">Requerir cuenta para poder postear</label>
             </div>
             <!--- muy flojo !!! -->
-            <div>
+            <div class="contenido-setup-div-flojo">
                 <div class="contenido-subir-formulario-aviso-setup">
                     <p style="display: flex;" id="mensaje-pdo">- PDO instalado (<b><span id="mensaje-pdo-status">...</span></b>)</p>
                 </div>

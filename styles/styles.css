@@ -1122,6 +1122,17 @@ header h1{
     margin-bottom: 0.8em;
 }
 
+.contenido-setup-div-flojo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    margin-top: 1em;
+}
+
+.contenido-setup-div-flojo * {
+    margin-top: 0 !important;
+}
+
 .contenido-subir-preview{
     display: flex;
     height: 100%;
